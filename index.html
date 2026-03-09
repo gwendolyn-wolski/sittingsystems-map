@@ -9,12 +9,10 @@
     :root {
       --bg: #f3f3f1;
       --text: #111111;
-      --muted: rgba(17,17,17,.58);
-      --line: rgba(17,17,17,.10);
-      --card-bg: transparent;
-      --gap: 28px;
-      --radius: 14px;
-      --max-width: 1400px;
+      --muted: rgba(17,17,17,.56);
+      --line: rgba(17,17,17,.08);
+      --max-width: 1440px;
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; }
@@ -33,7 +31,7 @@
 
     .page {
       width: 100%;
-      padding: 28px 28px 56px;
+      padding: 20px 20px 64px;
     }
 
     .wrap {
@@ -42,53 +40,54 @@
     }
 
     .header {
-      margin-bottom: 42px;
+      margin: 0 0 56px 0;
+      max-width: 720px;
     }
 
     .title {
-      margin: 0 0 10px 0;
-      font-size: clamp(40px, 6vw, 72px);
-      line-height: .95;
-      letter-spacing: -0.04em;
+      margin: 0 0 18px 0;
+      font-size: clamp(58px, 8vw, 108px);
+      line-height: .9;
+      letter-spacing: -0.055em;
       font-weight: 700;
     }
 
     .intro {
       margin: 0;
-      max-width: 440px;
-      font-size: 16px;
+      max-width: 620px;
+      font-size: 18px;
       line-height: 1.35;
       color: var(--muted);
+      letter-spacing: -0.01em;
     }
 
     .meta-row {
       display: flex;
       justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-      margin: 10px 0 28px;
-      padding-bottom: 12px;
+      align-items: center;
+      margin: 0 0 34px 0;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--line);
     }
 
     .count {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
-      letter-spacing: .02em;
+      letter-spacing: .01em;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 34px 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 52px 30px;
+      align-items: start;
     }
 
     .card {
       display: block;
       color: inherit;
       text-decoration: none;
-      background: var(--card-bg);
-      transition: transform .18s ease, opacity .18s ease;
+      transition: transform .16s ease, opacity .16s ease;
     }
 
     .card:hover {
@@ -96,13 +95,12 @@
     }
 
     .thumb-wrap {
-      position: relative;
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 1.18 / 1;
       overflow: hidden;
       border-radius: var(--radius);
       background: rgba(0,0,0,.04);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .thumb {
@@ -111,26 +109,31 @@
       object-fit: cover;
       display: block;
       opacity: 0;
-      transition: opacity .25s ease;
+      transition: opacity .28s ease, transform .28s ease;
     }
 
     .thumb.loaded {
       opacity: 1;
     }
 
+    .card:hover .thumb.loaded {
+      transform: scale(1.015);
+    }
+
     .id {
       margin: 0 0 4px 0;
-      font-size: 15px;
-      line-height: 1.2;
+      font-size: 17px;
+      line-height: 1.15;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
     .object-title {
-      margin: 0 0 6px 0;
-      font-size: 14px;
-      line-height: 1.25;
-      color: var(--text);
+      margin: 0 0 8px 0;
+      font-size: 15px;
+      line-height: 1.28;
+      color: rgba(17,17,17,.88);
+      letter-spacing: -0.01em;
     }
 
     .context {
@@ -138,55 +141,51 @@
       font-size: 11px;
       line-height: 1.2;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
       color: var(--muted);
     }
 
-    .empty {
-      padding: 40px 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    .empty,
     .loading {
-      color: var(--muted);
       font-size: 14px;
+      color: var(--muted);
     }
 
-    @media (max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 800px) {
-      .page {
-        padding: 22px 18px 40px;
-      }
-
-      .meta-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
+    @media (max-width: 1100px) {
       .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 28px 16px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .grid {
-        grid-template-columns: 1fr;
+        gap: 42px 24px;
       }
 
       .title {
-        font-size: 42px;
+        font-size: clamp(52px, 8vw, 84px);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        padding: 18px 16px 42px;
+      }
+
+      .header {
+        margin-bottom: 42px;
+      }
+
+      .title {
+        font-size: 54px;
       }
 
       .intro {
-        font-size: 15px;
+        font-size: 16px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .thumb-wrap {
+        aspect-ratio: 1.2 / 1;
       }
     }
   </style>
@@ -255,9 +254,7 @@
 
       try {
         const res = await fetch('./index.json', { cache: 'no-store' });
-        if (!res.ok) {
-          throw new Error(`Failed to load index.json (${res.status})`);
-        }
+        if (!res.ok) throw new Error(`Failed to load index.json (${res.status})`);
 
         const items = await res.json();
 
@@ -275,6 +272,11 @@
         grid.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
       }
     }
+
+    init();
+  </script>
+</body>
+</html>
 
     init();
   </script>
