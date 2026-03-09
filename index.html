@@ -185,11 +185,10 @@ map.options.maxBoundsViscosity = 1.0;
           const url = rec["Readymag_URL"] || '';
           const label = rec["Map_Label"] || rec["Display_ID"] || 'View';
           const context = rec["Context (Primary)"] || '';
-          const thumbUrl = extractThumbUrl(rec["Thumbnail"]);
-
+          const thumbUrl = rec["Image"]?.trim() || extractThumbUrl(rec["Thumbnail"]);
           const popupHtml = `
             <div class="ss-popup">
-              ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="">` : ``}
+              ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" onerror="this.style.display='none'">` : ``}
               <div class="ss-title">${label}</div>
               ${url ? `<a class="ss-link" href="${url}" target="_blank" rel="noopener">Open object page</a>` : ``}
               ${context ? `<div class="ss-meta">${context}</div>` : ``}
