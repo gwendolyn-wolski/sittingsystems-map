@@ -1,0 +1,138 @@
+[
+  {
+    "Record_Number": 1,
+    "Display_ID": "SS-001",
+    "Title": "Informal Armchair Arrangement, Sidewalk",
+    "Seating_Type": "armchair",
+    "Context (Primary)": "Waiting",
+    "Readymag_URL": "https://sittingsystems.org/ss-001/"
+  },
+  {
+    "Record_Number": 2,
+    "Display_ID": "SS-002",
+    "Title": "Child-Sized Chair, Private Residence",
+    "Seating_Type": "child-sized chair",
+    "Context (Primary)": "Resting",
+    "Readymag_URL": "https://sittingsystems.org/ss-002/"
+  },
+  {
+    "Record_Number": 3,
+    "Display_ID": "SS-003",
+    "Title": "Decorative Side Chair, Outdoor Market",
+    "Seating_Type": "side chair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-003/"
+  },
+  {
+    "Record_Number": 4,
+    "Display_ID": "SS-004",
+    "Title": "Ceremonial Upholstered Chair — Louvre Interior",
+    "Seating_Type": "Ceremonial upholstered chair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-004/"
+  },
+  {
+    "Record_Number": 5,
+    "Display_ID": "SS-005",
+    "Title": "Modified Armchair — Exhibition Installation",
+    "Seating_Type": "armchair (modified)",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-005/"
+  },
+  {
+    "Record_Number": 6,
+    "Display_ID": "SS-006",
+    "Title": "Painted Ladder-Back Chair — Commercial Interior",
+    "Seating_Type": "painted ladder-back chair",
+    "Context (Primary)": "Waiting",
+    "Readymag_URL": "https://sittingsystems.org/ss-006/"
+  },
+  {
+    "Record_Number": 7,
+    "Display_ID": "SS-007",
+    "Title": "Upholstered Armchair — Roadside (Winter)",
+    "Seating_Type": "upholstered armchair",
+    "Context (Primary)": "Waiting",
+    "Readymag_URL": "https://sittingsystems.org/ss-007/"
+  },
+  {
+    "Record_Number": 8,
+    "Display_ID": "SS-008",
+    "Title": "Artist’s Step Chair — Improvised Seating",
+    "Seating_Type": "artist’s step chair",
+    "Context (Primary)": "Working",
+    "Readymag_URL": "https://sittingsystems.org/ss-008/"
+  },
+  {
+    "Record_Number": 9,
+    "Display_ID": "SS-009",
+    "Title": "Reclining Loungers — Hospitality Lawn",
+    "Seating_Type": "reclining lounger",
+    "Context (Primary)": "Resting",
+    "Readymag_URL": "https://sittingsystems.org/ss-009/"
+  },
+  {
+    "Record_Number": 10,
+    "Display_ID": "SS-010",
+    "Title": "Ornamental Armchairs — Storefront Threshold",
+    "Seating_Type": "ornamental armchair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-010/"
+  },
+  {
+    "Record_Number": 11,
+    "Display_ID": "SS-011",
+    "Title": "Student Desk-Chair — Classroom Synchronization",
+    "Seating_Type": "student desk-chair",
+    "Context (Primary)": "Working",
+    "Readymag_URL": "https://sittingsystems.org/ss-011/"
+  },
+  {
+    "Record_Number": 12,
+    "Display_ID": "SS-012",
+    "Title": "Lakeside Armchairs — Horizon-Oriented Rest",
+    "Seating_Type": "outdoor armchair",
+    "Context (Primary)": "Resting",
+    "Readymag_URL": "https://sittingsystems.org/ss-012/"
+  },
+  {
+    "Record_Number": 13,
+    "Display_ID": "SS-013",
+    "Title": "Dining Chairs (Matched Set) — Domestic Displacement",
+    "Seating_Type": "dining chair",
+    "Context (Primary)": "Waiting",
+    "Readymag_URL": "https://sittingsystems.org/ss-013/"
+  },
+  {
+    "Record_Number": 14,
+    "Display_ID": "SS-014",
+    "Title": "Lounge Chair — Exhibition Proxy for Rest",
+    "Seating_Type": "lounge chair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-014/"
+  },
+  {
+    "Record_Number": 15,
+    "Display_ID": "SS-015",
+    "Title": "Bentwood Armchair — Retail Seating",
+    "Seating_Type": "bentwood armchair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-015/"
+  },
+  {
+    "Record_Number": 16,
+    "Display_ID": "SS-016",
+    "Title": "Molded Plywood Lounge Chair — Sidewalk Resale Display",
+    "Seating_Type": "molded plywood lounge chair",
+    "Context (Primary)": "Display",
+    "Readymag_URL": "https://sittingsystems.org/ss-016/"
+  },
+  {
+    "Record_Number": 17,
+    "Display_ID": "SS-017",
+    "Title": "Deep-Seated Armchair — Domestic Rest",
+    "Seating_Type": "armchair",
+    "Context (Primary)": "Resting",
+    "Readymag_URL": "https://sittingsystems.org/ss-017/"
+  }
+]
