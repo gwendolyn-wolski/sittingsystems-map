@@ -185,7 +185,8 @@ map.options.maxBoundsViscosity = 1.0;
           const url = rec["Readymag_URL"] || '';
           const label = rec["Map_Label"] || rec["Display_ID"] || 'View';
           const context = rec["Context (Primary)"] || '';
-          const thumbUrl = rec["Image"]?.trim() || extractThumbUrl(rec["Thumbnail"]);
+          const displayId = (rec["Display_ID"] || "").trim();
+          const thumbUrl = displayId ? `images/${displayId}.jpeg` : "";
           const popupHtml = `
           <div class="ss-popup">
             ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" loading="lazy" onerror="this.remove()">` : ``}
