@@ -13,7 +13,7 @@
       --line: rgba(17,17,17,.08);
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
-      --max-width: 1440px;
+      --max-width: 1520px;
       --radius: 16px;
     }
 
@@ -33,7 +33,7 @@
 
     .page {
       width: 100%;
-      padding: 20px 20px 64px;
+      padding: 24px 24px 72px;
     }
 
     .wrap {
@@ -42,21 +42,21 @@
     }
 
     .header {
-      margin: 0 0 38px 0;
-      max-width: 720px;
+      margin: 0 0 56px 0;
+      max-width: 780px;
     }
 
     .title {
       margin: 0 0 18px 0;
-      font-size: clamp(58px, 8vw, 108px);
-      line-height: .9;
-      letter-spacing: -0.055em;
+      font-size: clamp(62px, 9vw, 118px);
+      line-height: .88;
+      letter-spacing: -0.06em;
       font-weight: 700;
     }
 
     .intro {
       margin: 0;
-      max-width: 620px;
+      max-width: 640px;
       font-size: 16px;
       line-height: 1.35;
       color: var(--muted);
@@ -67,7 +67,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 0 0 28px 0;
+      margin: 0 0 34px 0;
       padding-bottom: 14px;
       border-bottom: 1px solid var(--line);
     }
@@ -80,8 +80,8 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 42px 24px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 54px 26px;
       align-items: start;
     }
 
@@ -89,21 +89,44 @@
       display: block;
       color: inherit;
       text-decoration: none;
-      padding-bottom: 6px;
-      transition: transform .16s ease, opacity .16s ease;
+      transition: transform .16s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
     }
 
+    .card.standard {
+      grid-column: span 4;
+    }
+
+    .card.featured {
+      grid-column: span 6;
+    }
+
+    .card.featured.offset-right {
+      grid-column: 7 / span 6;
+    }
+
+    .card.featured.offset-left {
+      grid-column: 1 / span 6;
+    }
+
     .thumb-wrap {
       width: 100%;
-      aspect-ratio: 1.45 / 1;
       overflow: hidden;
       border-radius: var(--radius);
       background: rgba(0,0,0,.04);
       margin-bottom: 14px;
+    }
+
+    .card.standard .thumb-wrap {
+      aspect-ratio: 1.42 / 1;
+    }
+
+    .card.featured .thumb-wrap {
+      aspect-ratio: 1.2 / 1;
+      margin-bottom: 16px;
     }
 
     .thumb {
@@ -112,7 +135,7 @@
       object-fit: cover;
       display: block;
       opacity: 0;
-      transform: scale(0.98);
+      transform: scale(0.985);
       transition: opacity .28s ease, transform .28s ease;
     }
 
@@ -132,12 +155,23 @@
       letter-spacing: -0.025em;
     }
 
+    .card.featured .id {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
     .object-title {
       margin: 0 0 8px 0;
       font-size: 15px;
       line-height: 1.28;
       color: rgba(17,17,17,.88);
       letter-spacing: -0.01em;
+    }
+
+    .card.featured .object-title {
+      font-size: 18px;
+      line-height: 1.24;
+      max-width: 90%;
     }
 
     .context {
@@ -172,34 +206,45 @@
       white-space: nowrap;
     }
 
-    .empty,
-    .loading {
+    .spacer {
+      grid-column: span 12;
+      height: 22px;
+    }
+
+    .loading,
+    .empty {
       font-size: 14px;
       color: var(--muted);
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1200px) {
       .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 36px 22px;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 42px 22px;
       }
 
-      .title {
-        font-size: clamp(52px, 8vw, 84px);
+      .card.standard {
+        grid-column: span 4;
+      }
+
+      .card.featured,
+      .card.featured.offset-left,
+      .card.featured.offset-right {
+        grid-column: span 8;
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       .page {
-        padding: 18px 16px 42px;
+        padding: 18px 16px 44px;
       }
 
       .header {
-        margin-bottom: 32px;
+        margin-bottom: 34px;
       }
 
       .title {
-        font-size: 54px;
+        font-size: 58px;
       }
 
       .intro {
@@ -211,8 +256,20 @@
         gap: 30px;
       }
 
-      .thumb-wrap {
-        aspect-ratio: 1.3 / 1;
+      .card.standard,
+      .card.featured,
+      .card.featured.offset-left,
+      .card.featured.offset-right {
+        grid-column: auto;
+      }
+
+      .card.standard .thumb-wrap,
+      .card.featured .thumb-wrap {
+        aspect-ratio: 1.28 / 1;
+      }
+
+      .spacer {
+        display: none;
       }
     }
   </style>
@@ -261,7 +318,7 @@
       `;
     }
 
-    function renderCard(item) {
+    function renderCard(item, options = {}) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
       const context = (item["Context (Primary)"] || "").trim();
@@ -269,8 +326,11 @@
       const url = (item.Readymag_URL || "").trim();
       const img = imagePathFromDisplayId(displayId);
 
+      const featured = !!options.featured;
+      const extraClass = options.extraClass ? ` ${options.extraClass}` : "";
+
       return `
-        <a class="card" href="${escapeHtml(url)}" target="_top" rel="noopener">
+        <a class="card ${featured ? "featured" : "standard"}${extraClass}" href="${escapeHtml(url)}" target="_top" rel="noopener">
           <div class="thumb-wrap">
             <img
               class="thumb"
@@ -294,10 +354,16 @@
       const count = document.getElementById('count');
 
       try {
-        const res = await fetch('./index.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error(`Failed to load index.json (${res.status})`);
+        const [indexRes, featuredRes] = await Promise.all([
+          fetch('./index.json', { cache: 'no-store' }),
+          fetch('./featured.json', { cache: 'no-store' })
+        ]);
 
-        const items = await res.json();
+        if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
+        if (!featuredRes.ok) throw new Error(`Failed to load featured.json (${featuredRes.status})`);
+
+        const items = await indexRes.json();
+        const featuredItems = await featuredRes.json();
 
         if (!Array.isArray(items) || items.length === 0) {
           count.textContent = '0 public objects';
@@ -305,8 +371,43 @@
           return;
         }
 
+        const featuredIds = new Set(
+          Array.isArray(featuredItems)
+            ? featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
+            : []
+        );
+
         count.textContent = `${items.length} public object${items.length === 1 ? '' : 's'}`;
-        grid.innerHTML = items.map(renderCard).join('');
+
+        let html = "";
+        let featuredCounter = 0;
+        let standardCounter = 0;
+
+        items.forEach((item, index) => {
+          const displayId = (item.Display_ID || "").trim();
+          const isFeatured = featuredIds.has(displayId);
+
+          if (isFeatured) {
+            const offsetClass = featuredCounter % 2 === 0 ? "offset-left" : "offset-right";
+
+            if (index !== 0 && standardCounter >= 2) {
+              html += `<div class="spacer" aria-hidden="true"></div>`;
+            }
+
+            html += renderCard(item, {
+              featured: true,
+              extraClass: offsetClass
+            });
+
+            featuredCounter += 1;
+            standardCounter = 0;
+          } else {
+            html += renderCard(item, { featured: false });
+            standardCounter += 1;
+          }
+        });
+
+        grid.innerHTML = html;
       } catch (err) {
         console.error(err);
         count.textContent = 'Unable to load index';
