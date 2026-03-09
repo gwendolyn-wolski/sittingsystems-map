@@ -1,9 +1,9 @@
-name: Update data.json from Airtable
+name: Update site JSON from Airtable
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 5 * * *"
 
 permissions:
   contents: write
@@ -21,46 +21,34 @@ jobs:
         with:
           node-version: 20
 
-      - name: Fetch Airtable data and build data.json
+      - name: Fetch Airtable data and build JSON files
         env:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_TABLE_NAME: tbl46Hz3VFC0g978N
-          AIRTABLE_VIEW_NAME: Public - Map
+          AIRTABLE_TABLE_ID: tbl46Hz3VFC0g978N
+          MAP_VIEW: Public - Map
+          INDEX_VIEW: Public - All
+          CONTEXT_VIEW: Public - By Context
+          FEATURED_VIEW: Public - Featured
         run: |
           node <<'EOF'
           const fs = require('fs');
 
-          async function main() {
-            const baseId = process.env.AIRTABLE_BASE_ID;
-            const token = process.env.AIRTABLE_TOKEN;
-            const tableName = process.env.AIRTABLE_TABLE_NAME;
-            const viewName = process.env.AIRTABLE_VIEW_NAME;
-
-            const params = new URLSearchParams();
-            params.set('view', viewName);
-
-            const wantedFields = [
-              'Display_ID',
-              'Latitude',
-              'Longitude',
-              'Readymag_URL',
-              'Map_Label',
-              'Context (Primary)'
-            ];
-
-            for (const f of wantedFields) {
-              params.append('fields[]', f);
-            }
-
+          async function fetchView({ baseId, tableId, token, viewName, fields }) {
             let offset = null;
             let all = [];
 
             do {
-              const pageParams = new URLSearchParams(params);
-              if (offset) pageParams.set('offset', offset);
+              const params = new URLSearchParams();
+              params.set('view', viewName);
 
-              const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}?${pageParams.toString()}`;
+              for (const f of fields) {
+                params.append('fields[]', f);
+              }
+
+              if (offset) params.set('offset', offset);
+
+              const url = `https://api.airtable.com/v0/${baseId}/${tableId}?${params.toString()}`;
 
               const res = await fetch(url, {
                 headers: {
@@ -70,7 +58,7 @@ jobs:
 
               if (!res.ok) {
                 const text = await res.text();
-                throw new Error(`Airtable error: ${res.status} ${text}`);
+                throw new Error(`Airtable error for view "${viewName}": ${res.status} ${text}`);
               }
 
               const data = await res.json();
@@ -78,23 +66,172 @@ jobs:
               offset = data.offset || null;
             } while (offset);
 
-            const output = all.map(r => {
-              const f = r.fields || {};
-              return {
-                Display_ID: f['Display_ID'] || '',
-                Latitude: f['Latitude'] ?? null,
-                Longitude: f['Longitude'] ?? null,
-                Readymag_URL: f['Readymag_URL'] || '',
-                Map_Label: f['Map_Label'] || '',
-                'Context (Primary)': f['Context (Primary)'] || ''
-              };
-            }).filter(r =>
-              r.Display_ID &&
-              typeof r.Latitude === 'number' &&
-              typeof r.Longitude === 'number'
-            );
+            return all;
+          }
 
-            fs.writeFileSync('data.json', JSON.stringify(output, null, 2));
+          function cleanRecord(fields) {
+            return {
+              Record_Number: fields['Record Number'] ?? null,
+              Display_ID: fields['Display_ID'] || '',
+              Title: fields['Title'] || '',
+              Seating_Type: fields['Seating Type'] || '',
+              Context_Primary: fields['Context (Primary)'] || '',
+              Context_Secondary: fields['Context - Secondary'] || [],
+              Origin_System: fields['Origin System'] || [],
+              Current_System: fields['Current System (multi-select)'] || [],
+              Readymag_URL: fields['Readymag_URL'] || '',
+              Map_Label: fields['Map_Label'] || '',
+              Latitude: fields['Latitude'] ?? null,
+              Longitude: fields['Longitude'] ?? null
+            };
+          }
+
+          function sortByRecordNumber(a, b) {
+            return (a.Record_Number ?? 9999) - (b.Record_Number ?? 9999);
+          }
+
+          async function main() {
+            const token = process.env.AIRTABLE_TOKEN;
+            const baseId = process.env.AIRTABLE_BASE_ID;
+            const tableId = process.env.AIRTABLE_TABLE_ID;
+
+            const sharedFields = [
+              'Record Number',
+              'Display_ID',
+              'Title',
+              'Seating Type',
+              'Context (Primary)',
+              'Context - Secondary',
+              'Origin System',
+              'Current System (multi-select)',
+              'Readymag_URL',
+              'Map_Label',
+              'Latitude',
+              'Longitude'
+            ];
+
+            // MAP
+            const mapRecordsRaw = await fetchView({
+              baseId,
+              tableId,
+              token,
+              viewName: process.env.MAP_VIEW,
+              fields: sharedFields
+            });
+
+            const dataJson = mapRecordsRaw
+              .map(r => cleanRecord(r.fields || {}))
+              .filter(r =>
+                r.Display_ID &&
+                typeof r.Latitude === 'number' &&
+                typeof r.Longitude === 'number'
+              )
+              .sort(sortByRecordNumber)
+              .map(r => ({
+                Display_ID: r.Display_ID,
+                Latitude: r.Latitude,
+                Longitude: r.Longitude,
+                Readymag_URL: r.Readymag_URL,
+                Map_Label: r.Map_Label,
+                "Context (Primary)": r.Context_Primary
+              }));
+
+            fs.writeFileSync('data.json', JSON.stringify(dataJson, null, 2));
+
+            // INDEX
+            const indexRecordsRaw = await fetchView({
+              baseId,
+              tableId,
+              token,
+              viewName: process.env.INDEX_VIEW,
+              fields: sharedFields
+            });
+
+            const indexJson = indexRecordsRaw
+              .map(r => cleanRecord(r.fields || {}))
+              .filter(r => r.Display_ID)
+              .sort(sortByRecordNumber)
+              .map(r => ({
+                Record_Number: r.Record_Number,
+                Display_ID: r.Display_ID,
+                Title: r.Title,
+                Seating_Type: r.Seating_Type,
+                "Context (Primary)": r.Context_Primary,
+                "Context - Secondary": r.Context_Secondary,
+                Readymag_URL: r.Readymag_URL
+              }));
+
+            fs.writeFileSync('index.json', JSON.stringify(indexJson, null, 2));
+
+            // CONTEXT
+            const contextRecordsRaw = await fetchView({
+              baseId,
+              tableId,
+              token,
+              viewName: process.env.CONTEXT_VIEW,
+              fields: sharedFields
+            });
+
+            const contextOrder = [
+              'Waiting',
+              'Working',
+              'Eating',
+              'Social',
+              'Resting',
+              'Transit',
+              'Display',
+              'Interaction',
+              'Instruction'
+            ];
+
+            const grouped = {};
+
+            for (const key of contextOrder) {
+              grouped[key] = [];
+            }
+
+            contextRecordsRaw
+              .map(r => cleanRecord(r.fields || {}))
+              .filter(r => r.Display_ID && r.Context_Primary)
+              .sort(sortByRecordNumber)
+              .forEach(r => {
+                if (!grouped[r.Context_Primary]) grouped[r.Context_Primary] = [];
+                grouped[r.Context_Primary].push({
+                  Record_Number: r.Record_Number,
+                  Display_ID: r.Display_ID,
+                  Title: r.Title,
+                  Seating_Type: r.Seating_Type,
+                  "Context (Primary)": r.Context_Primary,
+                  "Context - Secondary": r.Context_Secondary,
+                  Readymag_URL: r.Readymag_URL
+                });
+              });
+
+            fs.writeFileSync('context.json', JSON.stringify(grouped, null, 2));
+
+            // FEATURED
+            const featuredRecordsRaw = await fetchView({
+              baseId,
+              tableId,
+              token,
+              viewName: process.env.FEATURED_VIEW,
+              fields: sharedFields
+            });
+
+            const featuredJson = featuredRecordsRaw
+              .map(r => cleanRecord(r.fields || {}))
+              .filter(r => r.Display_ID)
+              .sort(sortByRecordNumber)
+              .map(r => ({
+                Record_Number: r.Record_Number,
+                Display_ID: r.Display_ID,
+                Title: r.Title,
+                Seating_Type: r.Seating_Type,
+                "Context (Primary)": r.Context_Primary,
+                Readymag_URL: r.Readymag_URL
+              }));
+
+            fs.writeFileSync('featured.json', JSON.stringify(featuredJson, null, 2));
           }
 
           main().catch(err => {
@@ -103,10 +240,10 @@ jobs:
           });
           EOF
 
-      - name: Commit updated data.json
+      - name: Commit updated JSON files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git diff --cached --quiet || git commit -m "Update data.json from Airtable"
+          git add data.json index.json context.json featured.json
+          git diff --cached --quiet || git commit -m "Update site JSON from Airtable"
           git push
