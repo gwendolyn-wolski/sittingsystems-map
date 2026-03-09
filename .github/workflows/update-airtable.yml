@@ -25,7 +25,7 @@ jobs:
         env:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_TABLE_NAME: Chairs
+          AIRTABLE_TABLE_NAME: tbl46Hz3VFC0g978N
           AIRTABLE_VIEW_NAME: Public - Map
         run: |
           node <<'EOF'
