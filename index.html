@@ -187,13 +187,13 @@ map.options.maxBoundsViscosity = 1.0;
           const context = rec["Context (Primary)"] || '';
           const thumbUrl = rec["Image"]?.trim() || extractThumbUrl(rec["Thumbnail"]);
           const popupHtml = `
-            <div class="ss-popup">
-              ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" onerror="this.style.display='none'">` : ``}
-              <div class="ss-title">${label}</div>
-              ${url ? `<a class="ss-link" href="${url}" target="_blank" rel="noopener">Open object page</a>` : ``}
-              ${context ? `<div class="ss-meta">${context}</div>` : ``}
-            </div>
-          `;
+          <div class="ss-popup">
+            ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" loading="lazy" onerror="this.remove()">` : ``}
+            <div class="ss-title">${label}</div>
+            ${url ? `<a class="ss-link" href="${url}" target="_blank" rel="noopener">Open object page</a>` : ``}
+            ${context ? `<div class="ss-meta">${context}</div>` : ``}
+          </div>
+        `;
 
         const marker = L.circleMarker([lat, lng], {
             radius: 5,
