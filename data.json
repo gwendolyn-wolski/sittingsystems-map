@@ -1,173 +1,138 @@
-
 [
   {
-    "Record Number": 1,
     "Display_ID": "SS-001",
-    "Context (Primary)": "Waiting",
-     "Image": "images/SS-001.jpeg",
     "Latitude": -34.585687,
     "Longitude": -58.429375,
     "Readymag_URL": "https://sittingsystems.org/ss-001/",
-    "Map_Label": "SS-001 — Informal Armchair Arrangement, Sidewalk"
+    "Map_Label": "SS-001 — Informal Armchair Arrangement, Sidewalk",
+    "Context (Primary)": "Waiting"
   },
   {
-    "Record Number": 2,
     "Display_ID": "SS-002",
-    "Context (Primary)": "Resting",
-    "Image": "images/SS-002.jpeg",
     "Latitude": 41.88,
     "Longitude": -87.7796,
     "Readymag_URL": "https://sittingsystems.org/ss-002/",
-    "Map_Label": "SS-002 — Child-Sized Chair, Private Residence"
+    "Map_Label": "SS-002 — Child-Sized Chair, Private Residence",
+    "Context (Primary)": "Resting"
   },
   {
-    "Record Number": 3,
     "Display_ID": "SS-003",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-003.jpeg",
     "Latitude": 48.901753,
     "Longitude": 2.34162,
     "Readymag_URL": "https://sittingsystems.org/ss-003/",
-    "Map_Label": "SS-003 — Decorative Side Chair, Outdoor Market"
+    "Map_Label": "SS-003 — Decorative Side Chair, Outdoor Market",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 4,
     "Display_ID": "SS-004",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-004.jpeg",
     "Latitude": 48.86097,
     "Longitude": 2.339405,
     "Readymag_URL": "https://sittingsystems.org/ss-004/",
-    "Map_Label": "SS-004 — Ceremonial Upholstered Chair — Louvre Interior"
+    "Map_Label": "SS-004 — Ceremonial Upholstered Chair — Louvre Interior",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 5,
     "Display_ID": "SS-005",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-005.jpeg",
     "Latitude": 40.704283,
     "Longitude": -73.985542,
     "Readymag_URL": "https://sittingsystems.org/ss-005/",
-    "Map_Label": "SS-005 — Modified Armchair — Exhibition Installation"
+    "Map_Label": "SS-005 — Modified Armchair — Exhibition Installation",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 6,
     "Display_ID": "SS-006",
-    "Context (Primary)": "Waiting",
-    "Image": "images/SS-006.jpeg",
     "Latitude": 40.366872,
     "Longitude": -74.944642,
     "Readymag_URL": "https://sittingsystems.org/ss-006/",
-    "Map_Label": "SS-006 — Painted Ladder-Back Chair — Commercial Interior"
+    "Map_Label": "SS-006 — Painted Ladder-Back Chair — Commercial Interior",
+    "Context (Primary)": "Waiting"
   },
   {
-    "Record Number": 7,
     "Display_ID": "SS-007",
-    "Context (Primary)": "Waiting",
-    "Image": "images/SS-007.jpeg",
     "Latitude": 41.1081,
     "Longitude": -75.4549,
     "Readymag_URL": "https://sittingsystems.org/ss-007/",
-    "Map_Label": "SS-007 — Upholstered Armchair — Roadside (Winter)"
+    "Map_Label": "SS-007 — Upholstered Armchair — Roadside (Winter)",
+    "Context (Primary)": "Waiting"
   },
   {
-    "Record Number": 8,
     "Display_ID": "SS-008",
-    "Context (Primary)": "Working",
-    "Image": "images/SS-008.jpeg",
     "Latitude": 34.0549,
     "Longitude": -118.2426,
     "Readymag_URL": "https://sittingsystems.org/ss-008/",
-    "Map_Label": "SS-008 — Artist’s Step Chair — Improvised Seating"
+    "Map_Label": "SS-008 — Artist’s Step Chair — Improvised Seating",
+    "Context (Primary)": "Working"
   },
   {
-    "Record Number": 9,
     "Display_ID": "SS-009",
-    "Context (Primary)": "Resting",
-    "Image": "images/SS-009.jpeg",
-    "Latitude": -29.728212,
-    "Longitude": 31.087279,
+    "Latitude": -29.728212406061417,
+    "Longitude": 31.087279050924582,
     "Readymag_URL": "https://sittingsystems.org/ss-009/",
-    "Map_Label": "SS-009 — Reclining Loungers — Hospitality Lawn"
+    "Map_Label": "SS-009 — Reclining Loungers — Hospitality Lawn",
+    "Context (Primary)": "Resting"
   },
   {
-    "Record Number": 10,
     "Display_ID": "SS-010",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-010.jpeg",
     "Latitude": 40.733095,
     "Longitude": -73.992675,
     "Readymag_URL": "https://sittingsystems.org/ss-010/",
-    "Map_Label": "SS-010 — Ornamental Armchairs — Storefront Threshold"
+    "Map_Label": "SS-010 — Ornamental Armchairs — Storefront Threshold",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 11,
     "Display_ID": "SS-011",
-    "Context (Primary)": "Working",
-    "Image": "images/SS-011.jpeg",
     "Latitude": 9.6606,
     "Longitude": 80.0117,
     "Readymag_URL": "https://sittingsystems.org/ss-011/",
-    "Map_Label": "SS-011 — Student Desk-Chair — Classroom Synchronization"
+    "Map_Label": "SS-011 — Student Desk-Chair — Classroom Synchronization",
+    "Context (Primary)": "Working"
   },
   {
-    "Record Number": 12,
     "Display_ID": "SS-012",
-    "Context (Primary)": "Resting",
-    "Image": "images/SS-012.jpeg",
     "Latitude": 43.7844,
     "Longitude": -88.7879,
     "Readymag_URL": "https://sittingsystems.org/ss-012/",
-    "Map_Label": "SS-012 — Lakeside Armchairs — Horizon-Oriented Rest"
+    "Map_Label": "SS-012 — Lakeside Armchairs — Horizon-Oriented Rest",
+    "Context (Primary)": "Resting"
   },
   {
-    "Record Number": 13,
     "Display_ID": "SS-013",
-    "Context (Primary)": "Waiting",
-    "Image": "images/SS-013.jpeg",
     "Latitude": 40.3661,
     "Longitude": -74.9428,
     "Readymag_URL": "https://sittingsystems.org/ss-013/",
-    "Map_Label": "SS-013 — Dining Chairs (Matched Set) — Domestic Displacement"
+    "Map_Label": "SS-013 — Dining Chairs (Matched Set) — Domestic Displacement",
+    "Context (Primary)": "Waiting"
   },
   {
-    "Record Number": 14,
     "Display_ID": "SS-014",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-014.jpeg",
     "Latitude": 40.713708,
     "Longitude": -73.994438,
     "Readymag_URL": "https://sittingsystems.org/ss-014/",
-    "Map_Label": "SS-014 — Lounge Chair — Exhibition Proxy for Rest"
+    "Map_Label": "SS-014 — Lounge Chair — Exhibition Proxy for Rest",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 15,
     "Display_ID": "SS-015",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-015.jpeg",
     "Latitude": 40.721275,
     "Longitude": -73.996467,
     "Readymag_URL": "https://sittingsystems.org/ss-015/",
-    "Map_Label": "SS-015 — Bentwood Armchair — Retail Seating"
+    "Map_Label": "SS-015 — Bentwood Armchair — Retail Seating",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 16,
     "Display_ID": "SS-016",
-    "Context (Primary)": "Display",
-    "Image": "images/SS-016.jpeg",
     "Latitude": 40.679512,
     "Longitude": -73.997337,
     "Readymag_URL": "https://sittingsystems.org/ss-016/",
-    "Map_Label": "SS-016 — Molded Plywood Lounge Chair — Sidewalk Resale Display"
+    "Map_Label": "SS-016 — Molded Plywood Lounge Chair — Sidewalk Resale Display",
+    "Context (Primary)": "Display"
   },
   {
-    "Record Number": 17,
     "Display_ID": "SS-017",
-    "Context (Primary)": "Resting",
-    "Image": "images/SS-017.jpeg",
     "Latitude": 48.847808,
     "Longitude": 2.353055,
     "Readymag_URL": "https://sittingsystems.org/ss-017/",
-    "Map_Label": "SS-017 — Deep-Seated Armchair — Domestic Rest"
+    "Map_Label": "SS-017 — Deep-Seated Armchair — Domestic Rest",
+    "Context (Primary)": "Resting"
   }
 ]
