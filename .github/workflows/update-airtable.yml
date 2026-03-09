@@ -1,0 +1,112 @@
+name: Update data.json from Airtable
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch Airtable data and build data.json
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TABLE_NAME: Chairs
+          AIRTABLE_VIEW_NAME: Public - Map
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+
+          async function main() {
+            const baseId = process.env.AIRTABLE_BASE_ID;
+            const token = process.env.AIRTABLE_TOKEN;
+            const tableName = process.env.AIRTABLE_TABLE_NAME;
+            const viewName = process.env.AIRTABLE_VIEW_NAME;
+
+            const params = new URLSearchParams();
+            params.set('view', viewName);
+
+            const wantedFields = [
+              'Display_ID',
+              'Latitude',
+              'Longitude',
+              'Readymag_URL',
+              'Map_Label',
+              'Context (Primary)'
+            ];
+
+            for (const f of wantedFields) {
+              params.append('fields[]', f);
+            }
+
+            let offset = null;
+            let all = [];
+
+            do {
+              const pageParams = new URLSearchParams(params);
+              if (offset) pageParams.set('offset', offset);
+
+              const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}?${pageParams.toString()}`;
+
+              const res = await fetch(url, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              });
+
+              if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`Airtable error: ${res.status} ${text}`);
+              }
+
+              const data = await res.json();
+              all = all.concat(data.records || []);
+              offset = data.offset || null;
+            } while (offset);
+
+            const output = all.map(r => {
+              const f = r.fields || {};
+              return {
+                Display_ID: f['Display_ID'] || '',
+                Latitude: f['Latitude'] ?? null,
+                Longitude: f['Longitude'] ?? null,
+                Readymag_URL: f['Readymag_URL'] || '',
+                Map_Label: f['Map_Label'] || '',
+                'Context (Primary)': f['Context (Primary)'] || ''
+              };
+            }).filter(r =>
+              r.Display_ID &&
+              typeof r.Latitude === 'number' &&
+              typeof r.Longitude === 'number'
+            );
+
+            fs.writeFileSync('data.json', JSON.stringify(output, null, 2));
+          }
+
+          main().catch(err => {
+            console.error(err);
+            process.exit(1);
+          });
+          EOF
+
+      - name: Commit updated data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || git commit -m "Update data.json from Airtable"
+          git push
