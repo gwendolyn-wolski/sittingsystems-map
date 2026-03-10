@@ -128,7 +128,7 @@
 
     .subtitle {
       margin: 22px 0 0 0;
-      max-width: 520px;
+      max-width: 560px;
       font-size: 13px;
       line-height: 1.38;
       color: rgba(17,17,17,.82);
@@ -237,6 +237,13 @@
 
     .context-panel-content {
       padding: 4px 0 28px 0;
+    }
+
+    .empty-category {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+      padding-top: 2px;
     }
 
     .card-grid {
@@ -590,9 +597,11 @@
       "Waiting",
       "Working",
       "Eating",
+      "Social",
       "Resting",
-      "Interaction",
+      "Transit",
       "Display",
+      "Interaction",
       "Instruction"
     ];
 
@@ -600,9 +609,11 @@
       "Waiting": "Objects that hold the body in readiness, pause, delay, or compliance.",
       "Working": "Seats used in acts of labor, study, making, or concentrated attention.",
       "Eating": "Objects that stage the body in relation to shared consumption and table ritual.",
+      "Social": "Seats that arrange conversation, gathering, companionship, or informal exchange.",
       "Resting": "Forms that support retreat, leisure, recline, or private domestic stillness.",
-      "Interaction": "Seats that structure conversation, exchange, performance, or collective encounter.",
+      "Transit": "Objects linked to passage, temporary pause, circulation, or movement through space.",
       "Display": "Objects functioning as image, proxy, ornament, staging device, or exhibition furniture.",
+      "Interaction": "Seats that structure conversation, exchange, performance, or collective encounter.",
       "Instruction": "Seats that discipline posture, direct behavior, or organize the body through pedagogy."
     };
 
@@ -731,30 +742,20 @@
         const res = await fetch('./context.json', { cache: 'no-store' });
         if (!res.ok) throw new Error(`Failed to load context.json (${res.status})`);
 
-        const itemsRaw = await res.json();
-        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
-          root.innerHTML = '<div class="empty">No objects available yet.</div>';
+        const data = await res.json();
+        if (!data || typeof data !== 'object' || Array.isArray(data)) {
+          root.innerHTML = '<div class="empty">There was a problem reading the context file.</div>';
           postSize();
           return;
         }
 
-        const items = [...itemsRaw].sort(byRecordDescending);
-        const groups = new Map();
-
-        items.forEach(item => {
-          const key = (item["Context (Primary)"] || "").trim();
-          if (!key) return;
-          if (!groups.has(key)) groups.set(key, []);
-          groups.get(key).push(item);
-        });
-
         const orderedKeys = [
-          ...CONTEXT_ORDER.filter(key => groups.has(key)),
-          ...[...groups.keys()].filter(key => !CONTEXT_ORDER.includes(key))
+          ...CONTEXT_ORDER,
+          ...Object.keys(data).filter(key => !CONTEXT_ORDER.includes(key))
         ];
 
         const html = orderedKeys.map((key, i) => {
-          const cards = groups.get(key) || [];
+          const cards = Array.isArray(data[key]) ? [...data[key]].sort(byRecordDescending) : [];
           const panelId = `context-panel-${i}`;
 
           return `
@@ -771,9 +772,11 @@
               <div id="${panelId}" class="context-panel">
                 <div class="context-panel-inner">
                   <div class="context-panel-content">
-                    <div class="card-grid">
-                      ${cards.map(renderCard).join("")}
-                    </div>
+                    ${
+                      cards.length
+                        ? `<div class="card-grid">${cards.map(renderCard).join("")}</div>`
+                        : `<div class="empty-category">No entries in this category yet.</div>`
+                    }
                   </div>
                 </div>
               </div>
@@ -781,7 +784,7 @@
           `;
         }).join("");
 
-        root.innerHTML = html || '<div class="empty">No context groups available yet.</div>';
+        root.innerHTML = html;
         attachAccordionBehavior();
 
         setTimeout(postSize, 50);
