@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sitting Systems — By Context</title>
+
+  <style>
+    :root {
+      --bg: transparent;
+      --text: #111111;
+      --muted: rgba(17,17,17,.58);
+      --line: #e3e3e3;
+      --pill-bg: rgba(17,17,17,.05);
+      --pill-text: rgba(17,17,17,.72);
+
+      --page-pad-x: 28px;
+      --page-pad-bottom: 56px;
+
+      --rail-w: 150px;
+      --gap: 56px;
+
+      --content-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .page,
+    .layout,
+    .main,
+    .contexts {
+      overflow: visible;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      padding: 16px var(--page-pad-x) var(--page-pad-bottom);
+      background: transparent;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr;
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .rail {
+      padding-top: 40px;
+    }
+
+    .rail-label {
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+
+    .nav {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 500;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .nav a {
+      opacity: .94;
+    }
+
+    .nav .sep {
+      display: inline-block;
+      margin: 0 10px;
+      opacity: .7;
+    }
+
+    .nav a.active {
+      font-weight: 600;
+      border-bottom: 1px solid #111;
+      padding-bottom: 1px;
+    }
+
+    .masthead {
+      width: var(--content-w);
+      max-width: 100%;
+      padding-top: 22px;
+    }
+
+    .title {
+      width: 300px;
+      margin: 0;
+      font-size: 35px;
+      line-height: 0.9;
+      font-weight: 630;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      margin: 22px 0 0 0;
+      max-width: 520px;
+      font-size: 13px;
+      line-height: 1.38;
+      color: rgba(17,17,17,.82);
+    }
+
+    .rule {
+      margin-top: 10px;
+      height: 1px;
+      background: var(--line);
+      width: calc(100vw - var(--page-pad-x) * 2);
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+    }
+
+    .contexts {
+      width: var(--content-w);
+      max-width: 100%;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    .context-section {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .context-header {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .context-name {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 620;
+      letter-spacing: -0.03em;
+    }
+
+    .context-note {
+      margin: 2px 0 0 0;
+      max-width: 520px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: rgba(17,17,17,.72);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 34px;
+      align-items: start;
+    }
+
+    .card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      transition: transform .16s ease, opacity .45s ease, filter .45s ease;
+      min-width: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .thumb-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(0,0,0,.03);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      aspect-ratio: 1.35 / 1;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      opacity: 0;
+      transform: scale(0.985);
+      transition: opacity .28s ease, transform .28s ease;
+    }
+
+    .thumb.loaded {
+      opacity: 1;
+    }
+
+    .card:hover .thumb.loaded {
+      transform: scale(1.01);
+    }
+
+    .id {
+      margin: 0 0 4px 0;
+      font-size: 17px;
+      line-height: 1.12;
+      font-weight: 650;
+      letter-spacing: -0.025em;
+    }
+
+    .object-title {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      line-height: 1.24;
+      letter-spacing: -0.015em;
+      color: rgba(17,17,17,.9);
+    }
+
+    .context {
+      margin: 0 0 12px 0;
+      font-size: 11px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 10px 3px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      font-size: 12px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .loading,
+    .empty {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(2px);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card,
+      .thumb,
+      .reveal {
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      :root {
+        --rail-w: 120px;
+        --gap: 36px;
+      }
+
+      .card-grid {
+        gap: 26px;
+      }
+
+      .title {
+        font-size: 33px;
+      }
+
+      .context-header {
+        grid-template-columns: 150px 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --page-pad-x: 18px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+      }
+
+      .rail {
+        padding-top: 0;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .masthead,
+      .contexts {
+        width: 100%;
+      }
+
+      .rule {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .contexts {
+        margin-top: 34px;
+      }
+
+      .context-header {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      :root {
+        --page-pad-x: 20px;
+        --page-pad-bottom: 34px;
+      }
+
+      .page {
+        padding-top: 22px;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .rail {
+        padding-top: 0;
+        margin-bottom: 18px;
+      }
+
+      .rail-label {
+        font-size: 11px;
+        letter-spacing: .14em;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 18px;
+      }
+
+      .nav {
+        font-size: 13px;
+        line-height: 1.35;
+        white-space: normal;
+        max-width: 100%;
+      }
+
+      .nav .sep {
+        margin: 0 6px;
+      }
+
+      .masthead {
+        padding-top: 0;
+        width: 100%;
+      }
+
+      .title {
+        width: 100%;
+        max-width: 240px;
+        font-size: 28px;
+        line-height: 0.92;
+        margin: 0 0 14px 0;
+      }
+
+      .subtitle {
+        margin-top: 0;
+        max-width: 100%;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .rule {
+        margin-top: 14px;
+        width: 100%;
+      }
+
+      .contexts {
+        width: 100%;
+        margin-top: 24px;
+        gap: 34px;
+      }
+
+      .context-name {
+        font-size: 20px;
+      }
+
+      .context-note {
+        font-size: 12px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .card .id {
+        font-size: 14px;
+      }
+
+      .card .object-title {
+        font-size: 15px;
+        line-height: 1.28;
+      }
+
+      .context {
+        font-size: 10px;
+        letter-spacing: .14em;
+        margin-bottom: 10px;
+      }
+
+      .tag {
+        font-size: 11px;
+        min-height: 22px;
+        padding: 4px 9px 3px;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="layout">
+      <aside class="rail">
+        <div class="rail-label">By Context</div>
+      </aside>
+
+      <section class="main">
+        <div class="topbar">
+          <nav class="nav" aria-label="Section navigation">
+            <a href="#">Index</a><span class="sep">·</span><a class="active" href="#">By Context</a><span class="sep">·</span><a href="#">By Location</a><span class="sep">·</span><a href="#">Notes</a><span class="sep">·</span><a href="#">Sources</a>
+          </nav>
+        </div>
+
+        <header class="masthead">
+          <h1 class="title">By<br>Context</h1>
+          <p class="subtitle">Seating organized by situational use rather than chronology. Each grouping gathers objects according to the condition of the seated body.</p>
+          <div class="rule" aria-hidden="true"></div>
+        </header>
+
+        <section id="contexts" class="contexts" aria-live="polite">
+          <div class="loading">Loading objects...</div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const CONTEXT_ORDER = [
+      "Waiting",
+      "Working",
+      "Eating",
+      "Resting",
+      "Interaction",
+      "Display",
+      "Instruction"
+    ];
+
+    const CONTEXT_NOTES = {
+      "Waiting": "Objects that hold the body in readiness, pause, delay, or compliance.",
+      "Working": "Seats used in acts of labor, study, making, or concentrated attention.",
+      "Eating": "Objects that stage the body in relation to shared consumption and table ritual.",
+      "Resting": "Forms that support retreat, leisure, recline, or private domestic stillness.",
+      "Interaction": "Seats that structure conversation, exchange, performance, or collective encounter.",
+      "Display": "Objects functioning as image, proxy, ornament, staging device, or exhibition furniture.",
+      "Instruction": "Seats that discipline posture, direct behavior, or organize the body through pedagogy."
+    };
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function imagePathFromDisplayId(displayId) {
+      return displayId ? `images/${displayId}.jpeg` : "";
+    }
+
+    function renderTags(tags) {
+      if (!Array.isArray(tags) || tags.length === 0) return "";
+      return `
+        <ul class="tags">
+          ${tags.filter(Boolean).map(tag => `<li class="tag">${escapeHtml(tag)}</li>`).join("")}
+        </ul>
+      `;
+    }
+
+    function renderCard(item) {
+      const displayId = (item.Display_ID || "").trim();
+      const title = (item.Title || "").trim();
+      const context = (item["Context (Primary)"] || "").trim();
+      const secondary = item["Context - Secondary"] || [];
+      const url = (item.Readymag_URL || "").trim();
+      const img = imagePathFromDisplayId(displayId);
+
+      return `
+        <a class="card reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+          <div class="thumb-wrap">
+            <img
+              class="thumb"
+              src="${escapeHtml(img)}"
+              alt="${escapeHtml(displayId)}"
+              loading="lazy"
+              onload="this.classList.add('loaded'); postSize();"
+              onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
+            >
+          </div>
+          <p class="id">${escapeHtml(displayId)}</p>
+          <p class="object-title">${escapeHtml(title)}</p>
+          <p class="context">${escapeHtml(context)}</p>
+          ${renderTags(secondary)}
+        </a>
+      `;
+    }
+
+    function byRecordDescending(a, b) {
+      return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
+    }
+
+    function setupReveal() {
+      const items = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window) || window.innerWidth <= 680) {
+        items.forEach(el => el.classList.add('is-visible'));
+        postSize();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+            postSize();
+          }
+        });
+      }, {
+        threshold: 0.14,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      items.forEach(el => observer.observe(el));
+    }
+
+    function postSize() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+
+      window.parent.postMessage({
+        type: 'sittingsystems:resize',
+        height
+      }, '*');
+    }
+
+    async function init() {
+      const root = document.getElementById('contexts');
+
+      try {
+        const res = await fetch('./index.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to load index.json (${res.status})`);
+
+        const itemsRaw = await res.json();
+        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
+          root.innerHTML = '<div class="empty">No objects available yet.</div>';
+          postSize();
+          return;
+        }
+
+        const items = [...itemsRaw].sort(byRecordDescending);
+        const groups = new Map();
+
+        items.forEach(item => {
+          const key = (item["Context (Primary)"] || "").trim();
+          if (!key) return;
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(item);
+        });
+
+        const orderedKeys = [
+          ...CONTEXT_ORDER.filter(key => groups.has(key)),
+          ...[...groups.keys()].filter(key => !CONTEXT_ORDER.includes(key))
+        ];
+
+        const html = orderedKeys.map(key => {
+          const cards = groups.get(key) || [];
+          return `
+            <section class="context-section">
+              <div class="context-header">
+                <h2 class="context-name">${escapeHtml(key)}</h2>
+                <p class="context-note">${escapeHtml(CONTEXT_NOTES[key] || "")}</p>
+              </div>
+              <div class="card-grid">
+                ${cards.map(renderCard).join("")}
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        root.innerHTML = html || '<div class="empty">No context groups available yet.</div>';
+        setupReveal();
+
+        setTimeout(postSize, 50);
+        setTimeout(postSize, 300);
+        setTimeout(postSize, 900);
+      } catch (err) {
+        console.error(err);
+        root.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
+        postSize();
+      }
+    }
+
+    window.addEventListener('load', postSize);
+    window.addEventListener('resize', postSize);
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => postSize());
+      ro.observe(document.body);
+    }
+
+    init();
+  </script>
+</body>
+</html>
