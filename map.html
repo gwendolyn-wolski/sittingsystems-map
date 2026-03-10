@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sitting Systems — Map</title>
+  <title>Sitting Systems — By Location</title>
 
   <link
     rel="stylesheet"
@@ -12,13 +12,149 @@
     crossorigin=""
   />
 
-  <!-- Clustering -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    html, body { height: 100%; margin: 0; }
-    #map { height: 100vh; width: 100vw; background: #f4f4f4; }
+    :root {
+      --bg: transparent;
+      --text: #111111;
+      --muted: rgba(17,17,17,.58);
+      --line: #e3e3e3;
+
+      --page-pad-x: 28px;
+      --page-pad-bottom: 56px;
+
+      --rail-w: 150px;
+      --gap: 56px;
+
+      --content-w: min(1100px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body { min-height: 100vh; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      padding: 16px var(--page-pad-x) var(--page-pad-bottom);
+      background: transparent;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr;
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .rail {
+      padding-top: 40px;
+    }
+
+    .rail-label {
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+
+    .nav {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 500;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .nav a {
+      opacity: .94;
+    }
+
+    .nav .sep {
+      display: inline-block;
+      margin: 0 10px;
+      opacity: .7;
+    }
+
+    .nav a.active {
+      font-weight: 600;
+      border-bottom: 1px solid #111;
+      padding-bottom: 1px;
+    }
+
+    .masthead {
+      width: var(--content-w);
+      max-width: 100%;
+      padding-top: 22px;
+    }
+
+    .title {
+      width: 300px;
+      margin: 0;
+      font-size: 35px;
+      line-height: 0.9;
+      font-weight: 630;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      margin: 22px 0 0 0;
+      max-width: 740px;
+      font-size: 13px;
+      line-height: 1.38;
+      color: rgba(17,17,17,.82);
+    }
+
+    .rule {
+      margin-top: 10px;
+      height: 1px;
+      background: var(--line);
+      width: calc(100vw - var(--page-pad-x) * 2);
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+    }
+
+    .map-wrap {
+      width: var(--content-w);
+      max-width: 100%;
+      margin-top: 30px;
+    }
+
+    #map {
+      width: 100%;
+      height: min(72vh, 760px);
+      min-height: 460px;
+      background: #f4f4f4;
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
     .leaflet-container a:focus { outline: none; }
 
@@ -30,6 +166,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,.12) !important;
       border: 1px solid rgba(0,0,0,.08) !important;
     }
+
     .leaflet-control-zoom {
       border: 0 !important;
       box-shadow: none !important;
@@ -40,18 +177,21 @@
       box-shadow: 0 18px 40px rgba(0,0,0,.18) !important;
       border: 1px solid rgba(0,0,0,.08) !important;
     }
+
     .leaflet-popup-content {
       margin: 14px !important;
       width: 280px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+
     .leaflet-control-attribution {
       font-size: 10px !important;
       opacity: .45;
     }
+
     .leaflet-popup-tip { box-shadow: none !important; }
 
-    .ss-thumb{
+    .ss-thumb {
       display: block;
       width: 100% !important;
       max-width: 280px !important;
@@ -60,6 +200,7 @@
       border-radius: 14px;
       margin: 0 0 10px 0;
     }
+
     .ss-title {
       font-size: 16px;
       line-height: 1.25;
@@ -67,6 +208,7 @@
       margin: 0 0 6px 0;
       letter-spacing: -0.01em;
     }
+
     .ss-meta {
       margin-top: 6px;
       font-size: 12px;
@@ -74,6 +216,7 @@
       text-transform: uppercase;
       opacity: .6;
     }
+
     .ss-link {
       display: inline-block;
       margin-top: 6px;
@@ -83,39 +226,182 @@
       padding-bottom: 1px;
       color: #111;
     }
-    .ss-link:hover { border-bottom-color: rgba(0,0,0,.75); }
 
-    /* --- Minimal cluster styling (overrides default) --- */
+    .ss-link:hover {
+      border-bottom-color: rgba(0,0,0,.75);
+    }
+
     .marker-cluster,
     .marker-cluster div {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     .marker-cluster div {
-    width: 30px !important;
-    height: 30px !important;
-    border-radius: 999px !important;
-    background: rgba(17,17,17,.88) !important;
-    border: 1px solid rgba(255,255,255,.35) !important;
-    box-shadow: 0 10px 18px rgba(0,0,0,.14) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 999px !important;
+      background: rgba(17,17,17,.88) !important;
+      border: 1px solid rgba(255,255,255,.35) !important;
+      box-shadow: 0 10px 18px rgba(0,0,0,.14) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
 
     .marker-cluster span {
-    color: #fff !important;
-    font-weight: 650 !important;
-    font-size: 11px !important;
-    line-height: 1 !important;
+      color: #fff !important;
+      font-weight: 650 !important;
+      font-size: 11px !important;
+      line-height: 1 !important;
+    }
+
+    @media (max-width: 1100px) {
+      :root {
+        --rail-w: 120px;
+        --gap: 36px;
+      }
+
+      .title {
+        font-size: 33px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --page-pad-x: 18px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+      }
+
+      .rail {
+        padding-top: 0;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .masthead,
+      .map-wrap {
+        width: 100%;
+      }
+
+      .rule {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 680px) {
+      :root {
+        --page-pad-x: 20px;
+        --page-pad-bottom: 34px;
+      }
+
+      .page {
+        padding-top: 22px;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .rail {
+        padding-top: 0;
+        margin-bottom: 18px;
+      }
+
+      .rail-label {
+        font-size: 11px;
+        letter-spacing: .14em;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 18px;
+      }
+
+      .nav {
+        font-size: 13px;
+        line-height: 1.35;
+        white-space: normal;
+        max-width: 100%;
+      }
+
+      .nav .sep {
+        margin: 0 6px;
+      }
+
+      .masthead {
+        padding-top: 0;
+        width: 100%;
+      }
+
+      .title {
+        width: 100%;
+        max-width: 240px;
+        font-size: 28px;
+        line-height: 0.92;
+        margin: 0 0 14px 0;
+      }
+
+      .subtitle {
+        margin-top: 0;
+        max-width: 100%;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .rule {
+        margin-top: 14px;
+        width: 100%;
+      }
+
+      .map-wrap {
+        width: 100%;
+        margin-top: 24px;
+      }
+
+      #map {
+        height: 58vh;
+        min-height: 380px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="map"></div>
+  <main class="page">
+    <div class="layout">
+      <aside class="rail">
+        <div class="rail-label">By Location</div>
+      </aside>
+
+      <section class="main">
+        <div class="topbar">
+          <nav class="nav" aria-label="Section navigation">
+            <a href="https://sittingsystems.org/index/" target="_top">Index</a><span class="sep">·</span><a href="https://sittingsystems.org/context/" target="_top">By Context</a><span class="sep">·</span><a class="active" href="https://sittingsystems.org/location/" target="_top">By Location</a><span class="sep">·</span><a href="https://sittingsystems.org/notes/" target="_top">Notes</a><span class="sep">·</span><a href="https://sittingsystems.org/sources/" target="_top">Sources</a>
+          </nav>
+        </div>
+
+        <header class="masthead">
+          <h1 class="title">By<br>Location</h1>
+          <p class="subtitle">Entries organized geographically, allowing clusters, dispersions, and repeated seating conditions to emerge across sites.</p>
+          <div class="rule" aria-hidden="true"></div>
+        </header>
+
+        <section class="map-wrap">
+          <div id="map"></div>
+        </section>
+      </section>
+    </div>
+  </main>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -123,25 +409,27 @@
     crossorigin=""
   ></script>
 
-  <!-- Clustering -->
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
     const IS_DESKTOP_POINTER = window.matchMedia("(pointer: fine)").matches;
 
     const map = L.map('map', {
-        zoomControl: false,
-        scrollWheelZoom: true,
-        tap: false
+      zoomControl: false,
+      scrollWheelZoom: true,
+      tap: false
     });
-const worldBounds = L.latLngBounds(
-  L.latLng(-85, -180),
-  L.latLng( 85,  180)
-);
-map.setMaxBounds(worldBounds);
-map.options.maxBoundsViscosity = 1.0;
+
+    const worldBounds = L.latLngBounds(
+      L.latLng(-85, -180),
+      L.latLng(85, 180)
+    );
+
+    map.setMaxBounds(worldBounds);
+    map.options.maxBoundsViscosity = 1.0;
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
+
     map.on('click', () => map.scrollWheelZoom.enable());
     map.on('mouseout', () => map.scrollWheelZoom.enable());
 
@@ -152,19 +440,12 @@ map.options.maxBoundsViscosity = 1.0;
       noWrap: true
     }).addTo(map);
 
-    function extractThumbUrl(thumbnailField) {
-      if (!thumbnailField) return '';
-      const match = String(thumbnailField).match(/\((https?:\/\/[^\)]+)\)/);
-      return match ? match[1] : '';
-    }
     function toNum(x) {
       const n = Number(x);
       return Number.isFinite(n) ? n : null;
     }
 
-    // --- Cluster group ---
     const clusters = L.markerClusterGroup({
-      // Keep it minimal and calm
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
       zoomToBoundsOnClick: true,
@@ -187,22 +468,23 @@ map.options.maxBoundsViscosity = 1.0;
           const context = rec["Context (Primary)"] || '';
           const displayId = (rec["Display_ID"] || "").trim();
           const thumbUrl = displayId ? `images/${displayId}.jpeg` : "";
-          const popupHtml = `
-          <div class="ss-popup">
-            ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" loading="lazy" onerror="this.remove()">` : ``}
-            <div class="ss-title">${label}</div>
-            ${url ? `<a class="ss-link" href="${url}" target="_blank" rel="noopener">Open object page</a>` : ``}
-            ${context ? `<div class="ss-meta">${context}</div>` : ``}
-          </div>
-        `;
 
-        const marker = L.circleMarker([lat, lng], {
+          const popupHtml = `
+            <div class="ss-popup">
+              ${thumbUrl ? `<img class="ss-thumb" src="${thumbUrl}" alt="" loading="lazy" onerror="this.remove()">` : ``}
+              <div class="ss-title">${label}</div>
+              ${url ? `<a class="ss-link" href="${url}" target="_top" rel="noopener">Open object page</a>` : ``}
+              ${context ? `<div class="ss-meta">${context}</div>` : ``}
+            </div>
+          `;
+
+          const marker = L.circleMarker([lat, lng], {
             radius: 5,
             color: "rgba(0,0,0,.18)",
             weight: 4,
             fillColor: "#111",
             fillOpacity: 0.95
-        });
+          });
 
           marker.bindPopup(popupHtml, {
             closeButton: true,
@@ -211,7 +493,7 @@ map.options.maxBoundsViscosity = 1.0;
           });
 
           marker.on('mouseover', () => marker.setStyle({ radius: 7 }));
-          marker.on('mouseout',  () => marker.setStyle({ radius: 5 }));
+          marker.on('mouseout', () => marker.setStyle({ radius: 5 }));
 
           if (IS_DESKTOP_POINTER) {
             marker.on('mouseover', () => marker.openPopup());
@@ -220,6 +502,7 @@ map.options.maxBoundsViscosity = 1.0;
               if (related && related.closest && related.closest('.leaflet-popup')) return;
               marker.closePopup();
             });
+
             marker.on('popupopen', () => {
               const el = marker.getPopup().getElement();
               if (!el) return;
@@ -239,11 +522,22 @@ map.options.maxBoundsViscosity = 1.0;
         } else {
           map.setView([0, 0], 2);
         }
+
+        setTimeout(() => map.invalidateSize(), 120);
       })
       .catch(err => {
         console.error('Failed to load data.json', err);
         map.setView([0, 0], 2);
+        setTimeout(() => map.invalidateSize(), 120);
       });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => map.invalidateSize(), 120);
+    });
+
+    window.addEventListener('resize', () => {
+      map.invalidateSize();
+    });
   </script>
 </body>
 </html>
