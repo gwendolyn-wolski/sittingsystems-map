@@ -7,12 +7,23 @@
 
   <style>
     :root {
+      --bg: transparent;
       --text: #111111;
-      --muted: rgba(17,17,17,.56);
+      --muted: rgba(17,17,17,.58);
+      --line: #e5e5e5;
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
-      --max-width: 1280px;
-      --radius: 10px;
+
+      --page-pad-x: 28px;
+      --page-pad-bottom: 56px;
+
+      --rail-w: 150px;
+      --gap: 56px;
+
+      --content-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --hero-w: min(920px, calc(var(--content-w) * 0.9));
+
+      --radius: 8px;
     }
 
     * { box-sizing: border-box; }
@@ -20,9 +31,9 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: transparent;
+      background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
@@ -30,110 +41,164 @@
       overflow-x: hidden;
     }
 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .page {
       width: 100%;
-      padding: 0 24px 56px;
+      padding: 18px var(--page-pad-x) var(--page-pad-bottom);
       background: transparent;
     }
 
-    .wrap {
-      max-width: var(--max-width);
-      margin: 0 auto;
+    .layout {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr;
+      column-gap: var(--gap);
+      align-items: start;
     }
 
-    .flow {
+    .rail {
+      padding-top: 30px;
+    }
+
+    .rail-label {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .nav {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      opacity: .92;
+    }
+
+    .nav a.active {
+      font-weight: 600;
+      border-bottom: 1px solid #111;
+      padding-bottom: 1px;
+    }
+
+    .masthead {
+      width: var(--content-w);
+      max-width: 100%;
+      padding-top: 24px;
+    }
+
+    .title {
+      width: 240px;
+      font-size: 30px;
+      line-height: .92;
+      font-weight: 650;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .subtitle {
+      margin: 42px 0 0 0;
+      max-width: 470px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: rgba(17,17,17,.82);
+    }
+
+    .rule {
+      margin-top: 14px;
+      height: 1px;
+      background: var(--line);
+      width: calc(100vw - var(--page-pad-x) * 2);
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+    }
+
+    .archive {
+      width: var(--content-w);
+      max-width: 100%;
+      margin-top: 88px;
       display: flex;
       flex-direction: column;
-      gap: 48px;
-    }
-
-    .standard-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
-      align-items: start;
+      gap: 56px;
     }
 
     .featured-row {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      align-items: start;
-      min-height: 20px;
-      margin-bottom: 20px;
+      width: 100%;
     }
 
-    .featured-row.center .card.featured {
-      grid-column: 3 / span 8;
+    .featured-card {
+      width: var(--hero-w);
+      max-width: 100%;
     }
 
-    .featured-row.right .card.featured {
-      grid-column: 8 / span 5;
+    .featured-card.right {
+      margin-left: auto;
     }
 
-    .featured-row.left .card.featured {
-      grid-column: 1 / span 5;
+    .featured-card.left,
+    .featured-card.center {
+      margin-left: 0;
     }
 
-    .card {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-      transition: transform .16s ease, opacity .45s ease, filter .45s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
+    .featured-card.center {
+      margin-left: 0;
     }
 
     .thumb-wrap {
       width: 100%;
       overflow: hidden;
-      border-radius: var(--radius);
       background: rgba(0,0,0,.03);
+      border-radius: var(--radius);
       margin-bottom: 12px;
     }
 
-    .card.standard .thumb-wrap {
-      aspect-ratio: 1.38 / 1;
-      max-width: 100%;
-    }
-
-    .card.featured {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .card.featured .thumb-wrap {
-      aspect-ratio: auto;
-      max-width: 760px;
-      margin: 0 auto 14px auto;
+    .featured-card .thumb-wrap {
+      background: transparent;
       border-radius: 0;
       overflow: visible;
-      background: transparent;
+      margin-bottom: 16px;
     }
 
-    .thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      opacity: 0;
-      transform: scale(0.985);
-      transition: opacity .28s ease, transform .28s ease;
-    }
-
-    .card.standard .thumb {
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card.featured .thumb {
+    .featured-card .thumb {
       width: 100%;
       height: auto;
       object-fit: contain;
       object-position: center center;
       display: block;
+    }
+
+    .card-grid .thumb-wrap {
+      aspect-ratio: 1.35 / 1;
+    }
+
+    .card-grid .thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    .thumb {
+      opacity: 0;
+      transform: scale(0.985);
+      transition: opacity .28s ease, transform .28s ease;
     }
 
     .thumb.loaded {
@@ -147,56 +212,40 @@
     .id {
       margin: 0 0 4px 0;
       font-size: 17px;
-      line-height: 1.14;
-      font-weight: 700;
+      line-height: 1.12;
+      font-weight: 650;
       letter-spacing: -0.025em;
     }
 
-    .card.featured .id {
+    .featured-card .id {
       font-size: 18px;
-      margin-bottom: 6px;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .object-title {
       margin: 0 0 8px 0;
-      font-size: 15px;
-      line-height: 1.26;
-      color: rgba(17,17,17,.88);
-      letter-spacing: -0.01em;
-      max-width: 96%;
+      font-size: 16px;
+      line-height: 1.24;
+      letter-spacing: -0.015em;
+      color: rgba(17,17,17,.9);
     }
 
-    .card.featured .object-title {
-      font-size: 17px;
-      line-height: 1.24;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
+    .featured-card .object-title {
+      font-size: 18px;
     }
 
     .context {
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
       font-size: 11px;
       line-height: 1.2;
       text-transform: uppercase;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       color: var(--muted);
-    }
-
-    .card.featured .context,
-    .card.featured .tags {
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -205,15 +254,32 @@
     .tag {
       display: inline-flex;
       align-items: center;
-      min-height: 22px;
-      padding: 4px 8px 3px;
+      min-height: 24px;
+      padding: 4px 10px 3px;
       border-radius: 999px;
       background: var(--pill-bg);
       color: var(--pill-text);
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1;
-      letter-spacing: .02em;
       white-space: nowrap;
+    }
+
+    .card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      transition: transform .16s ease, opacity .45s ease, filter .45s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 34px;
+      align-items: start;
     }
 
     .loading,
@@ -248,98 +314,71 @@
       }
     }
 
-    @media (max-width: 1200px) {
-      .wrap {
-        max-width: 1040px;
+    @media (max-width: 1100px) {
+      :root {
+        --rail-w: 120px;
+        --gap: 36px;
+        --hero-w: min(860px, calc(var(--content-w) * 0.94));
       }
 
-      .flow {
-        gap: 40px;
-      }
-
-      .standard-row {
-        gap: 22px;
-      }
-
-      .featured-row {
-        grid-template-columns: repeat(8, minmax(0, 1fr));
-      }
-
-      .featured-row.center .card.featured {
-        grid-column: 2 / span 6;
-      }
-
-      .featured-row.right .card.featured {
-        grid-column: 3 / span 5;
-      }
-
-      .featured-row.left .card.featured {
-        grid-column: 1 / span 5;
-      }
-
-      .card.featured,
-      .card.featured .thumb-wrap,
-      .card.featured .id,
-      .card.featured .object-title,
-      .card.featured .context,
-      .card.featured .tags {
-        max-width: 700px;
+      .card-grid {
+        gap: 26px;
       }
     }
 
     @media (max-width: 900px) {
-      .standard-row {
+      :root {
+        --page-pad-x: 18px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+      }
+
+      .rail {
+        padding-top: 0;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 0;
+      }
+
+      .masthead,
+      .archive {
+        width: 100%;
+      }
+
+      .rule {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .featured-row {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
-
-      .featured-row.center .card.featured,
-      .featured-row.right .card.featured,
-      .featured-row.left .card.featured {
-        grid-column: 1 / -1;
-      }
-
-      .card.featured,
-      .card.featured .thumb-wrap,
-      .card.featured .id,
-      .card.featured .object-title,
-      .card.featured .context,
-      .card.featured .tags {
-        max-width: 100%;
       }
     }
 
-    @media (max-width: 760px) {
-      .page {
-        padding: 0 16px 40px;
+    @media (max-width: 680px) {
+      .title {
+        font-size: 26px;
+        width: 200px;
       }
 
-      .flow {
-        gap: 28px;
-      }
-
-      .featured-row {
-        margin-bottom: 8px;
-      }
-
-      .standard-row {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
-      .featured-row {
-        grid-template-columns: 1fr;
-      }
-
-      .card.standard .thumb-wrap {
-        aspect-ratio: 1.28 / 1;
-      }
-
-      .card.featured .thumb-wrap {
+      .subtitle {
+        margin-top: 28px;
         max-width: 100%;
+      }
+
+      .archive {
+        margin-top: 56px;
+        gap: 40px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
       }
 
       .reveal {
@@ -347,14 +386,41 @@
         transform: none;
         filter: none;
       }
+
+      .nav {
+        font-size: 14px;
+        white-space: normal;
+      }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <div class="wrap">
-      <section id="flow" class="flow" aria-live="polite">
-        <div class="loading">Loading objects...</div>
+    <div class="layout">
+      <aside class="rail">
+        <div class="rail-label">Index</div>
+      </aside>
+
+      <section class="main">
+        <div class="topbar">
+          <nav class="nav" aria-label="Section navigation">
+            <a class="active" href="#">Index</a> ·
+            <a href="#">By Context</a> ·
+            <a href="#">By Location</a> ·
+            <a href="#">Notes</a> ·
+            <a href="#">Sources</a>
+          </nav>
+        </div>
+
+        <header class="masthead">
+          <h1 class="title">Sitting<br>Systems</h1>
+          <p class="subtitle">An archive of chairs, seats, and the context in which the body rests.</p>
+          <div class="rule" aria-hidden="true"></div>
+        </header>
+
+        <section id="archive" class="archive" aria-live="polite">
+          <div class="loading">Loading objects...</div>
+        </section>
       </section>
     </div>
   </main>
@@ -377,15 +443,14 @@
       if (!Array.isArray(tags) || tags.length === 0) return "";
       return `
         <ul class="tags">
-          ${tags
-            .filter(Boolean)
-            .map(tag => `<li class="tag">${escapeHtml(tag)}</li>`)
-            .join("")}
+          ${tags.filter(Boolean).map(tag => `<li class="tag">${escapeHtml(tag)}</li>`).join("")}
         </ul>
       `;
     }
 
-    function renderCard(item, featured = false) {
+    function renderCard(item, opts = {}) {
+      const { featured = false, alignment = "left" } = opts;
+
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
       const context = (item["Context (Primary)"] || "").trim();
@@ -393,8 +458,31 @@
       const url = (item.Readymag_URL || "").trim();
       const img = imagePathFromDisplayId(displayId);
 
+      if (featured) {
+        return `
+          <div class="featured-row">
+            <a class="card featured-card ${alignment} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+              <div class="thumb-wrap">
+                <img
+                  class="thumb"
+                  src="${escapeHtml(img)}"
+                  alt="${escapeHtml(displayId)}"
+                  loading="lazy"
+                  onload="this.classList.add('loaded'); postSize();"
+                  onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
+                >
+              </div>
+              <p class="id">${escapeHtml(displayId)}</p>
+              <p class="object-title">${escapeHtml(title)}</p>
+              <p class="context">${escapeHtml(context)}</p>
+              ${renderTags(secondary)}
+            </a>
+          </div>
+        `;
+      }
+
       return `
-        <a class="card ${featured ? "featured" : "standard"} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+        <a class="card reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
           <div class="thumb-wrap">
             <img
               class="thumb"
@@ -417,11 +505,10 @@
       return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
     }
 
-    function buildStandardRow(items, reverseVisual = false) {
-      const ordered = reverseVisual ? [...items].reverse() : items;
+    function buildGridRow(items) {
       return `
-        <div class="standard-row">
-          ${ordered.map(item => renderCard(item, false)).join("")}
+        <div class="card-grid">
+          ${items.map(item => renderCard(item)).join("")}
         </div>
       `;
     }
@@ -429,7 +516,7 @@
     function setupReveal() {
       const items = document.querySelectorAll('.reveal');
 
-      if (!('IntersectionObserver' in window) || window.innerWidth <= 760) {
+      if (!('IntersectionObserver' in window) || window.innerWidth <= 680) {
         items.forEach(el => el.classList.add('is-visible'));
         postSize();
         return;
@@ -466,7 +553,7 @@
     }
 
     async function init() {
-      const flow = document.getElementById('flow');
+      const archive = document.getElementById('archive');
 
       try {
         const [indexRes, featuredRes] = await Promise.all([
@@ -481,7 +568,7 @@
         const featuredRaw = await featuredRes.json();
 
         if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
-          flow.innerHTML = '<div class="empty">No objects available yet.</div>';
+          archive.innerHTML = '<div class="empty">No objects available yet.</div>';
           postSize();
           return;
         }
@@ -492,18 +579,18 @@
           featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
         );
 
-        let html = "";
         const itemMap = new Map(items.map(item => [(item.Display_ID || "").trim(), item]));
 
         const firstFeaturedId = featuredItems[0] ? (featuredItems[0].Display_ID || "").trim() : null;
         const secondFeaturedId = featuredItems[1] ? (featuredItems[1].Display_ID || "").trim() : null;
 
+        let html = "";
+
         if (firstFeaturedId && itemMap.has(firstFeaturedId)) {
-          html += `
-            <div class="featured-row center">
-              ${renderCard(itemMap.get(firstFeaturedId), true)}
-            </div>
-          `;
+          html += renderCard(itemMap.get(firstFeaturedId), {
+            featured: true,
+            alignment: "left"
+          });
         }
 
         const remaining = items.filter(item => {
@@ -511,57 +598,53 @@
           return id !== firstFeaturedId;
         });
 
-        let standardBuffer = [];
+        let buffer = [];
 
-        function flushStandard(reverseVisual = false) {
-          if (standardBuffer.length === 0) return;
-          html += buildStandardRow(standardBuffer, reverseVisual);
-          standardBuffer = [];
+        function flushBuffer() {
+          if (!buffer.length) return;
+          html += buildGridRow(buffer);
+          buffer = [];
         }
 
         remaining.forEach(item => {
           const id = (item.Display_ID || "").trim();
 
           if (id === secondFeaturedId) {
-            flushStandard(false);
-            html += `
-              <div class="featured-row right">
-                ${renderCard(item, true)}
-              </div>
-            `;
+            flushBuffer();
+            html += renderCard(item, {
+              featured: true,
+              alignment: "right"
+            });
             return;
           }
 
           if (featuredIds.has(id) && id !== secondFeaturedId) {
-            flushStandard(false);
-            html += `
-              <div class="featured-row left">
-                ${renderCard(item, true)}
-              </div>
-            `;
+            flushBuffer();
+            html += renderCard(item, {
+              featured: true,
+              alignment: "left"
+            });
             return;
           }
 
-          standardBuffer.push(item);
+          buffer.push(item);
 
-          if (standardBuffer.length === 3) {
-            const firstId = (standardBuffer[0].Display_ID || "").trim();
-            const reverseVisual = Number(firstId.replace("SS-", "")) % 2 === 0;
-            flushStandard(reverseVisual);
+          if (buffer.length === 3) {
+            flushBuffer();
           }
         });
 
-        flushStandard(false);
+        flushBuffer();
 
-        flow.innerHTML = html;
+        archive.innerHTML = html;
         setupReveal();
 
         setTimeout(postSize, 50);
         setTimeout(postSize, 300);
-        setTimeout(postSize, 800);
+        setTimeout(postSize, 900);
       } catch (err) {
         console.error(err);
-        flow.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
+        archive.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
         postSize();
       }
     }
