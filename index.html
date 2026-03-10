@@ -13,8 +13,8 @@
       --line: rgba(17,17,17,.08);
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
-      --max-width: 1540px;
-      --radius: 16px;
+      --max-width: 1280px;
+      --radius: 10px;
     }
 
     * { box-sizing: border-box; }
@@ -33,7 +33,7 @@
 
     .page {
       width: 100%;
-      padding: 24px 24px 72px;
+      padding: 24px 24px 84px;
     }
 
     .wrap {
@@ -42,23 +42,23 @@
     }
 
     .header {
-      margin: 0 0 56px 0;
-      max-width: 780px;
+      margin: 0 0 54px 0;
+      max-width: 720px;
     }
 
     .title {
       margin: 0 0 18px 0;
-      font-size: clamp(62px, 9vw, 118px);
+      font-size: clamp(56px, 8vw, 112px);
       line-height: .88;
-      letter-spacing: -0.06em;
+      letter-spacing: -0.065em;
       font-weight: 700;
     }
 
     .intro {
       margin: 0;
-      max-width: 640px;
+      max-width: 580px;
       font-size: 16px;
-      line-height: 1.35;
+      line-height: 1.36;
       color: var(--muted);
       letter-spacing: -0.01em;
     }
@@ -67,8 +67,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 0 0 34px 0;
-      padding-bottom: 14px;
+      margin: 0 0 38px 0;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -81,7 +81,7 @@
     .flow {
       display: flex;
       flex-direction: column;
-      gap: 44px;
+      gap: 58px;
     }
 
     .standard-row {
@@ -94,8 +94,8 @@
     .featured-row {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      min-height: 40px;
       align-items: start;
+      min-height: 20px;
     }
 
     .featured-row.center .card.featured {
@@ -103,11 +103,11 @@
     }
 
     .featured-row.right .card.featured {
-      grid-column: 7 / span 6;
+      grid-column: 8 / span 5;
     }
 
     .featured-row.left .card.featured {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 5;
     }
 
     .card {
@@ -126,16 +126,18 @@
       overflow: hidden;
       border-radius: var(--radius);
       background: rgba(0,0,0,.04);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .card.standard .thumb-wrap {
-      aspect-ratio: 1.45 / 1;
+      aspect-ratio: 1.38 / 1;
+      max-width: 100%;
     }
 
     .card.featured .thumb-wrap {
-      aspect-ratio: 1.12 / 1;
-      margin-bottom: 16px;
+      aspect-ratio: 1.06 / 1;
+      max-width: 100%;
+      margin-bottom: 14px;
     }
 
     .thumb {
@@ -159,28 +161,29 @@
     .id {
       margin: 0 0 4px 0;
       font-size: 17px;
-      line-height: 1.15;
+      line-height: 1.14;
       font-weight: 700;
       letter-spacing: -0.025em;
     }
 
     .card.featured .id {
-      font-size: 20px;
+      font-size: 19px;
       margin-bottom: 6px;
     }
 
     .object-title {
       margin: 0 0 8px 0;
       font-size: 15px;
-      line-height: 1.28;
+      line-height: 1.26;
       color: rgba(17,17,17,.88);
       letter-spacing: -0.01em;
+      max-width: 96%;
     }
 
     .card.featured .object-title {
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.24;
-      max-width: 90%;
+      max-width: 88%;
     }
 
     .context {
@@ -188,7 +191,7 @@
       font-size: 11px;
       line-height: 1.2;
       text-transform: uppercase;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       color: var(--muted);
     }
 
@@ -222,29 +225,58 @@
     }
 
     @media (max-width: 1200px) {
+      .wrap {
+        max-width: 1040px;
+      }
+
+      .flow {
+        gap: 46px;
+      }
+
       .standard-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px 22px;
+        gap: 22px;
       }
 
       .featured-row {
         grid-template-columns: repeat(8, minmax(0, 1fr));
       }
 
+      .featured-row.center .card.featured {
+        grid-column: 2 / span 6;
+      }
+
+      .featured-row.right .card.featured {
+        grid-column: 3 / span 5;
+      }
+
+      .featured-row.left .card.featured {
+        grid-column: 1 / span 5;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .standard-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .featured-row {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
       .featured-row.center .card.featured,
       .featured-row.right .card.featured,
       .featured-row.left .card.featured {
-        grid-column: 2 / span 6;
+        grid-column: 1 / -1;
       }
     }
 
     @media (max-width: 760px) {
       .page {
-        padding: 18px 16px 44px;
+        padding: 18px 16px 48px;
       }
 
       .header {
-        margin-bottom: 34px;
+        margin-bottom: 36px;
       }
 
       .title {
@@ -266,12 +298,6 @@
 
       .featured-row {
         grid-template-columns: 1fr;
-      }
-
-      .featured-row.center .card.featured,
-      .featured-row.right .card.featured,
-      .featured-row.left .card.featured {
-        grid-column: auto;
       }
 
       .card.standard .thumb-wrap,
@@ -357,12 +383,13 @@
       return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
     }
 
-    function chunk(arr, size) {
-      const out = [];
-      for (let i = 0; i < arr.length; i += size) {
-        out.push(arr.slice(i, i + size));
-      }
-      return out;
+    function buildStandardRow(items, reverseVisual = false) {
+      const ordered = reverseVisual ? [...items].reverse() : items;
+      return `
+        <div class="standard-row">
+          ${ordered.map(item => renderCard(item, false)).join("")}
+        </div>
+      `;
     }
 
     async function init() {
@@ -389,71 +416,76 @@
 
         const items = [...itemsRaw].sort(byRecordDescending);
         const featuredItems = Array.isArray(featuredRaw) ? [...featuredRaw].sort(byRecordDescending) : [];
-        const featuredIds = new Set(featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean));
-
-        const standardItems = items.filter(item => !featuredIds.has((item.Display_ID || "").trim()));
+        const featuredIds = new Set(
+          featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
+        );
 
         count.textContent = `${items.length} public object${items.length === 1 ? '' : 's'}`;
 
         let html = "";
 
-        // First featured centered, second right, third left, then repeat.
-        const featuredAlignments = ["center", "right", "left"];
+        const itemMap = new Map(items.map(item => [(item.Display_ID || "").trim(), item]));
 
-        if (featuredItems.length > 0) {
-          const firstFeatured = featuredItems[0];
+        // Explicitly place first featured centered.
+        const firstFeaturedId = featuredItems[0] ? (featuredItems[0].Display_ID || "").trim() : null;
+        const secondFeaturedId = featuredItems[1] ? (featuredItems[1].Display_ID || "").trim() : null;
+
+        if (firstFeaturedId && itemMap.has(firstFeaturedId)) {
           html += `
-            <div class="featured-row ${featuredAlignments[0]}">
-              ${renderCard(firstFeatured, true)}
+            <div class="featured-row center">
+              ${renderCard(itemMap.get(firstFeaturedId), true)}
             </div>
           `;
         }
 
-        // Now merge remaining content in descending order.
-        // We walk through all items after removing the first featured already placed.
-        const placedFeaturedIds = new Set();
-        if (featuredItems.length > 0) {
-          placedFeaturedIds.add((featuredItems[0].Display_ID || "").trim());
-        }
-
-        const remainingItems = items.filter(item => !placedFeaturedIds.has((item.Display_ID || "").trim()));
-
-        let currentStandardRow = [];
-        let featuredIndex = 1;
-
-        function flushStandardRow() {
-          if (currentStandardRow.length === 0) return;
-          html += `
-            <div class="standard-row">
-              ${currentStandardRow.map(item => renderCard(item, false)).join("")}
-            </div>
-          `;
-          currentStandardRow = [];
-        }
-
-        remainingItems.forEach(item => {
+        // Remaining archive in descending order, with the second featured staying right-aligned.
+        const remaining = items.filter(item => {
           const id = (item.Display_ID || "").trim();
-          const isFeatured = featuredIds.has(id);
+          return id !== firstFeaturedId;
+        });
 
-          if (isFeatured) {
-            flushStandardRow();
+        let standardBuffer = [];
 
-            const alignment = featuredAlignments[featuredIndex % featuredAlignments.length];
+        function flushStandard(reverseVisual = false) {
+          if (standardBuffer.length === 0) return;
+          html += buildStandardRow(standardBuffer, reverseVisual);
+          standardBuffer = [];
+        }
+
+        remaining.forEach(item => {
+          const id = (item.Display_ID || "").trim();
+
+          if (id === secondFeaturedId) {
+            flushStandard(false);
             html += `
-              <div class="featured-row ${alignment}">
+              <div class="featured-row right">
                 ${renderCard(item, true)}
               </div>
             `;
-            featuredIndex += 1;
-          } else {
-            currentStandardRow.push(item);
-            if (currentStandardRow.length === 3) {
-              flushStandardRow();
-            }
+            return;
+          }
+
+          if (featuredIds.has(id) && id !== secondFeaturedId) {
+            flushStandard(false);
+            html += `
+              <div class="featured-row left">
+                ${renderCard(item, true)}
+              </div>
+            `;
+            return;
+          }
+
+          standardBuffer.push(item);
+
+          if (standardBuffer.length === 3) {
+            // Alternate visual direction per row to feel more art-book than rigid catalog.
+            const firstId = (standardBuffer[0].Display_ID || "").trim();
+            const reverseVisual = Number(firstId.replace("SS-", "")) % 2 === 0;
+            flushStandard(reverseVisual);
           }
         });
 
-        flushStandardRow();
+        flushStandard(false);
 
         flow.innerHTML = html;
       } catch (err) {
