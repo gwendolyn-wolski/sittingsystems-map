@@ -10,7 +10,6 @@
       --bg: #f3f3f1;
       --text: #111111;
       --muted: rgba(17,17,17,.56);
-      --line: rgba(17,17,17,.08);
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
       --max-width: 1280px;
@@ -33,49 +32,12 @@
 
     .page {
       width: 100%;
-      padding: 24px 24px 84px;
+      padding: 8px 24px 84px;
     }
 
     .wrap {
       max-width: var(--max-width);
       margin: 0 auto;
-    }
-
-    .header {
-      margin: 0 0 54px 0;
-      max-width: 720px;
-    }
-
-    .title {
-      margin: 0 0 18px 0;
-      font-size: clamp(56px, 8vw, 112px);
-      line-height: .88;
-      letter-spacing: -0.065em;
-      font-weight: 700;
-    }
-
-    .intro {
-      margin: 0;
-      max-width: 580px;
-      font-size: 16px;
-      line-height: 1.36;
-      color: var(--muted);
-      letter-spacing: -0.01em;
-    }
-
-    .meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 0 38px 0;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .count {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: .01em;
     }
 
     .flow {
@@ -272,19 +234,7 @@
 
     @media (max-width: 760px) {
       .page {
-        padding: 18px 16px 48px;
-      }
-
-      .header {
-        margin-bottom: 36px;
-      }
-
-      .title {
-        font-size: 58px;
-      }
-
-      .intro {
-        font-size: 15px;
+        padding: 4px 16px 48px;
       }
 
       .flow {
@@ -310,15 +260,6 @@
 <body>
   <main class="page">
     <div class="wrap">
-      <header class="header">
-        <h1 class="title">Sitting<br>Systems</h1>
-        <p class="intro">A growing index of observed seating objects, organized as an archive of context, posture, and use.</p>
-      </header>
-
-      <section class="meta-row">
-        <div class="count" id="count">Loading index...</div>
-      </section>
-
       <section id="flow" class="flow" aria-live="polite">
         <div class="loading">Loading objects...</div>
       </section>
@@ -394,7 +335,6 @@
 
     async function init() {
       const flow = document.getElementById('flow');
-      const count = document.getElementById('count');
 
       try {
         const [indexRes, featuredRes] = await Promise.all([
@@ -409,7 +349,6 @@
         const featuredRaw = await featuredRes.json();
 
         if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
-          count.textContent = '0 public objects';
           flow.innerHTML = '<div class="empty">No objects available yet.</div>';
           return;
         }
@@ -420,13 +359,10 @@
           featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
         );
 
-        count.textContent = `${items.length} public object${items.length === 1 ? '' : 's'}`;
-
         let html = "";
 
         const itemMap = new Map(items.map(item => [(item.Display_ID || "").trim(), item]));
 
-        // Explicitly place first featured centered.
         const firstFeaturedId = featuredItems[0] ? (featuredItems[0].Display_ID || "").trim() : null;
         const secondFeaturedId = featuredItems[1] ? (featuredItems[1].Display_ID || "").trim() : null;
 
@@ -438,7 +374,6 @@
           `;
         }
 
-        // Remaining archive in descending order, with the second featured staying right-aligned.
         const remaining = items.filter(item => {
           const id = (item.Display_ID || "").trim();
           return id !== firstFeaturedId;
@@ -478,7 +413,6 @@
           standardBuffer.push(item);
 
           if (standardBuffer.length === 3) {
-            // Alternate visual direction per row to feel more art-book than rigid catalog.
             const firstId = (standardBuffer[0].Display_ID || "").trim();
             const reverseVisual = Number(firstId.replace("SS-", "")) % 2 === 0;
             flushStandard(reverseVisual);
@@ -490,7 +424,6 @@
         flow.innerHTML = html;
       } catch (err) {
         console.error(err);
-        count.textContent = 'Unable to load index';
         flow.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
       }
     }
