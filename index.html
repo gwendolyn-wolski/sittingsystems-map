@@ -32,7 +32,7 @@
 
     .page {
       width: 100%;
-      padding: 0 24px 72px;
+      padding: 0 24px 56px;
       background: transparent;
     }
 
@@ -44,7 +44,7 @@
     .flow {
       display: flex;
       flex-direction: column;
-      gap: 58px;
+      gap: 48px;
     }
 
     .standard-row {
@@ -59,7 +59,7 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       align-items: start;
       min-height: 20px;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
 
     .featured-row.center .card.featured {
@@ -78,7 +78,7 @@
       display: block;
       color: inherit;
       text-decoration: none;
-      transition: transform .16s ease, opacity .5s ease, filter .5s ease;
+      transition: transform .16s ease, opacity .45s ease, filter .45s ease;
     }
 
     .card:hover {
@@ -99,14 +99,14 @@
     }
 
     .card.featured {
-      max-width: 920px;
+      max-width: 760px;
       margin: 0 auto;
     }
 
     .card.featured .thumb-wrap {
       aspect-ratio: auto;
-      max-width: 860px;
-      margin: 0 auto 16px auto;
+      max-width: 760px;
+      margin: 0 auto 14px auto;
       border-radius: 0;
       overflow: visible;
       background: transparent;
@@ -153,9 +153,9 @@
     }
 
     .card.featured .id {
-      font-size: 19px;
+      font-size: 18px;
       margin-bottom: 6px;
-      max-width: 860px;
+      max-width: 760px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -172,7 +172,7 @@
     .card.featured .object-title {
       font-size: 17px;
       line-height: 1.24;
-      max-width: 860px;
+      max-width: 760px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -188,7 +188,7 @@
 
     .card.featured .context,
     .card.featured .tags {
-      max-width: 860px;
+      max-width: 760px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -254,7 +254,7 @@
       }
 
       .flow {
-        gap: 46px;
+        gap: 40px;
       }
 
       .standard-row {
@@ -277,16 +277,13 @@
         grid-column: 1 / span 5;
       }
 
-      .card.featured {
-        max-width: 820px;
-      }
-
+      .card.featured,
       .card.featured .thumb-wrap,
       .card.featured .id,
       .card.featured .object-title,
       .card.featured .context,
       .card.featured .tags {
-        max-width: 760px;
+        max-width: 700px;
       }
     }
 
@@ -317,15 +314,15 @@
 
     @media (max-width: 760px) {
       .page {
-        padding: 0 16px 48px;
+        padding: 0 16px 40px;
       }
 
       .flow {
-        gap: 30px;
+        gap: 28px;
       }
 
       .featured-row {
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
 
       .standard-row {
@@ -431,6 +428,7 @@
 
     function setupReveal() {
       const items = document.querySelectorAll('.reveal');
+
       if (!('IntersectionObserver' in window) || window.innerWidth <= 760) {
         items.forEach(el => el.classList.add('is-visible'));
         postSize();
@@ -557,6 +555,7 @@
 
         flow.innerHTML = html;
         setupReveal();
+
         setTimeout(postSize, 50);
         setTimeout(postSize, 300);
         setTimeout(postSize, 800);
