@@ -7,7 +7,6 @@
 
   <style>
     :root {
-      --bg: #f3f3f1;
       --text: #111111;
       --muted: rgba(17,17,17,.56);
       --pill-bg: rgba(17,17,17,.05);
@@ -21,18 +20,20 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: var(--bg);
+      background: transparent;
       color: var(--text);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .page {
       width: 100%;
-      padding: 8px 24px 84px;
+      padding: 0 24px 72px;
+      background: transparent;
     }
 
     .wrap {
@@ -58,7 +59,7 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       align-items: start;
       min-height: 20px;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
     }
 
     .featured-row.center .card.featured {
@@ -88,7 +89,7 @@
       width: 100%;
       overflow: hidden;
       border-radius: var(--radius);
-      background: rgba(0,0,0,.04);
+      background: rgba(0,0,0,.03);
       margin-bottom: 12px;
     }
 
@@ -102,7 +103,6 @@
       margin: 0 auto;
     }
 
-    /* featured image: no border, no crop */
     .card.featured .thumb-wrap {
       aspect-ratio: auto;
       max-width: 860px;
@@ -317,7 +317,7 @@
 
     @media (max-width: 760px) {
       .page {
-        padding: 4px 16px 48px;
+        padding: 0 16px 48px;
       }
 
       .flow {
@@ -404,8 +404,8 @@
               src="${escapeHtml(img)}"
               alt="${escapeHtml(displayId)}"
               loading="lazy"
-              onload="this.classList.add('loaded')"
-              onerror="this.closest('.thumb-wrap').style.display='none';"
+              onload="this.classList.add('loaded'); postSize();"
+              onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
             >
           </div>
           <p class="id">${escapeHtml(displayId)}</p>
@@ -433,6 +433,7 @@
       const items = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window) || window.innerWidth <= 760) {
         items.forEach(el => el.classList.add('is-visible'));
+        postSize();
         return;
       }
 
@@ -441,6 +442,7 @@
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             observer.unobserve(entry.target);
+            postSize();
           }
         });
       }, {
@@ -449,6 +451,20 @@
       });
 
       items.forEach(el => observer.observe(el));
+    }
+
+    function postSize() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+
+      window.parent.postMessage({
+        type: 'sittingsystems:resize',
+        height
+      }, '*');
     }
 
     async function init() {
@@ -468,6 +484,7 @@
 
         if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
           flow.innerHTML = '<div class="empty">No objects available yet.</div>';
+          postSize();
           return;
         }
 
@@ -478,7 +495,6 @@
         );
 
         let html = "";
-
         const itemMap = new Map(items.map(item => [(item.Display_ID || "").trim(), item]));
 
         const firstFeaturedId = featuredItems[0] ? (featuredItems[0].Display_ID || "").trim() : null;
@@ -541,11 +557,18 @@
 
         flow.innerHTML = html;
         setupReveal();
+        setTimeout(postSize, 50);
+        setTimeout(postSize, 300);
+        setTimeout(postSize, 800);
       } catch (err) {
         console.error(err);
         flow.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
+        postSize();
       }
     }
+
+    window.addEventListener('load', postSize);
+    window.addEventListener('resize', postSize);
 
     init();
   </script>
