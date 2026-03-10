@@ -10,7 +10,7 @@
       --bg: transparent;
       --text: #111111;
       --muted: rgba(17,17,17,.58);
-      --line: #e5e5e5;
+      --line: #e3e3e3;
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
 
@@ -21,7 +21,7 @@
       --gap: 56px;
 
       --content-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --hero-w: min(920px, calc(var(--content-w) * 0.9));
+      --hero-w: min(900px, calc(var(--content-w) * 0.88));
 
       --radius: 8px;
     }
@@ -48,7 +48,7 @@
 
     .page {
       width: 100%;
-      padding: 18px var(--page-pad-x) var(--page-pad-bottom);
+      padding: 16px var(--page-pad-x) var(--page-pad-bottom);
       background: transparent;
     }
 
@@ -60,12 +60,12 @@
     }
 
     .rail {
-      padding-top: 30px;
+      padding-top: 34px;
     }
 
     .rail-label {
       font-size: 12px;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       font-weight: 500;
     }
@@ -78,7 +78,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: flex-start;
-      margin-bottom: 8px;
+      margin-bottom: 0;
     }
 
     .nav {
@@ -86,10 +86,17 @@
       line-height: 1.2;
       font-weight: 500;
       white-space: nowrap;
+      letter-spacing: -0.01em;
     }
 
     .nav a {
-      opacity: .92;
+      opacity: .94;
+    }
+
+    .nav .sep {
+      display: inline-block;
+      margin: 0 9px;
+      opacity: .7;
     }
 
     .nav a.active {
@@ -101,28 +108,28 @@
     .masthead {
       width: var(--content-w);
       max-width: 100%;
-      padding-top: 24px;
+      padding-top: 18px;
     }
 
     .title {
-      width: 240px;
-      font-size: 30px;
-      line-height: .92;
-      font-weight: 650;
-      letter-spacing: -0.04em;
+      width: 280px;
       margin: 0;
+      font-size: 35px;
+      line-height: 0.92;
+      font-weight: 630;
+      letter-spacing: -0.045em;
     }
 
     .subtitle {
-      margin: 42px 0 0 0;
-      max-width: 470px;
+      margin: 24px 0 0 0;
+      max-width: 400px;
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.35;
       color: rgba(17,17,17,.82);
     }
 
     .rule {
-      margin-top: 14px;
+      margin-top: 10px;
       height: 1px;
       background: var(--line);
       width: calc(100vw - var(--page-pad-x) * 2);
@@ -132,7 +139,7 @@
     .archive {
       width: var(--content-w);
       max-width: 100%;
-      margin-top: 88px;
+      margin-top: 52px;
       display: flex;
       flex-direction: column;
       gap: 56px;
@@ -152,10 +159,6 @@
     }
 
     .featured-card.left,
-    .featured-card.center {
-      margin-left: 0;
-    }
-
     .featured-card.center {
       margin-left: 0;
     }
@@ -318,11 +321,15 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --hero-w: min(860px, calc(var(--content-w) * 0.94));
+        --hero-w: min(840px, calc(var(--content-w) * 0.9));
       }
 
       .card-grid {
         gap: 26px;
+      }
+
+      .title {
+        font-size: 33px;
       }
     }
 
@@ -342,7 +349,6 @@
 
       .topbar {
         justify-content: flex-start;
-        margin-bottom: 0;
       }
 
       .masthead,
@@ -358,21 +364,26 @@
       .card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .archive {
+        margin-top: 44px;
+      }
     }
 
     @media (max-width: 680px) {
       .title {
-        font-size: 26px;
-        width: 200px;
+        font-size: 28px;
+        width: 220px;
       }
 
       .subtitle {
-        margin-top: 28px;
+        margin-top: 20px;
         max-width: 100%;
+        font-size: 13px;
       }
 
       .archive {
-        margin-top: 56px;
+        margin-top: 36px;
         gap: 40px;
       }
 
@@ -391,6 +402,10 @@
         font-size: 14px;
         white-space: normal;
       }
+
+      .nav .sep {
+        margin: 0 6px;
+      }
     }
   </style>
 </head>
@@ -404,11 +419,7 @@
       <section class="main">
         <div class="topbar">
           <nav class="nav" aria-label="Section navigation">
-            <a class="active" href="#">Index</a> ·
-            <a href="#">By Context</a> ·
-            <a href="#">By Location</a> ·
-            <a href="#">Notes</a> ·
-            <a href="#">Sources</a>
+            <a class="active" href="#">Index</a><span class="sep">·</span><a href="#">By Context</a><span class="sep">·</span><a href="#">By Location</a><span class="sep">·</span><a href="#">Notes</a><span class="sep">·</span><a href="#">Sources</a>
           </nav>
         </div>
 
