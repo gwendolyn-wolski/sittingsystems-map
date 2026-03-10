@@ -34,11 +34,19 @@
       background: var(--bg);
       color: var(--text);
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
     }
 
     body {
       min-height: 100vh;
-      overflow-x: hidden;
+    }
+
+    .page,
+    .layout,
+    .main,
+    .archive {
+      overflow: visible;
     }
 
     a {
@@ -379,7 +387,6 @@
       }
     }
 
-    /* MOBILE FIX */
     @media (max-width: 680px) {
       :root {
         --page-pad-x: 20px;
@@ -773,6 +780,11 @@
 
     window.addEventListener('load', postSize);
     window.addEventListener('resize', postSize);
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => postSize());
+      ro.observe(document.body);
+    }
 
     init();
   </script>
