@@ -21,7 +21,7 @@
       --gap: 56px;
 
       --content-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --hero-w: min(900px, calc(var(--content-w) * 0.88));
+      --hero-w: min(875px, calc(var(--content-w) * 0.85));
 
       --radius: 8px;
     }
@@ -60,12 +60,12 @@
     }
 
     .rail {
-      padding-top: 34px;
+      padding-top: 40px;
     }
 
     .rail-label {
       font-size: 12px;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       font-weight: 500;
     }
@@ -95,7 +95,7 @@
 
     .nav .sep {
       display: inline-block;
-      margin: 0 9px;
+      margin: 0 10px;
       opacity: .7;
     }
 
@@ -108,23 +108,23 @@
     .masthead {
       width: var(--content-w);
       max-width: 100%;
-      padding-top: 18px;
+      padding-top: 22px;
     }
 
     .title {
-      width: 280px;
+      width: 290px;
       margin: 0;
       font-size: 35px;
-      line-height: 0.92;
+      line-height: 0.9;
       font-weight: 630;
       letter-spacing: -0.045em;
     }
 
     .subtitle {
-      margin: 24px 0 0 0;
-      max-width: 400px;
-      font-size: 14px;
-      line-height: 1.35;
+      margin: 22px 0 0 0;
+      max-width: 470px;
+      font-size: 13px;
+      line-height: 1.38;
       color: rgba(17,17,17,.82);
     }
 
@@ -139,7 +139,7 @@
     .archive {
       width: var(--content-w);
       max-width: 100%;
-      margin-top: 52px;
+      margin-top: 40px;
       display: flex;
       flex-direction: column;
       gap: 56px;
@@ -175,7 +175,7 @@
       background: transparent;
       border-radius: 0;
       overflow: visible;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .featured-card .thumb {
@@ -221,7 +221,10 @@
     }
 
     .featured-card .id {
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 5px;
     }
 
     .object-title {
@@ -233,7 +236,10 @@
     }
 
     .featured-card .object-title {
-      font-size: 18px;
+      font-size: 19px;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      margin-bottom: 7px;
     }
 
     .context {
@@ -321,7 +327,7 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --hero-w: min(840px, calc(var(--content-w) * 0.9));
+        --hero-w: min(820px, calc(var(--content-w) * 0.87));
       }
 
       .card-grid {
@@ -366,7 +372,7 @@
       }
 
       .archive {
-        margin-top: 44px;
+        margin-top: 34px;
       }
     }
 
@@ -377,13 +383,13 @@
       }
 
       .subtitle {
-        margin-top: 20px;
+        margin-top: 18px;
         max-width: 100%;
         font-size: 13px;
       }
 
       .archive {
-        margin-top: 36px;
+        margin-top: 28px;
         gap: 40px;
       }
 
@@ -405,6 +411,10 @@
 
       .nav .sep {
         margin: 0 6px;
+      }
+
+      .featured-card .object-title {
+        font-size: 17px;
       }
     }
   </style>
