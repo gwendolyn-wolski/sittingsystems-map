@@ -13,7 +13,7 @@
       --line: rgba(17,17,17,.08);
       --pill-bg: rgba(17,17,17,.05);
       --pill-text: rgba(17,17,17,.72);
-      --max-width: 1520px;
+      --max-width: 1540px;
       --radius: 16px;
     }
 
@@ -78,11 +78,36 @@
       letter-spacing: .01em;
     }
 
-    .grid {
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 44px;
+    }
+
+    .standard-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .featured-row {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 54px 26px;
+      min-height: 40px;
       align-items: start;
+    }
+
+    .featured-row.center .card.featured {
+      grid-column: 4 / span 6;
+    }
+
+    .featured-row.right .card.featured {
+      grid-column: 7 / span 6;
+    }
+
+    .featured-row.left .card.featured {
+      grid-column: 1 / span 6;
     }
 
     .card {
@@ -96,22 +121,6 @@
       transform: translateY(-2px);
     }
 
-    .card.standard {
-      grid-column: span 4;
-    }
-
-    .card.featured {
-      grid-column: span 6;
-    }
-
-    .card.featured.offset-right {
-      grid-column: 7 / span 6;
-    }
-
-    .card.featured.offset-left {
-      grid-column: 1 / span 6;
-    }
-
     .thumb-wrap {
       width: 100%;
       overflow: hidden;
@@ -121,11 +130,11 @@
     }
 
     .card.standard .thumb-wrap {
-      aspect-ratio: 1.42 / 1;
+      aspect-ratio: 1.45 / 1;
     }
 
     .card.featured .thumb-wrap {
-      aspect-ratio: 1.2 / 1;
+      aspect-ratio: 1.12 / 1;
       margin-bottom: 16px;
     }
 
@@ -206,11 +215,6 @@
       white-space: nowrap;
     }
 
-    .spacer {
-      grid-column: span 12;
-      height: 22px;
-    }
-
     .loading,
     .empty {
       font-size: 14px;
@@ -218,19 +222,19 @@
     }
 
     @media (max-width: 1200px) {
-      .grid {
+      .standard-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px 22px;
+      }
+
+      .featured-row {
         grid-template-columns: repeat(8, minmax(0, 1fr));
-        gap: 42px 22px;
       }
 
-      .card.standard {
-        grid-column: span 4;
-      }
-
-      .card.featured,
-      .card.featured.offset-left,
-      .card.featured.offset-right {
-        grid-column: span 8;
+      .featured-row.center .card.featured,
+      .featured-row.right .card.featured,
+      .featured-row.left .card.featured {
+        grid-column: 2 / span 6;
       }
     }
 
@@ -251,25 +255,28 @@
         font-size: 15px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      .flow {
         gap: 30px;
       }
 
-      .card.standard,
-      .card.featured,
-      .card.featured.offset-left,
-      .card.featured.offset-right {
+      .standard-row {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .featured-row {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-row.center .card.featured,
+      .featured-row.right .card.featured,
+      .featured-row.left .card.featured {
         grid-column: auto;
       }
 
       .card.standard .thumb-wrap,
       .card.featured .thumb-wrap {
         aspect-ratio: 1.28 / 1;
-      }
-
-      .spacer {
-        display: none;
       }
     }
   </style>
@@ -286,7 +293,7 @@
         <div class="count" id="count">Loading index...</div>
       </section>
 
-      <section id="grid" class="grid" aria-live="polite">
+      <section id="flow" class="flow" aria-live="polite">
         <div class="loading">Loading objects...</div>
       </section>
     </div>
@@ -318,7 +325,7 @@
       `;
     }
 
-    function renderCard(item, options = {}) {
+    function renderCard(item, featured = false) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
       const context = (item["Context (Primary)"] || "").trim();
@@ -326,11 +333,8 @@
       const url = (item.Readymag_URL || "").trim();
       const img = imagePathFromDisplayId(displayId);
 
-      const featured = !!options.featured;
-      const extraClass = options.extraClass ? ` ${options.extraClass}` : "";
-
       return `
-        <a class="card ${featured ? "featured" : "standard"}${extraClass}" href="${escapeHtml(url)}" target="_top" rel="noopener">
+        <a class="card ${featured ? "featured" : "standard"}" href="${escapeHtml(url)}" target="_top" rel="noopener">
           <div class="thumb-wrap">
             <img
               class="thumb"
@@ -349,8 +353,20 @@
       `;
     }
 
+    function byRecordDescending(a, b) {
+      return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
+    }
+
+    function chunk(arr, size) {
+      const out = [];
+      for (let i = 0; i < arr.length; i += size) {
+        out.push(arr.slice(i, i + size));
+      }
+      return out;
+    }
+
     async function init() {
-      const grid = document.getElementById('grid');
+      const flow = document.getElementById('flow');
       const count = document.getElementById('count');
 
       try {
@@ -362,56 +378,88 @@
         if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
         if (!featuredRes.ok) throw new Error(`Failed to load featured.json (${featuredRes.status})`);
 
-        const items = await indexRes.json();
-        const featuredItems = await featuredRes.json();
+        const itemsRaw = await indexRes.json();
+        const featuredRaw = await featuredRes.json();
 
-        if (!Array.isArray(items) || items.length === 0) {
+        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
           count.textContent = '0 public objects';
-          grid.innerHTML = '<div class="empty">No objects available yet.</div>';
+          flow.innerHTML = '<div class="empty">No objects available yet.</div>';
           return;
         }
 
-        const featuredIds = new Set(
-          Array.isArray(featuredItems)
-            ? featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
-            : []
-        );
+        const items = [...itemsRaw].sort(byRecordDescending);
+        const featuredItems = Array.isArray(featuredRaw) ? [...featuredRaw].sort(byRecordDescending) : [];
+        const featuredIds = new Set(featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean));
+
+        const standardItems = items.filter(item => !featuredIds.has((item.Display_ID || "").trim()));
 
         count.textContent = `${items.length} public object${items.length === 1 ? '' : 's'}`;
 
         let html = "";
-        let featuredCounter = 0;
-        let standardCounter = 0;
 
-        items.forEach((item, index) => {
-          const displayId = (item.Display_ID || "").trim();
-          const isFeatured = featuredIds.has(displayId);
+        // First featured centered, second right, third left, then repeat.
+        const featuredAlignments = ["center", "right", "left"];
+
+        if (featuredItems.length > 0) {
+          const firstFeatured = featuredItems[0];
+          html += `
+            <div class="featured-row ${featuredAlignments[0]}">
+              ${renderCard(firstFeatured, true)}
+            </div>
+          `;
+        }
+
+        // Now merge remaining content in descending order.
+        // We walk through all items after removing the first featured already placed.
+        const placedFeaturedIds = new Set();
+        if (featuredItems.length > 0) {
+          placedFeaturedIds.add((featuredItems[0].Display_ID || "").trim());
+        }
+
+        const remainingItems = items.filter(item => !placedFeaturedIds.has((item.Display_ID || "").trim()));
+
+        let currentStandardRow = [];
+        let featuredIndex = 1;
+
+        function flushStandardRow() {
+          if (currentStandardRow.length === 0) return;
+          html += `
+            <div class="standard-row">
+              ${currentStandardRow.map(item => renderCard(item, false)).join("")}
+            </div>
+          `;
+          currentStandardRow = [];
+        }
+
+        remainingItems.forEach(item => {
+          const id = (item.Display_ID || "").trim();
+          const isFeatured = featuredIds.has(id);
 
           if (isFeatured) {
-            const offsetClass = featuredCounter % 2 === 0 ? "offset-left" : "offset-right";
+            flushStandardRow();
 
-            if (index !== 0 && standardCounter >= 2) {
-              html += `<div class="spacer" aria-hidden="true"></div>`;
-            }
-
-            html += renderCard(item, {
-              featured: true,
-              extraClass: offsetClass
-            });
-
-            featuredCounter += 1;
-            standardCounter = 0;
+            const alignment = featuredAlignments[featuredIndex % featuredAlignments.length];
+            html += `
+              <div class="featured-row ${alignment}">
+                ${renderCard(item, true)}
+              </div>
+            `;
+            featuredIndex += 1;
           } else {
-            html += renderCard(item, { featured: false });
-            standardCounter += 1;
+            currentStandardRow.push(item);
+            if (currentStandardRow.length === 3) {
+              flushStandardRow();
+            }
           }
         });
 
-        grid.innerHTML = html;
+        flushStandardRow();
+
+        flow.innerHTML = html;
       } catch (err) {
         console.error(err);
         count.textContent = 'Unable to load index';
-        grid.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
+        flow.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
       }
     }
 
