@@ -70,13 +70,6 @@
       padding-top: 40px;
     }
 
-    .rail-label {
-      font-size: 12px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
     .main {
       min-width: 0;
     }
@@ -142,7 +135,7 @@
     }
 
     .archive {
-      width: var(--content-w);
+      width: 100%;
       max-width: 100%;
       margin-top: 62px;
       display: flex;
@@ -152,19 +145,23 @@
 
     .featured-row {
       width: 100%;
+      display: flex;
+      justify-content: center;
     }
 
     .featured-card {
       display: block;
       width: var(--hero-w);
       max-width: 100%;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
 
-    .featured-card.left { margin-left: 0; }
-    .featured-card.right { margin-left: auto; }
+    .featured-card.left,
+    .featured-card.right,
     .featured-card.center {
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
 
     .thumb-wrap {
@@ -287,8 +284,8 @@
 
     .editorial-row.two {
       display: flex;
-      gap: 160px;
       align-items: flex-start;
+      gap: 160px;
     }
 
     .editorial-row.two.left {
@@ -305,14 +302,22 @@
 
     .editorial-row.three {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 140px 120px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
       align-items: start;
+    }
+
+    .editorial-row.three.left {
+      justify-items: start;
+    }
+
+    .editorial-row.three.right {
+      justify-items: end;
     }
 
     .editorial-row.three > .card:nth-child(1) {
       justify-self: start;
-      margin-top: 24px;
+      margin-top: 18px;
     }
 
     .editorial-row.three > .card:nth-child(2) {
@@ -322,7 +327,7 @@
 
     .editorial-row.three > .card:nth-child(3) {
       justify-self: end;
-      margin-top: 54px;
+      margin-top: 56px;
     }
 
     .editorial-row .thumb-wrap {
@@ -410,7 +415,7 @@
       }
 
       .rail {
-        padding-top: 0;
+        display: none;
       }
 
       .topbar {
@@ -476,16 +481,6 @@
         display: block;
       }
 
-      .rail {
-        padding-top: 0;
-        margin-bottom: 18px;
-      }
-
-      .rail-label {
-        font-size: 11px;
-        letter-spacing: .14em;
-      }
-
       .topbar {
         justify-content: flex-start;
         margin-bottom: 18px;
@@ -533,15 +528,19 @@
         gap: 42px;
       }
 
-      .featured-row,
+      .featured-row {
+        width: 100%;
+        display: block;
+      }
+
       .featured-card,
       .featured-card.left,
       .featured-card.right,
       .featured-card.center {
         width: 100%;
         max-width: 100%;
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
 
       .featured-card .thumb-wrap {
@@ -621,9 +620,7 @@
 <body>
   <main class="page">
     <div class="layout">
-      <aside class="rail">
-        <div class="rail-label">Index</div>
-      </aside>
+      <aside class="rail"></aside>
 
       <section class="main">
         <div class="topbar" data-site-nav></div>
@@ -665,7 +662,7 @@
     }
 
     function renderCard(item, opts = {}) {
-      const { featured = false, alignment = "left" } = opts;
+      const { featured = false, alignment = "center" } = opts;
 
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
@@ -805,7 +802,7 @@
         if (firstFeaturedId && itemMap.has(firstFeaturedId)) {
           html += renderCard(itemMap.get(firstFeaturedId), {
             featured: true,
-            alignment: "left"
+            alignment: "center"
           });
         }
 
@@ -815,34 +812,45 @@
         });
 
         let buffer = [];
-        let rowPatternIndex = 0;
-        let twoRowAlignLeft = false;
-        let floatingFeaturedRight = true;
+        let rowIndex = 0;
+        let sideAlignLeft = true;
 
-        function flushBuffer() {
+        function nextPattern() {
+          return rowIndex % 3 === 2 ? 2 : (rowIndex % 2 === 0 ? 2 : 3);
+        }
+
+        function flushBuffer(forceAll = false) {
           if (!buffer.length) return;
 
           while (buffer.length) {
-            const pattern = rowPatternIndex % 2 === 0 ? 2 : 3;
-            const take = Math.min(pattern, buffer.length);
+            let pattern = nextPattern();
+            let take = pattern;
+
+            if (forceAll && buffer.length < pattern) {
+              take = buffer.length;
+            } else if (buffer.length < pattern) {
+              if (buffer.length >= 2) {
+                take = 2;
+              } else {
+                take = 1;
+              }
+            }
+
+            if (!forceAll && buffer.length === 4 && pattern === 3) {
+              take = 2;
+            }
+
             const chunk = buffer.splice(0, take);
+            const align = sideAlignLeft ? "left" : "right";
 
-            if (take === 1) {
-              html += buildEditorialRow(chunk, 2, twoRowAlignLeft ? "left" : "right");
-              twoRowAlignLeft = !twoRowAlignLeft;
-              rowPatternIndex++;
-              continue;
+            if (chunk.length === 3) {
+              html += buildEditorialRow(chunk, 3, align);
+            } else {
+              html += buildEditorialRow(chunk, 2, align);
             }
 
-            if (take === 2) {
-              html += buildEditorialRow(chunk, 2, twoRowAlignLeft ? "left" : "right");
-              twoRowAlignLeft = !twoRowAlignLeft;
-              rowPatternIndex++;
-              continue;
-            }
-
-            html += buildEditorialRow(chunk, 3, "left");
-            rowPatternIndex++;
+            sideAlignLeft = !sideAlignLeft;
+            rowIndex++;
           }
         }
 
@@ -850,28 +858,32 @@
           const id = (item.Display_ID || "").trim();
 
           if (id === secondFeaturedId) {
-            flushBuffer();
+            flushBuffer(true);
             html += renderCard(item, {
               featured: true,
-              alignment: "right"
+              alignment: "center"
             });
             return;
           }
 
           if (featuredIds.has(id) && id !== secondFeaturedId) {
-            flushBuffer();
+            flushBuffer(true);
             html += renderCard(item, {
               featured: true,
-              alignment: floatingFeaturedRight ? "right" : "left"
+              alignment: "center"
             });
-            floatingFeaturedRight = !floatingFeaturedRight;
             return;
           }
 
           buffer.push(item);
+
+          const pattern = nextPattern();
+          if (buffer.length >= pattern) {
+            flushBuffer();
+          }
         });
 
-        flushBuffer();
+        flushBuffer(true);
 
         archive.innerHTML = html;
         setupReveal();
