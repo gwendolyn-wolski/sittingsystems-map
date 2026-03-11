@@ -20,12 +20,11 @@
       --rail-w: 150px;
       --gap: 56px;
 
-      --content-w: min(1080px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --archive-w: calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap));
+      --full-field-w: calc(100vw - var(--page-pad-x) * 2);
 
-      --hero-w: min(650px, calc(var(--archive-w) * 0.50));
-      --hero-2-w: min(620px, calc(var(--archive-w) * 0.48));
+      --hero-w: min(650px, calc(var(--full-field-w) * 0.42));
+      --hero-2-w: min(600px, calc(var(--full-field-w) * 0.39));
 
       --card-img-w: 246px;
       --card-img-w-narrow: 218px;
@@ -34,8 +33,6 @@
       --card-text-w: 238px;
       --card-text-w-narrow: 214px;
       --card-text-w-wide: 258px;
-
-      --radius: 8px;
     }
 
     * { box-sizing: border-box; }
@@ -50,9 +47,7 @@
       overflow-y: hidden;
     }
 
-    body {
-      min-height: 100vh;
-    }
+    body { min-height: 100vh; }
 
     .page,
     .layout,
@@ -102,9 +97,7 @@
       letter-spacing: -0.01em;
     }
 
-    .nav a {
-      opacity: .94;
-    }
+    .nav a { opacity: .94; }
 
     .nav .sep {
       display: inline-block;
@@ -149,10 +142,12 @@
       margin-left: calc((var(--rail-w) + var(--gap)) * -1);
     }
 
+    /* this is the key fix */
     .archive {
-      width: var(--archive-w);
-      max-width: 100%;
+      width: var(--full-field-w);
+      max-width: none;
       margin-top: 64px;
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -163,27 +158,17 @@
       margin: 0 0 138px 0;
     }
 
-    .archive-block.tight {
-      margin-bottom: 104px;
-    }
-
-    .archive-block.loose {
-      margin-bottom: 162px;
-    }
+    .archive-block.tight { margin-bottom: 104px; }
+    .archive-block.loose { margin-bottom: 162px; }
 
     .featured-row {
       width: 100%;
       display: flex;
-      justify-content: center;
     }
 
-    .featured-row.center {
-      justify-content: center;
-    }
-
-    .featured-row.right {
-      justify-content: flex-end;
-    }
+    .featured-row.center { justify-content: center; }
+    .featured-row.right { justify-content: flex-end; }
+    .featured-row.left { justify-content: flex-start; }
 
     .featured-card {
       width: var(--hero-w);
@@ -267,33 +252,15 @@
       min-width: 0;
     }
 
-    .card.card-narrow {
-      width: var(--card-text-w-narrow);
-    }
+    .card.card-narrow { width: var(--card-text-w-narrow); }
+    .card.card-standard { width: var(--card-text-w); }
+    .card.card-wide { width: var(--card-text-w-wide); }
 
-    .card.card-standard {
-      width: var(--card-text-w);
-    }
+    .card.card-narrow .thumb { max-width: var(--card-img-w-narrow); }
+    .card.card-standard .thumb { max-width: var(--card-img-w); }
+    .card.card-wide .thumb { max-width: var(--card-img-w-wide); }
 
-    .card.card-wide {
-      width: var(--card-text-w-wide);
-    }
-
-    .card.card-narrow .thumb {
-      max-width: var(--card-img-w-narrow);
-    }
-
-    .card.card-standard .thumb {
-      max-width: var(--card-img-w);
-    }
-
-    .card.card-wide .thumb {
-      max-width: var(--card-img-w-wide);
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-    }
+    .card:hover { transform: translateY(-2px); }
 
     .card .thumb {
       width: 100%;
@@ -306,13 +273,8 @@
       transition: opacity .28s ease, transform .28s ease;
     }
 
-    .card .thumb.loaded {
-      opacity: 1;
-    }
-
-    .card:hover .thumb.loaded {
-      transform: scale(1.01);
-    }
+    .card .thumb.loaded { opacity: 1; }
+    .card:hover .thumb.loaded { transform: scale(1.01); }
 
     .id {
       margin: 0 0 7px 0;
@@ -403,9 +365,7 @@
         filter: none !important;
       }
 
-      .reveal {
-        opacity: 1 !important;
-      }
+      .reveal { opacity: 1 !important; }
     }
 
     @media (max-width: 1220px) {
@@ -418,8 +378,8 @@
         --card-text-w-narrow: 202px;
         --card-text-w-wide: 242px;
 
-        --hero-w: min(620px, calc(var(--archive-w) * 0.52));
-        --hero-2-w: min(580px, calc(var(--archive-w) * 0.48));
+        --hero-w: min(620px, calc(var(--full-field-w) * 0.44));
+        --hero-2-w: min(580px, calc(var(--full-field-w) * 0.40));
       }
 
       .editorial-row.two.left,
@@ -441,21 +401,14 @@
         --card-text-w-narrow: 188px;
         --card-text-w-wide: 226px;
 
-        --hero-w: min(580px, calc(var(--archive-w) * 0.54));
-        --hero-2-w: min(540px, calc(var(--archive-w) * 0.50));
+        --hero-w: min(580px, calc(var(--full-field-w) * 0.46));
+        --hero-2-w: min(540px, calc(var(--full-field-w) * 0.42));
       }
 
-      .title {
-        font-size: 33px;
-      }
+      .title { font-size: 33px; }
 
-      .archive-block {
-        margin-bottom: 120px;
-      }
-
-      .archive-block.loose {
-        margin-bottom: 144px;
-      }
+      .archive-block { margin-bottom: 120px; }
+      .archive-block.loose { margin-bottom: 144px; }
 
       .editorial-row.two.left,
       .editorial-row.two.right {
@@ -464,26 +417,21 @@
     }
 
     @media (max-width: 900px) {
-      :root {
-        --page-pad-x: 18px;
-      }
+      :root { --page-pad-x: 18px; }
 
       .layout {
         grid-template-columns: 1fr;
         row-gap: 18px;
       }
 
-      .rail {
-        display: none;
-      }
+      .rail { display: none; }
 
       .topbar {
         justify-content: flex-start;
         margin-bottom: 8px;
       }
 
-      .masthead,
-      .archive {
+      .masthead {
         width: 100%;
         max-width: 100%;
       }
@@ -494,6 +442,8 @@
       }
 
       .archive {
+        width: 100%;
+        margin-left: 0;
         margin-top: 42px;
       }
 
@@ -505,7 +455,8 @@
 
       .featured-row,
       .featured-row.center,
-      .featured-row.right {
+      .featured-row.right,
+      .featured-row.left {
         justify-content: flex-start;
       }
 
@@ -539,17 +490,10 @@
         --page-pad-bottom: 36px;
       }
 
-      html, body {
-        overflow-y: auto;
-      }
+      html, body { overflow-y: auto; }
 
-      .page {
-        padding-top: 22px;
-      }
-
-      .layout {
-        display: block;
-      }
+      .page { padding-top: 22px; }
+      .layout { display: block; }
 
       .topbar {
         justify-content: flex-start;
@@ -563,9 +507,7 @@
         max-width: 100%;
       }
 
-      .nav .sep {
-        margin: 0 6px;
-      }
+      .nav .sep { margin: 0 6px; }
 
       .masthead {
         padding-top: 0;
@@ -595,6 +537,7 @@
       .archive {
         width: 100%;
         margin-top: 30px;
+        margin-left: 0;
       }
 
       .archive-block,
@@ -609,13 +552,8 @@
         max-width: 100%;
       }
 
-      .featured-card .thumb-wrap {
-        margin-bottom: 12px;
-      }
-
-      .featured-card .id {
-        font-size: 15px;
-      }
+      .featured-card .thumb-wrap { margin-bottom: 12px; }
+      .featured-card .id { font-size: 15px; }
 
       .featured-card .object-title {
         font-size: 16px;
@@ -741,8 +679,7 @@
       const {
         featured = false,
         featuredClass = "",
-        scale = "standard",
-        indexInRow = 0
+        scale = "standard"
       } = opts;
 
       const displayId = (item.Display_ID || "").trim();
@@ -805,12 +742,7 @@
       const rowItems = items.splice(0, takeCount);
       if (!rowItems.length) return "";
 
-      const rowClassVariants = [
-        "offset-up",
-        "stagger-soft",
-        "offset-down",
-        ""
-      ];
+      const rowClassVariants = ["offset-up", "stagger-soft", "offset-down", ""];
       const rowVariant = rowClassVariants[rowIndex % rowClassVariants.length];
 
       if (rowItems.length === 2) {
@@ -819,8 +751,7 @@
           <div class="archive-block tight">
             <div class="editorial-row two ${sideClass}">
               ${rowItems.map((item, i) => renderCard(item, {
-                scale: getCardScale(item, i),
-                indexInRow: i
+                scale: getCardScale(item, i)
               })).join("")}
             </div>
           </div>
@@ -831,8 +762,7 @@
         <div class="archive-block ${rowVariant ? "loose" : ""}">
           <div class="editorial-row three ${rowVariant}">
             ${rowItems.map((item, i) => renderCard(item, {
-              scale: getCardScale(item, i),
-              indexInRow: i
+              scale: getCardScale(item, i)
             })).join("")}
           </div>
         </div>
