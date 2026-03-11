@@ -19,17 +19,23 @@
     :root {
       --bg: transparent;
       --text: #111111;
-      --muted: rgba(17,17,17,.58);
-      --line: #e3e3e3;
+      --muted: rgba(17,17,17,.48);
+      --muted-soft: rgba(17,17,17,.72);
+      --line: #e2e2e2;
 
       --page-pad-x: 28px;
-      --page-pad-bottom: 56px;
+      --page-pad-top: 58px;
+      --page-pad-bottom: 72px;
 
       --rail-w: 150px;
       --gap: 56px;
 
-      --content-w: min(1100px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --radius: 8px;
+      --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --full-w: calc(100vw - var(--page-pad-x) * 2);
+
+      --map-w: min(1180px, calc(var(--full-w) * 0.78));
+      --map-h: min(68vh, 760px);
+      --radius: 10px;
     }
 
     * { box-sizing: border-box; }
@@ -44,16 +50,25 @@
       overflow-y: hidden;
     }
 
-    body { min-height: 100vh; }
+    body {
+      min-height: 100vh;
+    }
 
     a {
       color: inherit;
       text-decoration: none;
     }
 
+    .page,
+    .layout,
+    .main,
+    .map-section {
+      overflow: visible;
+    }
+
     .page {
       width: 100%;
-      padding: 16px var(--page-pad-x) var(--page-pad-bottom);
+      padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
       background: transparent;
     }
 
@@ -65,14 +80,7 @@
     }
 
     .rail {
-      padding-top: 40px;
-    }
-
-    .rail-label {
-      font-size: 12px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      font-weight: 500;
+      min-height: 1px;
     }
 
     .main {
@@ -83,88 +91,71 @@
       display: flex;
       justify-content: flex-end;
       align-items: flex-start;
-      margin-bottom: 0;
-    }
-
-    .nav {
-      font-size: 15px;
-      line-height: 1.2;
-      font-weight: 500;
-      white-space: nowrap;
-      letter-spacing: -0.01em;
-    }
-
-    .nav a {
-      opacity: .94;
-    }
-
-    .nav .sep {
-      display: inline-block;
-      margin: 0 10px;
-      opacity: .7;
-    }
-
-    .nav a.active {
-      font-weight: 600;
-      border-bottom: 1px solid #111;
-      padding-bottom: 1px;
+      margin: 0;
     }
 
     .masthead {
-      width: var(--content-w);
+      width: var(--masthead-w);
       max-width: 100%;
-      padding-top: 22px;
+      padding-top: 8px;
     }
 
     .title {
-      width: 300px;
+      width: 290px;
       margin: 0;
       font-size: 35px;
       line-height: 0.9;
       font-weight: 630;
-      letter-spacing: -0.045em;
+      letter-spacing: -0.05em;
     }
 
     .subtitle {
-      margin: 22px 0 0 0;
-      max-width: 740px;
-      font-size: 13px;
-      line-height: 1.38;
-      color: rgba(17,17,17,.82);
+      margin: 14px 0 0 0;
+      max-width: 390px;
+      font-size: 10.5px;
+      line-height: 1.28;
+      color: var(--muted-soft);
     }
 
     .rule {
-      margin-top: 10px;
+      margin-top: 8px;
       height: 1px;
       background: var(--line);
       width: calc(100vw - var(--page-pad-x) * 2);
       margin-left: calc((var(--rail-w) + var(--gap)) * -1);
     }
 
-    .map-wrap {
-      width: var(--content-w);
+    .map-section {
+      width: var(--full-w);
+      max-width: var(--full-w);
+      margin-top: 72px;
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+      display: flex;
+      justify-content: center;
+    }
+
+    .map-frame {
+      width: var(--map-w);
       max-width: 100%;
-      margin-top: 30px;
     }
 
     #map {
       width: 100%;
-      height: min(72vh, 760px);
+      height: var(--map-h);
       min-height: 460px;
       background: #f4f4f4;
-      border-radius: 8px;
+      border-radius: var(--radius);
       overflow: hidden;
     }
 
-    .leaflet-container a:focus { outline: none; }
+    .leaflet-container {
+      background: #f4f4f4;
+      border-radius: var(--radius);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-    .leaflet-control-zoom a {
-      border-radius: 10px !important;
-      width: 34px !important;
-      height: 34px !important;
-      line-height: 34px !important;
-      box-shadow: 0 6px 20px rgba(0,0,0,.12) !important;
-      border: 1px solid rgba(0,0,0,.08) !important;
+    .leaflet-container a:focus {
+      outline: none;
     }
 
     .leaflet-control-zoom {
@@ -172,63 +163,79 @@
       box-shadow: none !important;
     }
 
+    .leaflet-control-zoom a {
+      border-radius: 10px !important;
+      width: 32px !important;
+      height: 32px !important;
+      line-height: 32px !important;
+      box-shadow: 0 6px 20px rgba(0,0,0,.10) !important;
+      border: 1px solid rgba(0,0,0,.06) !important;
+      background: rgba(255,255,255,.92) !important;
+      color: #111 !important;
+    }
+
     .leaflet-popup-content-wrapper {
-      border-radius: 18px !important;
-      box-shadow: 0 18px 40px rgba(0,0,0,.18) !important;
-      border: 1px solid rgba(0,0,0,.08) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,.14) !important;
+      border: 1px solid rgba(0,0,0,.06) !important;
     }
 
     .leaflet-popup-content {
-      margin: 14px !important;
-      width: 280px;
+      margin: 12px !important;
+      width: 260px;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .leaflet-control-attribution {
-      font-size: 10px !important;
-      opacity: .45;
+    .leaflet-popup-tip {
+      box-shadow: none !important;
     }
 
-    .leaflet-popup-tip { box-shadow: none !important; }
+    .leaflet-control-attribution {
+      font-size: 9px !important;
+      opacity: .38;
+    }
 
     .ss-thumb {
       display: block;
       width: 100% !important;
-      max-width: 280px !important;
-      height: 160px !important;
+      max-width: 260px !important;
+      height: 148px !important;
       object-fit: cover !important;
-      border-radius: 14px;
-      margin: 0 0 10px 0;
+      border-radius: 12px;
+      margin: 0 0 9px 0;
     }
 
     .ss-title {
-      font-size: 16px;
-      line-height: 1.25;
-      font-weight: 650;
-      margin: 0 0 6px 0;
-      letter-spacing: -0.01em;
+      font-size: 13px;
+      line-height: 1.18;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin: 0 0 5px 0;
+      color: rgba(17,17,17,.9);
     }
 
     .ss-meta {
-      margin-top: 6px;
-      font-size: 12px;
-      letter-spacing: .02em;
+      margin-top: 5px;
+      font-size: 9.5px;
+      line-height: 1;
       text-transform: uppercase;
-      opacity: .6;
+      letter-spacing: .2em;
+      color: rgba(17,17,17,.46);
     }
 
     .ss-link {
       display: inline-block;
       margin-top: 6px;
-      font-size: 14px;
+      font-size: 10.5px;
+      line-height: 1.2;
       text-decoration: none;
-      border-bottom: 1px solid rgba(0,0,0,.35);
+      border-bottom: 1px solid rgba(17,17,17,.28);
       padding-bottom: 1px;
       color: #111;
     }
 
     .ss-link:hover {
-      border-bottom-color: rgba(0,0,0,.75);
+      border-bottom-color: rgba(17,17,17,.62);
     }
 
     .marker-cluster,
@@ -244,7 +251,7 @@
       border-radius: 999px !important;
       background: rgba(17,17,17,.88) !important;
       border: 1px solid rgba(255,255,255,.35) !important;
-      box-shadow: 0 10px 18px rgba(0,0,0,.14) !important;
+      box-shadow: 0 10px 18px rgba(0,0,0,.12) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -257,10 +264,17 @@
       line-height: 1 !important;
     }
 
+    @media (max-width: 1220px) {
+      :root {
+        --map-w: min(1080px, calc(var(--full-w) * 0.82));
+      }
+    }
+
     @media (max-width: 1100px) {
       :root {
         --rail-w: 120px;
         --gap: 36px;
+        --map-w: min(980px, calc(var(--full-w) * 0.86));
       }
 
       .title {
@@ -271,6 +285,12 @@
     @media (max-width: 900px) {
       :root {
         --page-pad-x: 18px;
+        --page-pad-top: 48px;
+        --map-w: 100%;
+      }
+
+      html, body {
+        overflow-y: auto;
       }
 
       .layout {
@@ -279,7 +299,7 @@
       }
 
       .rail {
-        padding-top: 0;
+        display: none;
       }
 
       .topbar {
@@ -288,54 +308,53 @@
       }
 
       .masthead,
-      .map-wrap {
+      .map-section {
         width: 100%;
+        max-width: 100%;
       }
 
       .rule {
         width: 100%;
         margin-left: 0;
       }
+
+      .map-section {
+        margin-top: 44px;
+        margin-left: 0;
+        justify-content: center;
+      }
+
+      .map-frame {
+        width: 100%;
+      }
+
+      #map {
+        min-height: 430px;
+      }
     }
 
     @media (max-width: 680px) {
       :root {
         --page-pad-x: 20px;
-        --page-pad-bottom: 34px;
+        --page-pad-top: 22px;
+        --page-pad-bottom: 36px;
+      }
+
+      html, body {
+        overflow-y: auto;
       }
 
       .page {
-        padding-top: 22px;
+        padding-top: var(--page-pad-top);
       }
 
       .layout {
         display: block;
       }
 
-      .rail {
-        padding-top: 0;
-        margin-bottom: 18px;
-      }
-
-      .rail-label {
-        font-size: 11px;
-        letter-spacing: .14em;
-      }
-
       .topbar {
         justify-content: flex-start;
         margin-bottom: 18px;
-      }
-
-      .nav {
-        font-size: 13px;
-        line-height: 1.35;
-        white-space: normal;
-        max-width: 100%;
-      }
-
-      .nav .sep {
-        margin: 0 6px;
       }
 
       .masthead {
@@ -345,7 +364,7 @@
 
       .title {
         width: 100%;
-        max-width: 240px;
+        max-width: 220px;
         font-size: 28px;
         line-height: 0.92;
         margin: 0 0 14px 0;
@@ -354,8 +373,8 @@
       .subtitle {
         margin-top: 0;
         max-width: 100%;
-        font-size: 13px;
-        line-height: 1.4;
+        font-size: 12px;
+        line-height: 1.36;
       }
 
       .rule {
@@ -363,14 +382,29 @@
         width: 100%;
       }
 
-      .map-wrap {
+      .map-section {
         width: 100%;
-        margin-top: 24px;
+        margin-top: 30px;
+        margin-left: 0;
+      }
+
+      .map-frame {
+        width: 100%;
       }
 
       #map {
         height: 58vh;
-        min-height: 380px;
+        min-height: 360px;
+        border-radius: 8px;
+      }
+
+      .leaflet-popup-content {
+        width: 220px;
+      }
+
+      .ss-thumb {
+        max-width: 220px !important;
+        height: 126px !important;
       }
     }
   </style>
@@ -379,9 +413,7 @@
 <body>
   <main class="page">
     <div class="layout">
-      <aside class="rail">
-        <div class="rail-label">By Location</div>
-      </aside>
+      <aside class="rail"></aside>
 
       <section class="main">
         <div class="topbar" data-site-nav></div>
@@ -392,8 +424,10 @@
           <div class="rule" aria-hidden="true"></div>
         </header>
 
-        <section class="map-wrap">
-          <div id="map"></div>
+        <section class="map-section">
+          <div class="map-frame">
+            <div id="map"></div>
+          </div>
         </section>
       </section>
     </div>
