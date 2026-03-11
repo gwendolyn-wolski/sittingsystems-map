@@ -73,13 +73,6 @@
       min-width: 0;
     }
 
-    .topbar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-      margin: 0;
-    }
-
     .masthead {
       width: var(--masthead-w);
       max-width: 100%;
@@ -198,12 +191,6 @@
       .rail {
         display: none;
       }
-
-      .topbar {
-        justify-content: flex-start;
-        margin-bottom: 8px;
-      }
-
       .masthead,
       .notes-shell {
         width: 100%;
@@ -233,11 +220,6 @@
 
       .layout {
         display: block;
-      }
-
-      .topbar {
-        justify-content: flex-start;
-        margin-bottom: 18px;
       }
 
       .masthead {
@@ -291,8 +273,6 @@
       <aside class="rail"></aside>
 
       <section class="main">
-        <div class="topbar" data-site-nav></div>
-
         <header class="masthead">
           <h1 class="title">Notes</h1>
           <p class="subtitle">Brief observations drawn from accumulated entries.</p>
@@ -341,6 +321,5 @@
       ro.observe(document.body);
     }
   </script>
-  <script src="./nav.js"></script>
 </body>
 </html>
