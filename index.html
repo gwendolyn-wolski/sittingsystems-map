@@ -9,22 +9,28 @@
     :root {
       --bg: transparent;
       --text: #111111;
-      --muted: rgba(17,17,17,.58);
-      --line: #e3e3e3;
-      --pill-bg: rgba(17,17,17,.05);
-      --pill-text: rgba(17,17,17,.72);
+      --muted: rgba(17,17,17,.52);
+      --line: #e2e2e2;
+      --pill-bg: rgba(17,17,17,.045);
+      --pill-text: rgba(17,17,17,.66);
 
       --page-pad-x: 28px;
-      --page-pad-bottom: 56px;
+      --page-pad-bottom: 72px;
 
       --rail-w: 150px;
       --gap: 56px;
 
-      --content-w: min(1040px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --hero-w: min(700px, calc(var(--content-w) * 0.68));
+      --content-w: min(1080px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --hero-w: min(690px, calc(var(--content-w) * 0.66));
+      --hero-2-w: min(620px, calc(var(--content-w) * 0.60));
 
-      --card-img-w: 250px;
-      --card-text-w: 255px;
+      --card-img-w: 246px;
+      --card-img-w-narrow: 218px;
+      --card-img-w-wide: 268px;
+
+      --card-text-w: 238px;
+      --card-text-w-narrow: 214px;
+      --card-text-w-wide: 258px;
     }
 
     * { box-sizing: border-box; }
@@ -119,15 +125,15 @@
     }
 
     .subtitle {
-      margin: 22px 0 0 0;
+      margin: 24px 0 0 0;
       max-width: 470px;
       font-size: 13px;
       line-height: 1.38;
-      color: rgba(17,17,17,.82);
+      color: rgba(17,17,17,.80);
     }
 
     .rule {
-      margin-top: 10px;
+      margin-top: 16px;
       height: 1px;
       background: var(--line);
       width: calc(100vw - var(--page-pad-x) * 2);
@@ -137,11 +143,20 @@
     .archive {
       width: 100%;
       max-width: 100%;
-      margin-top: 62px;
+      margin-top: 84px;
       display: flex;
       flex-direction: column;
-      gap: 150px;
+      gap: 0;
     }
+
+    .archive-block {
+      width: 100%;
+    }
+
+    .archive-block.gap-s { margin-top: 42px; }
+    .archive-block.gap-m { margin-top: 84px; }
+    .archive-block.gap-l { margin-top: 138px; }
+    .archive-block.gap-xl { margin-top: 210px; }
 
     .featured-row {
       width: 100%;
@@ -149,19 +164,18 @@
       justify-content: center;
     }
 
+    .featured-row.right {
+      justify-content: flex-end;
+    }
+
     .featured-card {
       display: block;
       width: var(--hero-w);
       max-width: 100%;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
     }
 
-    .featured-card.left,
-    .featured-card.right,
-    .featured-card.center {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+    .featured-card.secondary {
+      width: var(--hero-2-w);
     }
 
     .thumb-wrap {
@@ -178,16 +192,14 @@
       transition: opacity .28s ease, transform .28s ease;
     }
 
-    .thumb.loaded {
-      opacity: 1;
-    }
+    .thumb.loaded { opacity: 1; }
 
     .card:hover .thumb.loaded {
       transform: scale(1.01);
     }
 
     .featured-card .thumb-wrap {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .featured-card .thumb {
@@ -199,40 +211,39 @@
 
     .id {
       margin: 0 0 4px 0;
-      font-size: 15px;
-      line-height: 1.12;
-      font-weight: 620;
+      font-size: 14px;
+      line-height: 1.08;
+      font-weight: 625;
       letter-spacing: -0.02em;
     }
 
     .featured-card .id {
       font-size: 15px;
-      font-weight: 620;
       margin-bottom: 6px;
     }
 
     .object-title {
       margin: 0 0 8px 0;
-      font-size: 15px;
-      line-height: 1.22;
-      letter-spacing: -0.015em;
+      font-size: 14px;
+      line-height: 1.18;
+      letter-spacing: -0.016em;
       color: rgba(17,17,17,.92);
     }
 
     .featured-card .object-title {
       font-size: 17px;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      line-height: 1.18;
+      letter-spacing: -0.022em;
       margin-bottom: 8px;
       max-width: 100%;
     }
 
     .context {
-      margin: 0 0 12px 0;
-      font-size: 10px;
-      line-height: 1.2;
+      margin: 0 0 10px 0;
+      font-size: 9px;
+      line-height: 1.15;
       text-transform: uppercase;
-      letter-spacing: .15em;
+      letter-spacing: .19em;
       color: var(--muted);
     }
 
@@ -248,12 +259,12 @@
     .tag {
       display: inline-flex;
       align-items: center;
-      min-height: 24px;
+      min-height: 22px;
       padding: 4px 10px 3px;
       border-radius: 999px;
       background: var(--pill-bg);
       color: var(--pill-text);
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1;
       white-space: nowrap;
     }
@@ -264,18 +275,50 @@
       text-decoration: none;
       transition: transform .16s ease, opacity .45s ease, filter .45s ease;
       min-width: 0;
-      max-width: var(--card-text-w);
     }
 
     .card:hover {
       transform: translateY(-2px);
     }
 
+    .card.variant-standard {
+      max-width: var(--card-text-w);
+    }
+
+    .card.variant-narrow {
+      max-width: var(--card-text-w-narrow);
+    }
+
+    .card.variant-wide {
+      max-width: var(--card-text-w-wide);
+    }
+
+    .card.variant-standard .thumb {
+      width: 100%;
+      max-width: var(--card-img-w);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .card.variant-narrow .thumb {
+      width: 100%;
+      max-width: var(--card-img-w-narrow);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .card.variant-wide .thumb {
+      width: 100%;
+      max-width: var(--card-img-w-wide);
+      height: auto;
+      object-fit: contain;
+    }
+
     .card .id,
     .card .object-title,
     .card .context,
     .card .tags {
-      max-width: var(--card-text-w);
+      width: 100%;
     }
 
     .editorial-row {
@@ -283,21 +326,39 @@
     }
 
     .editorial-row.two {
-      display: flex;
-      align-items: flex-start;
-      gap: 160px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, auto));
+      align-items: start;
+      column-gap: 170px;
+      row-gap: 0;
     }
 
     .editorial-row.two.left {
-      justify-content: flex-start;
+      justify-content: start;
     }
 
     .editorial-row.two.right {
-      justify-content: flex-end;
+      justify-content: end;
     }
 
-    .editorial-row.two .card:nth-child(2) {
-      margin-top: 42px;
+    .editorial-row.two.left .card:nth-child(1) {
+      justify-self: start;
+      margin-top: 0;
+    }
+
+    .editorial-row.two.left .card:nth-child(2) {
+      justify-self: start;
+      margin-top: 38px;
+    }
+
+    .editorial-row.two.right .card:nth-child(1) {
+      justify-self: start;
+      margin-top: 34px;
+    }
+
+    .editorial-row.two.right .card:nth-child(2) {
+      justify-self: end;
+      margin-top: 0;
     }
 
     .editorial-row.three {
@@ -307,41 +368,19 @@
       align-items: start;
     }
 
-    .editorial-row.three.left {
-      justify-items: start;
-    }
-
-    .editorial-row.three.right {
-      justify-items: end;
-    }
-
-    .editorial-row.three > .card:nth-child(1) {
+    .editorial-row.three .card:nth-child(1) {
       justify-self: start;
-      margin-top: 18px;
-    }
-
-    .editorial-row.three > .card:nth-child(2) {
-      justify-self: center;
       margin-top: 0;
     }
 
-    .editorial-row.three > .card:nth-child(3) {
+    .editorial-row.three .card:nth-child(2) {
+      justify-self: center;
+      margin-top: 42px;
+    }
+
+    .editorial-row.three .card:nth-child(3) {
       justify-self: end;
-      margin-top: 56px;
-    }
-
-    .editorial-row .thumb-wrap {
-      background: transparent;
-      aspect-ratio: auto;
-      margin-bottom: 12px;
-    }
-
-    .editorial-row .thumb {
-      width: 100%;
-      max-width: var(--card-img-w);
-      height: auto;
-      object-fit: contain;
-      object-position: center center;
+      margin-top: 0;
     }
 
     .loading,
@@ -371,30 +410,27 @@
         filter: none !important;
       }
 
-      .reveal {
-        opacity: 1 !important;
-      }
+      .reveal { opacity: 1 !important; }
     }
 
     @media (max-width: 1180px) {
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --hero-w: min(660px, calc(var(--content-w) * 0.7));
-        --card-img-w: 230px;
-        --card-text-w: 235px;
-      }
+        --hero-w: min(640px, calc(var(--content-w) * 0.66));
+        --hero-2-w: min(570px, calc(var(--content-w) * 0.58));
 
-      .archive {
-        gap: 120px;
+        --card-img-w: 228px;
+        --card-img-w-narrow: 206px;
+        --card-img-w-wide: 246px;
+
+        --card-text-w: 222px;
+        --card-text-w-narrow: 200px;
+        --card-text-w-wide: 238px;
       }
 
       .editorial-row.two {
-        gap: 110px;
-      }
-
-      .editorial-row.three {
-        gap: 110px 70px;
+        column-gap: 110px;
       }
 
       .title {
@@ -405,8 +441,8 @@
     @media (max-width: 900px) {
       :root {
         --page-pad-x: 18px;
-        --card-img-w: 210px;
-        --card-text-w: 215px;
+        --hero-w: min(620px, 100%);
+        --hero-2-w: min(560px, 100%);
       }
 
       .layout {
@@ -434,30 +470,34 @@
       }
 
       .archive {
-        margin-top: 40px;
-        gap: 80px;
+        margin-top: 56px;
       }
 
+      .archive-block.gap-s { margin-top: 30px; }
+      .archive-block.gap-m { margin-top: 58px; }
+      .archive-block.gap-l { margin-top: 90px; }
+      .archive-block.gap-xl { margin-top: 130px; }
+
       .editorial-row.two {
-        gap: 60px;
+        column-gap: 64px;
       }
 
       .editorial-row.three {
         grid-template-columns: repeat(2, 1fr);
-        gap: 70px 50px;
+        gap: 54px 44px;
       }
 
-      .editorial-row.three > .card:nth-child(1) {
+      .editorial-row.three .card:nth-child(1) {
         justify-self: start;
         margin-top: 0;
       }
 
-      .editorial-row.three > .card:nth-child(2) {
+      .editorial-row.three .card:nth-child(2) {
         justify-self: end;
         margin-top: 24px;
       }
 
-      .editorial-row.three > .card:nth-child(3) {
+      .editorial-row.three .card:nth-child(3) {
         grid-column: 1 / -1;
         justify-self: center;
         margin-top: 0;
@@ -469,8 +509,15 @@
         --page-pad-x: 20px;
         --page-pad-bottom: 34px;
         --hero-w: 100%;
+        --hero-2-w: 100%;
+
         --card-img-w: min(240px, 72vw);
-        --card-text-w: min(250px, 74vw);
+        --card-img-w-narrow: min(225px, 68vw);
+        --card-img-w-wide: min(248px, 74vw);
+
+        --card-text-w: min(246px, 74vw);
+        --card-text-w-narrow: min(228px, 69vw);
+        --card-text-w-wide: min(252px, 76vw);
       }
 
       .page {
@@ -524,23 +571,26 @@
 
       .archive {
         width: 100%;
-        margin-top: 28px;
-        gap: 42px;
+        margin-top: 32px;
       }
 
-      .featured-row {
+      .archive-block.gap-s,
+      .archive-block.gap-m,
+      .archive-block.gap-l,
+      .archive-block.gap-xl {
+        margin-top: 34px;
+      }
+
+      .featured-row,
+      .featured-row.right {
         width: 100%;
         display: block;
       }
 
       .featured-card,
-      .featured-card.left,
-      .featured-card.right,
-      .featured-card.center {
+      .featured-card.secondary {
         width: 100%;
         max-width: 100%;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
       }
 
       .featured-card .thumb-wrap {
@@ -579,25 +629,13 @@
       .editorial-row.three {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 34px;
+        gap: 32px;
       }
 
       .editorial-row.two .card,
       .editorial-row.three .card {
         justify-self: start;
         margin-top: 0 !important;
-        max-width: 100%;
-      }
-
-      .editorial-row .thumb {
-        max-width: var(--card-img-w);
-      }
-
-      .card .id,
-      .card .object-title,
-      .card .context,
-      .card .tags {
-        max-width: var(--card-text-w);
       }
 
       .card .id {
@@ -652,29 +690,51 @@
       return displayId ? `images/${displayId}.jpeg` : "";
     }
 
-    function renderTags(tags) {
+    function renderTags(tags, featured = false) {
       if (!Array.isArray(tags) || tags.length === 0) return "";
+
+      const filtered = featured ? tags.filter(Boolean) : tags.filter(Boolean).slice(0, 2);
+      if (!filtered.length) return "";
+
       return `
         <ul class="tags">
-          ${tags.filter(Boolean).map(tag => `<li class="tag">${escapeHtml(tag)}</li>`).join("")}
+          ${filtered.map(tag => `<li class="tag">${escapeHtml(tag)}</li>`).join("")}
         </ul>
       `;
     }
 
+    function cardVariantForRow(rowIndex, position, rowType) {
+      if (rowType === 2) {
+        if (position === 0) return rowIndex % 2 === 0 ? "wide" : "standard";
+        return rowIndex % 2 === 0 ? "narrow" : "wide";
+      }
+
+      if (position === 0) return "standard";
+      if (position === 1) return "narrow";
+      return "wide";
+    }
+
     function renderCard(item, opts = {}) {
-      const { featured = false, alignment = "center" } = opts;
+      const {
+        featured = false,
+        featuredClass = "",
+        variant = "standard",
+        suppressWeakTags = false
+      } = opts;
 
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
       const context = (item["Context (Primary)"] || "").trim();
-      const secondary = item["Context - Secondary"] || [];
+      const secondary = Array.isArray(item["Context - Secondary"]) ? item["Context - Secondary"] : [];
       const url = (item.Readymag_URL || "").trim();
       const img = imagePathFromDisplayId(displayId);
 
+      const tagsToShow = suppressWeakTags && secondary.length <= 1 ? [] : secondary;
+
       if (featured) {
         return `
-          <div class="featured-row">
-            <a class="card featured-card ${alignment} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+          <div class="featured-row ${featuredClass}">
+            <a class="card featured-card ${featuredClass === 'right' ? 'secondary' : ''} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
               <div class="thumb-wrap">
                 <img
                   class="thumb"
@@ -688,14 +748,14 @@
               <p class="id">${escapeHtml(displayId)}</p>
               <p class="object-title">${escapeHtml(title)}</p>
               <p class="context">${escapeHtml(context)}</p>
-              ${renderTags(secondary)}
+              ${renderTags(tagsToShow, true)}
             </a>
           </div>
         `;
       }
 
       return `
-        <a class="card reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+        <a class="card variant-${variant} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
           <div class="thumb-wrap">
             <img
               class="thumb"
@@ -709,7 +769,7 @@
           <p class="id">${escapeHtml(displayId)}</p>
           <p class="object-title">${escapeHtml(title)}</p>
           <p class="context">${escapeHtml(context)}</p>
-          ${renderTags(secondary)}
+          ${renderTags(tagsToShow, false)}
         </a>
       `;
     }
@@ -718,13 +778,21 @@
       return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
     }
 
-    function buildEditorialRow(items, type = 3, align = "left") {
+    function buildEditorialRow(items, rowIndex, type = 3, align = "left") {
       if (!items.length) return "";
-      return `
-        <div class="editorial-row ${type === 2 ? 'two' : 'three'} ${align}">
-          ${items.map(item => renderCard(item)).join("")}
-        </div>
-      `;
+
+      const rowClass = type === 2 ? "two" : "three";
+      const cardsHtml = items.map((item, idx) => {
+        const variant = cardVariantForRow(rowIndex, idx, type);
+        const suppressWeakTags = idx !== 0;
+        return renderCard(item, { variant, suppressWeakTags });
+      }).join("");
+
+      return `<div class="editorial-row ${rowClass} ${align}">${cardsHtml}</div>`;
+    }
+
+    function blockWrap(inner, gap = "m") {
+      return `<div class="archive-block gap-${gap}">${inner}</div>`;
     }
 
     function setupReveal() {
@@ -789,6 +857,7 @@
 
         const items = [...itemsRaw].sort(byRecordDescending);
         const featuredItems = Array.isArray(featuredRaw) ? [...featuredRaw].sort(byRecordDescending) : [];
+
         const featuredIds = new Set(
           featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
         );
@@ -798,12 +867,17 @@
         const secondFeaturedId = featuredItems[1] ? (featuredItems[1].Display_ID || "").trim() : null;
 
         let html = "";
+        let rowIndex = 0;
+        let directionLeft = true;
 
         if (firstFeaturedId && itemMap.has(firstFeaturedId)) {
-          html += renderCard(itemMap.get(firstFeaturedId), {
-            featured: true,
-            alignment: "center"
-          });
+          html += blockWrap(
+            renderCard(itemMap.get(firstFeaturedId), {
+              featured: true,
+              featuredClass: "center"
+            }),
+            "m"
+          );
         }
 
         const remaining = items.filter(item => {
@@ -812,11 +886,24 @@
         });
 
         let buffer = [];
-        let rowIndex = 0;
-        let sideAlignLeft = true;
 
         function nextPattern() {
-          return rowIndex % 3 === 2 ? 2 : (rowIndex % 2 === 0 ? 2 : 3);
+          return rowIndex % 3 === 2 ? 2 : 3;
+        }
+
+        function nextGap() {
+          if (rowIndex % 5 === 0) return "l";
+          if (rowIndex % 3 === 0) return "m";
+          return "xl";
+        }
+
+        function nextAlign(rowType) {
+          if (rowType === 2) {
+            const a = directionLeft ? "left" : "right";
+            directionLeft = !directionLeft;
+            return a;
+          }
+          return "left";
         }
 
         function flushBuffer(forceAll = false) {
@@ -829,11 +916,7 @@
             if (forceAll && buffer.length < pattern) {
               take = buffer.length;
             } else if (buffer.length < pattern) {
-              if (buffer.length >= 2) {
-                take = 2;
-              } else {
-                take = 1;
-              }
+              take = buffer.length >= 2 ? 2 : 1;
             }
 
             if (!forceAll && buffer.length === 4 && pattern === 3) {
@@ -841,15 +924,15 @@
             }
 
             const chunk = buffer.splice(0, take);
-            const align = sideAlignLeft ? "left" : "right";
+            const rowType = chunk.length >= 3 ? 3 : 2;
+            const align = nextAlign(rowType);
+            const gap = nextGap();
 
-            if (chunk.length === 3) {
-              html += buildEditorialRow(chunk, 3, align);
-            } else {
-              html += buildEditorialRow(chunk, 2, align);
-            }
+            html += blockWrap(
+              buildEditorialRow(chunk, rowIndex, rowType, align),
+              gap
+            );
 
-            sideAlignLeft = !sideAlignLeft;
             rowIndex++;
           }
         }
@@ -859,19 +942,27 @@
 
           if (id === secondFeaturedId) {
             flushBuffer(true);
-            html += renderCard(item, {
-              featured: true,
-              alignment: "center"
-            });
+
+            html += blockWrap(
+              renderCard(item, {
+                featured: true,
+                featuredClass: "right"
+              }),
+              "xl"
+            );
             return;
           }
 
           if (featuredIds.has(id) && id !== secondFeaturedId) {
             flushBuffer(true);
-            html += renderCard(item, {
-              featured: true,
-              alignment: "center"
-            });
+
+            html += blockWrap(
+              renderCard(item, {
+                featured: true,
+                featuredClass: "center"
+              }),
+              "l"
+            );
             return;
           }
 
