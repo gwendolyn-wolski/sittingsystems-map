@@ -31,10 +31,6 @@
       --card-img-w: 246px;
       --card-img-w-narrow: 220px;
       --card-img-w-wide: 270px;
-
-      --card-text-w: 220px;
-      --card-text-w-narrow: 198px;
-      --card-text-w-wide: 242px;
     }
 
     * { box-sizing: border-box; }
@@ -159,6 +155,11 @@
       justify-content: flex-end;
     }
 
+    .featured-row.center .featured-card {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     .featured-card {
       width: var(--hero-w);
       max-width: 100%;
@@ -220,11 +221,13 @@
 
     .editorial-row.two.left {
       justify-content: start;
+      justify-items: start;
       column-gap: 170px;
     }
 
     .editorial-row.two.right {
       justify-content: end;
+      justify-items: start;
       column-gap: 170px;
     }
 
@@ -233,9 +236,6 @@
       grid-template-columns: repeat(3, minmax(0, auto));
       align-items: start;
       width: 100%;
-    }
-
-    .editorial-row.three.edge-left {
       justify-content: space-between;
     }
 
@@ -268,27 +268,34 @@
     }
 
     .card.card-narrow {
-      width: var(--card-text-w-narrow);
+      width: var(--card-img-w-narrow);
     }
 
     .card.card-standard {
-      width: var(--card-text-w);
+      width: var(--card-img-w);
     }
 
     .card.card-wide {
-      width: var(--card-text-w-wide);
+      width: var(--card-img-w-wide);
     }
 
-    .card.card-narrow .thumb {
-      max-width: var(--card-img-w-narrow);
-    }
-
-    .card.card-standard .thumb {
-      max-width: var(--card-img-w);
-    }
-
+    .card.card-narrow .thumb,
+    .card.card-standard .thumb,
     .card.card-wide .thumb {
-      max-width: var(--card-img-w-wide);
+      width: 100%;
+      max-width: none;
+    }
+
+    .card .meta-block {
+      max-width: 92%;
+    }
+
+    .card.card-narrow .meta-block {
+      max-width: 90%;
+    }
+
+    .card.card-wide .meta-block {
+      max-width: 94%;
     }
 
     .id {
@@ -390,11 +397,6 @@
         --card-img-w: 230px;
         --card-img-w-narrow: 206px;
         --card-img-w-wide: 252px;
-
-        --card-text-w: 208px;
-        --card-text-w-narrow: 188px;
-        --card-text-w-wide: 228px;
-
         --hero-w: min(565px, calc(var(--archive-w) * 0.47));
         --hero-2-w: min(525px, calc(var(--archive-w) * 0.44));
       }
@@ -409,15 +411,9 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-
         --card-img-w: 214px;
         --card-img-w-narrow: 194px;
         --card-img-w-wide: 234px;
-
-        --card-text-w: 196px;
-        --card-text-w-narrow: 182px;
-        --card-text-w-wide: 214px;
-
         --hero-w: min(540px, calc(var(--archive-w) * 0.49));
         --hero-2-w: min(500px, calc(var(--archive-w) * 0.45));
       }
@@ -586,7 +582,10 @@
       }
 
       .featured-card .meta-block,
-      .featured-card.secondary .meta-block {
+      .featured-card.secondary .meta-block,
+      .card .meta-block,
+      .card.card-narrow .meta-block,
+      .card.card-wide .meta-block {
         max-width: 100%;
       }
 
@@ -784,7 +783,7 @@
 
       return `
         <div class="archive-block ${rowVariant ? "loose" : ""}">
-          <div class="editorial-row three edge-left ${rowVariant}">
+          <div class="editorial-row three ${rowVariant}">
             ${rowItems.map((item, i) => renderCard(item, {
               scale: getCardScale(item, i)
             })).join("")}
