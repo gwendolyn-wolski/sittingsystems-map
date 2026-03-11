@@ -103,7 +103,10 @@ function titleFromMapLabelFallback(mapLabel, displayId) {
   const raw = clean(mapLabel);
   if (!raw) return "";
   if (displayId && raw.startsWith(displayId)) {
-    return raw.replace(new RegExp("^" + displayId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s+[—-]\\s+"), "").trim();
+    return raw.replace(
+      new RegExp("^" + displayId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s+[—-]\\s+"),
+      ""
+    ).trim();
   }
   return raw;
 }
@@ -121,7 +124,7 @@ function objectNav(previousChair, nextChair) {
 
   const prevHtml = previousChair
     ? `
-      <a class="nav-link prev" href="${escapeHtml(prevHref)}">
+      <a class="nav-link prev" href="${escapeHtml(prevHref)}" target="_top" rel="noopener">
         <span class="nav-kicker">Previous object</span>
         <span class="nav-title">← ${escapeHtml(previousChair.Display_ID)} — ${escapeHtml(previousChair.Title)}</span>
       </a>
@@ -130,14 +133,15 @@ function objectNav(previousChair, nextChair) {
 
   const nextHtml = nextChair
     ? `
-      <a class="nav-link next" href="${escapeHtml(nextHref)}">
+      <a class="nav-link next" href="${escapeHtml(nextHref)}" target="_top" rel="noopener">
         <span class="nav-kicker">Next object</span>
         <span class="nav-title">${escapeHtml(nextChair.Display_ID)} — ${escapeHtml(nextChair.Title)} →</span>
       </a>
     `
-    : ``;
+    : "";
 
   return `<nav class="nav-row">${prevHtml}${nextHtml}</nav>`;
+}
 
 const chairs = rows
   .filter(row => clean(row["Display_ID"]))
@@ -161,7 +165,9 @@ const chairs = rows
       .join(", ");
 
     const originSystem = splitList(firstNonEmpty(row, ["Origin System"])).join(", ");
-    const currentSystem = splitList(firstNonEmpty(row, ["Current System (multi-select)", "Current System"])).join(", ");
+    const currentSystem = splitList(
+      firstNonEmpty(row, ["Current System (multi-select)", "Current System"])
+    ).join(", ");
     const materials = splitList(firstNonEmpty(row, ["Materials"])).join(", ");
     const bodyState = splitList(firstNonEmpty(row, ["Body State"])).join(", ");
 
