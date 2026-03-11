@@ -54,11 +54,11 @@ function joinParts(parts) {
   return parts.map(clean).filter(Boolean).join(", ");
 }
 
-function makeMetaBlock(label, value) {
+function makeMetaBlock(label, value, secondary = false) {
   const v = clean(value);
   if (!v) return "";
   return `
-    <div class="meta-group">
+    <div class="meta-group${secondary ? " secondary" : ""}">
       <p class="meta-label">${escapeHtml(label)}</p>
       <p class="meta-value">${escapeHtml(v)}</p>
     </div>
@@ -106,6 +106,30 @@ function titleFromMapLabelFallback(mapLabel, displayId) {
     return raw.replace(new RegExp("^" + displayId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s+[—-]\\s+"), "").trim();
   }
   return raw;
+}
+
+function objectNav(previousChair, nextChair) {
+  if (!previousChair && !nextChair) return "";
+
+  const prevHtml = previousChair
+    ? `
+      <a class="nav-link prev" href="../${escapeHtml(previousChair.Slug)}/">
+        <span class="nav-kicker">Previous object</span>
+        <span class="nav-title">← ${escapeHtml(previousChair.Display_ID)} — ${escapeHtml(previousChair.Title)}</span>
+      </a>
+    `
+    : `<div></div>`;
+
+  const nextHtml = nextChair
+    ? `
+      <a class="nav-link next" href="../${escapeHtml(nextChair.Slug)}/">
+        <span class="nav-kicker">Next object</span>
+        <span class="nav-title">${escapeHtml(nextChair.Display_ID)} — ${escapeHtml(nextChair.Title)} →</span>
+      </a>
+    `
+    : ``;
+
+  return `<nav class="nav-row">${prevHtml}${nextHtml}</nav>`;
 }
 
 const chairs = rows
@@ -173,33 +197,45 @@ const chairs = rows
       Context_Combined: contextCombined,
       Header_Subtitle: subtitle
     };
+  })
+  .sort((a, b) => {
+    if (a.Record_Number != null && b.Record_Number != null) {
+      return a.Record_Number - b.Record_Number;
+    }
+    return a.Display_ID.localeCompare(b.Display_ID);
   });
 
 fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairs, null, 2));
 
-chairs.forEach(chair => {
+chairs.forEach((chair, index) => {
   const slug = chair.Slug;
   const outDir = path.join(ROOT, slug);
   fs.mkdirSync(outDir, { recursive: true });
+
+  const previousChair = index > 0 ? chairs[index - 1] : null;
+  const nextChair = index < chairs.length - 1 ? chairs[index + 1] : null;
 
   const pageTitle = chair.Title
     ? `${chair.Display_ID} — ${chair.Title}`
     : chair.Display_ID;
 
-  const metaBlocks = [
+  const primaryMetaBlocks = [
     makeMetaBlock("Object ID", chair.Display_ID),
     makeMetaBlock("Seating Type", chair.Seating_Type),
     makeMetaBlock("Context", chair.Context_Combined),
-    makeMetaBlock("Location", chair.Location),
-    makeMetaBlock("Environment", chair.Environment),
-    makeMetaBlock("Site Type", chair.Site_Type),
-    makeMetaBlock("Materials", chair.Materials),
-    makeMetaBlock("Visibility", chair.Visibility),
-    makeMetaBlock("Duration", chair.Duration),
-    makeMetaBlock("Posture", chair.Posture),
-    makeMetaBlock("Body State", chair.Body_State),
-    makeMetaBlock("Origin System", chair.Origin_System),
-    makeMetaBlock("Current System", chair.Current_System)
+    makeMetaBlock("Location", chair.Location)
+  ].join("");
+
+  const secondaryMetaBlocks = [
+    makeMetaBlock("Environment", chair.Environment, true),
+    makeMetaBlock("Site Type", chair.Site_Type, true),
+    makeMetaBlock("Materials", chair.Materials, true),
+    makeMetaBlock("Visibility", chair.Visibility, true),
+    makeMetaBlock("Duration", chair.Duration, true),
+    makeMetaBlock("Posture", chair.Posture, true),
+    makeMetaBlock("Body State", chair.Body_State, true),
+    makeMetaBlock("Origin System", chair.Origin_System, true),
+    makeMetaBlock("Current System", chair.Current_System, true)
   ].join("");
 
   const captionBlock = clean(chair.Caption)
@@ -211,15 +247,18 @@ chairs.forEach(chair => {
     : "";
 
   const observationsBlock = paragraphize(chair.Observations);
+  const objectNavBlock = objectNav(previousChair, nextChair);
 
   const html = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
     .replaceAll("{{HEADER_SUBTITLE}}", escapeHtml(chair.Header_Subtitle))
-    .replaceAll("{{META_BLOCKS}}", metaBlocks)
+    .replaceAll("{{PRIMARY_META_BLOCKS}}", primaryMetaBlocks)
+    .replaceAll("{{SECONDARY_META_BLOCKS}}", secondaryMetaBlocks)
     .replaceAll("{{IMAGE_BLOCK}}", imageBlock(chair.Thumbnail, pageTitle))
     .replaceAll("{{CAPTION_BLOCK}}", captionBlock)
     .replaceAll("{{LOCATION_BLOCK}}", locationBlock)
-    .replaceAll("{{OBSERVATIONS_BLOCK}}", observationsBlock);
+    .replaceAll("{{OBSERVATIONS_BLOCK}}", observationsBlock)
+    .replaceAll("{{OBJECT_NAV}}", objectNavBlock);
 
   fs.writeFileSync(path.join(outDir, "index.html"), html);
 });
