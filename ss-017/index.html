@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SS-017 — Deep-Seated Armchair — Domestic Rest</title>
+
+  <style>
+    :root {
+      --bg: transparent;
+      --text: #111111;
+      --muted: rgba(17,17,17,.48);
+      --muted-soft: rgba(17,17,17,.72);
+      --line: #e2e2e2;
+
+      --page-pad-x: 28px;
+      --page-pad-top: 58px;
+      --page-pad-bottom: 72px;
+
+      --rail-w: 150px;
+      --gap: 56px;
+
+      --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --full-w: calc(100vw - var(--page-pad-x) * 2);
+
+      --detail-w: min(1180px, var(--full-w));
+      --meta-w: 240px;
+      --detail-gap: 64px;
+      --image-w: min(560px, 100%);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page,
+    .layout,
+    .main,
+    .detail-shell {
+      overflow: visible;
+    }
+
+    .page {
+      width: 100%;
+      padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+      background: transparent;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr;
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .rail {
+      min-height: 1px;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .masthead {
+      width: var(--masthead-w);
+      max-width: 100%;
+      padding-top: 8px;
+    }
+
+    .title {
+      width: 290px;
+      margin: 0;
+      font-size: 35px;
+      line-height: 0.9;
+      font-weight: 630;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      margin: 14px 0 0 0;
+      max-width: 390px;
+      font-size: 10.5px;
+      line-height: 1.28;
+      color: var(--muted-soft);
+    }
+
+    .rule {
+      margin-top: 8px;
+      height: 1px;
+      background: var(--line);
+      width: calc(100vw - var(--page-pad-x) * 2);
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+    }
+
+    .detail-shell {
+      width: var(--detail-w);
+      max-width: 100%;
+      margin-top: 72px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: minmax(210px, var(--meta-w)) minmax(0, 1fr);
+      column-gap: var(--detail-gap);
+      align-items: start;
+    }
+
+    .meta-group {
+      margin-bottom: 28px;
+    }
+
+    .meta-label {
+      margin: 0 0 3px 0;
+      font-size: 11px;
+      line-height: 1.25;
+      color: var(--muted-soft);
+      letter-spacing: -0.01em;
+    }
+
+    .meta-value {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.28;
+      font-weight: 630;
+      letter-spacing: -0.02em;
+    }
+
+    .media {
+      min-width: 0;
+    }
+
+    .image-wrap {
+      width: var(--image-w);
+      max-width: 100%;
+    }
+
+    .main-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption,
+    .location-line {
+      margin: 14px 0 0 0;
+      max-width: 760px;
+      font-size: 12px;
+      line-height: 1.42;
+      font-style: italic;
+      color: var(--muted-soft);
+    }
+
+    .notes {
+      margin-top: 20px;
+      max-width: 760px;
+      font-size: 13.5px;
+      line-height: 1.62;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .notes p {
+      margin: 0;
+    }
+
+    .empty-image {
+      width: var(--image-w);
+      max-width: 100%;
+      aspect-ratio: 4 / 3;
+      background: rgba(17,17,17,.03);
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --page-pad-x: 18px;
+        --page-pad-top: 48px;
+      }
+
+      html, body {
+        overflow-y: auto;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+      }
+
+      .rail {
+        display: none;
+      }
+
+      .masthead,
+      .detail-shell {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .rule {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .detail-shell {
+        margin-top: 44px;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+        row-gap: 34px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      :root {
+        --page-pad-x: 20px;
+        --page-pad-top: 22px;
+        --page-pad-bottom: 36px;
+      }
+
+      html, body {
+        overflow-y: auto;
+      }
+
+      .page {
+        padding-top: var(--page-pad-top);
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .masthead {
+        padding-top: 0;
+        width: 100%;
+      }
+
+      .title {
+        width: 100%;
+        max-width: 220px;
+        font-size: 28px;
+        line-height: 0.92;
+        margin: 0 0 14px 0;
+      }
+
+      .subtitle {
+        margin-top: 0;
+        max-width: 100%;
+        font-size: 12px;
+        line-height: 1.36;
+      }
+
+      .rule {
+        margin-top: 14px;
+        width: 100%;
+      }
+
+      .detail-shell {
+        width: 100%;
+        margin-top: 30px;
+      }
+
+      .meta-label {
+        font-size: 11.5px;
+      }
+
+      .meta-value {
+        font-size: 14px;
+      }
+
+      .caption,
+      .location-line {
+        font-size: 11.5px;
+      }
+
+      .notes {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="layout">
+      <aside class="rail"></aside>
+
+      <section class="main">
+        <header class="masthead">
+          <h1 class="title">Sitting<br>Systems</h1>
+          <p class="subtitle">SS-017 — Deep-Seated Armchair — Domestic Rest</p>
+          <div class="rule" aria-hidden="true"></div>
+        </header>
+
+        <section class="detail-shell">
+          <div class="detail-grid">
+            <aside class="meta">
+              
+    <div class="meta-group">
+      <p class="meta-label">Object ID</p>
+      <p class="meta-value">SS-017</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Seating Type</p>
+      <p class="meta-value">armchair</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Context</p>
+      <p class="meta-value">Resting, private</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Location</p>
+      <p class="meta-value">Paris, France</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Environment</p>
+      <p class="meta-value">indoor</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Site Type</p>
+      <p class="meta-value">private residence — living room</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Materials</p>
+      <p class="meta-value">upholstery, wood</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Visibility</p>
+      <p class="meta-value">usable</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Duration</p>
+      <p class="meta-value">extended</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Posture</p>
+      <p class="meta-value">reclined</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Body State</p>
+      <p class="meta-value">supported, contained, relaxed</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Origin System</p>
+      <p class="meta-value">domestic</p>
+    </div>
+  
+    <div class="meta-group">
+      <p class="meta-label">Current System</p>
+      <p class="meta-value">domestic</p>
+    </div>
+  
+            </aside>
+
+            <section class="media">
+              
+    <div class="image-wrap">
+      <img
+        class="main-image"
+        src="../images/SS-017.jpeg"
+        alt="SS-017 — Deep-Seated Armchair — Domestic Rest"
+        loading="eager"
+        onload="postSize()"
+        onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
+      />
+    </div>
+  
+              <p class="caption">Photographic record of  a deep-seated armchair designed to support extended rest and informal postures.</p>
+              <p class="location-line">Paris, France</p>
+              <div class="notes"><p>A deep-seated upholstered armchair positioned within a private interior and actively occupied. The form supports extended rest and informal bodily orientation, allowing the occupant to recline and elevate the legs. Unlike retail or display seating, this chair fully accommodates duration, operating as a domestic site of containment and release rather than regulation.</p></div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function postSize() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+
+      window.parent.postMessage({
+        type: 'sittingsystems:resize',
+        height
+      }, '*');
+    }
+
+    window.addEventListener('load', postSize);
+    window.addEventListener('resize', postSize);
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => postSize());
+      ro.observe(document.body);
+    }
+  </script>
+</body>
+</html>
