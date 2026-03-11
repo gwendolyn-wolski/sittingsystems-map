@@ -111,9 +111,17 @@ function titleFromMapLabelFallback(mapLabel, displayId) {
 function objectNav(previousChair, nextChair) {
   if (!previousChair && !nextChair) return "";
 
+  const prevHref = previousChair
+    ? `https://sittingsystems.org/${previousChair.Slug}/`
+    : "";
+
+  const nextHref = nextChair
+    ? `https://sittingsystems.org/${nextChair.Slug}/`
+    : "";
+
   const prevHtml = previousChair
     ? `
-      <a class="nav-link prev" href="../${escapeHtml(previousChair.Slug)}/">
+      <a class="nav-link prev" href="${escapeHtml(prevHref)}">
         <span class="nav-kicker">Previous object</span>
         <span class="nav-title">← ${escapeHtml(previousChair.Display_ID)} — ${escapeHtml(previousChair.Title)}</span>
       </a>
@@ -122,7 +130,7 @@ function objectNav(previousChair, nextChair) {
 
   const nextHtml = nextChair
     ? `
-      <a class="nav-link next" href="../${escapeHtml(nextChair.Slug)}/">
+      <a class="nav-link next" href="${escapeHtml(nextHref)}">
         <span class="nav-kicker">Next object</span>
         <span class="nav-title">${escapeHtml(nextChair.Display_ID)} — ${escapeHtml(nextChair.Title)} →</span>
       </a>
@@ -130,7 +138,6 @@ function objectNav(previousChair, nextChair) {
     : ``;
 
   return `<nav class="nav-row">${prevHtml}${nextHtml}</nav>`;
-}
 
 const chairs = rows
   .filter(row => clean(row["Display_ID"]))
