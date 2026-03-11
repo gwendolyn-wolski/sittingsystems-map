@@ -1,6 +1,6 @@
 [
   {
-    "Record_Number": 1,
+    "Record_Number": 0,
     "Display_ID": "SS-001",
     "Title": "Informal Armchair Arrangement, Sidewalk",
     "Slug": "ss-001",
@@ -35,7 +35,7 @@
     "Header_Subtitle": "SS-001 — Informal Armchair Arrangement, Sidewalk"
   },
   {
-    "Record_Number": 2,
+    "Record_Number": 0,
     "Display_ID": "SS-002",
     "Title": "Child-Sized Chair, Private Residence",
     "Slug": "ss-002",
@@ -71,7 +71,7 @@
     "Header_Subtitle": "SS-002 — Child-Sized Chair, Private Residence"
   },
   {
-    "Record_Number": 3,
+    "Record_Number": 0,
     "Display_ID": "SS-003",
     "Title": "Decorative Side Chair, Outdoor Market",
     "Slug": "ss-003",
@@ -107,7 +107,7 @@
     "Header_Subtitle": "SS-003 — Decorative Side Chair, Outdoor Market"
   },
   {
-    "Record_Number": 4,
+    "Record_Number": 0,
     "Display_ID": "SS-004",
     "Title": "Ceremonial Upholstered Chair — Louvre Interior",
     "Slug": "ss-004",
@@ -143,7 +143,7 @@
     "Header_Subtitle": "SS-004 — Ceremonial Upholstered Chair — Louvre Interior"
   },
   {
-    "Record_Number": 5,
+    "Record_Number": 0,
     "Display_ID": "SS-005",
     "Title": "Modified Armchair — Exhibition Installation",
     "Slug": "ss-005",
@@ -179,7 +179,7 @@
     "Header_Subtitle": "SS-005 — Modified Armchair — Exhibition Installation"
   },
   {
-    "Record_Number": 6,
+    "Record_Number": 0,
     "Display_ID": "SS-006",
     "Title": "Painted Ladder-Back Chair — Commercial Interior",
     "Slug": "ss-006",
@@ -214,7 +214,7 @@
     "Header_Subtitle": "SS-006 — Painted Ladder-Back Chair — Commercial Interior"
   },
   {
-    "Record_Number": 7,
+    "Record_Number": 0,
     "Display_ID": "SS-007",
     "Title": "Upholstered Armchair — Roadside (Winter)",
     "Slug": "ss-007",
@@ -251,7 +251,7 @@
     "Header_Subtitle": "SS-007 — Upholstered Armchair — Roadside (Winter)"
   },
   {
-    "Record_Number": 8,
+    "Record_Number": 0,
     "Display_ID": "SS-008",
     "Title": "Artist’s Step Chair — Improvised Seating",
     "Slug": "ss-008",
@@ -287,7 +287,7 @@
     "Header_Subtitle": "SS-008 — Artist’s Step Chair — Improvised Seating"
   },
   {
-    "Record_Number": 9,
+    "Record_Number": 0,
     "Display_ID": "SS-009",
     "Title": "Reclining Loungers — Hospitality Lawn",
     "Slug": "ss-009",
@@ -323,7 +323,7 @@
     "Header_Subtitle": "SS-009 — Reclining Loungers — Hospitality Lawn"
   },
   {
-    "Record_Number": 10,
+    "Record_Number": 0,
     "Display_ID": "SS-010",
     "Title": "Ornamental Armchairs — Storefront Threshold",
     "Slug": "ss-010",
@@ -358,7 +358,7 @@
     "Header_Subtitle": "SS-010 — Ornamental Armchairs — Storefront Threshold"
   },
   {
-    "Record_Number": 11,
+    "Record_Number": 0,
     "Display_ID": "SS-011",
     "Title": "Student Desk-Chair — Classroom Synchronization",
     "Slug": "ss-011",
@@ -393,7 +393,7 @@
     "Header_Subtitle": "SS-011 — Student Desk-Chair — Classroom Synchronization"
   },
   {
-    "Record_Number": 12,
+    "Record_Number": 0,
     "Display_ID": "SS-012",
     "Title": "Lakeside Armchairs — Horizon-Oriented Rest",
     "Slug": "ss-012",
@@ -414,7 +414,7 @@
     "Duration": "extended",
     "Posture": "reclined",
     "Body_State": "relaxed, unregulated",
-    "Observations": "Seating oriented toward a fixed horizon encourages sustained stillness. Unlike institutional or hospitality arrangements, no collective alignment or duration is prescribed. The body is permitted to remain without instruction, endpoint, or display.",
+    "Observations": "Seating oriented toward a fixed horizon encourages sustained stillness. The body is permitted to remain without instruction, endpoint, or display.",
     "Caption": "Photographic record of lakeside balcony seating.",
     "Thumbnail": "SS-012.jpeg",
     "Latitude": 43.7844,
@@ -428,7 +428,7 @@
     "Header_Subtitle": "SS-012 — Lakeside Armchairs — Horizon-Oriented Rest"
   },
   {
-    "Record_Number": 13,
+    "Record_Number": 0,
     "Display_ID": "SS-013",
     "Title": "Dining Chairs (Matched Set) — Domestic Displacement",
     "Slug": "ss-013",
@@ -463,7 +463,7 @@
     "Header_Subtitle": "SS-013 — Dining Chairs (Matched Set) — Domestic Displacement"
   },
   {
-    "Record_Number": 14,
+    "Record_Number": 0,
     "Display_ID": "SS-014",
     "Title": "Lounge Chair — Exhibition Proxy for Rest",
     "Slug": "ss-014",
@@ -500,7 +500,7 @@
     "Header_Subtitle": "SS-014 — Lounge Chair — Exhibition Proxy for Rest"
   },
   {
-    "Record_Number": 15,
+    "Record_Number": 0,
     "Display_ID": "SS-015",
     "Title": "Bentwood Armchair — Retail Seating",
     "Slug": "ss-015",
@@ -535,7 +535,7 @@
     "Header_Subtitle": "SS-015 — Bentwood Armchair — Retail Seating"
   },
   {
-    "Record_Number": 16,
+    "Record_Number": 0,
     "Display_ID": "SS-016",
     "Title": "Molded Plywood Lounge Chair — Sidewalk Resale Display",
     "Slug": "ss-016",
@@ -570,7 +570,7 @@
     "Header_Subtitle": "SS-016 — Molded Plywood Lounge Chair — Sidewalk Resale Display"
   },
   {
-    "Record_Number": 17,
+    "Record_Number": 0,
     "Display_ID": "SS-017",
     "Title": "Deep-Seated Armchair — Domestic Rest",
     "Slug": "ss-017",
