@@ -45,16 +45,6 @@ function firstNonEmpty(row, keys) {
   return "";
 }
 
-function firstImageName(raw) {
-  const value = clean(raw);
-  if (!value) return "";
-
-  const match = value.match(/([^,(]+?\.(?:jpg|jpeg|png|webp))/i);
-  if (match) return match[1].trim();
-
-  return value.split(",")[0].trim();
-}
-
 function toNum(value) {
   const n = Number(clean(value));
   return Number.isFinite(n) ? n : null;
@@ -99,7 +89,7 @@ function imageBlock(imageFile, pageTitle) {
     <div class="image-wrap">
       <img
         class="main-image"
-        src="/images/${escapeHtml(imageFile)}"
+        src="../images/${escapeHtml(imageFile)}"
         alt="${escapeHtml(pageTitle)}"
         loading="eager"
         onload="postSize()"
@@ -122,8 +112,11 @@ const chairs = rows
   .filter(row => clean(row["Display_ID"]))
   .map(row => {
     const displayId = clean(row["Display_ID"]);
-    const title = firstNonEmpty(row, ["Title"]) || titleFromMapLabelFallback(row["Map_Label"], displayId);
-    const imageFile = firstImageName(firstNonEmpty(row, ["Thumbnail", "Image_File", "Image"]));
+    const title =
+      firstNonEmpty(row, ["Title"]) ||
+      titleFromMapLabelFallback(row["Map_Label"], displayId);
+
+    const imageFile = `${displayId}.jpeg`;
 
     const city = firstNonEmpty(row, ["City"]);
     const state = firstNonEmpty(row, ["State"]);
@@ -132,7 +125,9 @@ const chairs = rows
 
     const contextPrimary = firstNonEmpty(row, ["Context (Primary)"]);
     const contextSecondaryList = splitList(firstNonEmpty(row, ["Context - Secondary"]));
-    const contextCombined = [contextPrimary, ...contextSecondaryList].filter(Boolean).join(", ");
+    const contextCombined = [contextPrimary, ...contextSecondaryList]
+      .filter(Boolean)
+      .join(", ");
 
     const originSystem = splitList(firstNonEmpty(row, ["Origin System"])).join(", ");
     const currentSystem = splitList(firstNonEmpty(row, ["Current System"])).join(", ");
@@ -148,30 +143,32 @@ const chairs = rows
       Display_ID: displayId,
       Title: title,
       Slug: displayId.toLowerCase(),
-      "Seating Type": firstNonEmpty(row, ["Seating Type", "Seating_Type"]),
-      "Context (Primary)": contextPrimary,
-      "Context - Secondary": contextSecondaryList,
-      "Origin System": originSystem,
-      "Current System": currentSystem,
+      Seating_Type: firstNonEmpty(row, ["Seating Type", "Seating_Type"]),
+      Context_Primary: contextPrimary,
+      Context_Secondary: contextSecondaryList,
+      Origin_System: originSystem,
+      Current_System: currentSystem,
       Environment: firstNonEmpty(row, ["Environment"]),
       Country: country,
       State: state,
       City: city,
-      "Site Type": firstNonEmpty(row, ["Site Type"]),
+      Site_Type: firstNonEmpty(row, ["Site Type"]),
       Materials: materials,
       Visibility: firstNonEmpty(row, ["Visibility"]),
       Duration: firstNonEmpty(row, ["Duration"]),
       Posture: firstNonEmpty(row, ["Posture"]),
-      "Body State": bodyState,
+      Body_State: bodyState,
       Observations: firstNonEmpty(row, ["Observations"]),
       Captions: firstNonEmpty(row, ["Captions", "Caption"]),
       Thumbnail: imageFile,
       Latitude: toNum(row["Latitude"]),
       Longitude: toNum(row["Longitude"]),
-      Readymag_URL: firstNonEmpty(row, ["Readymag_URL"]) || `https://sittingsystems.org/${displayId.toLowerCase()}/`,
+      Readymag_URL:
+        firstNonEmpty(row, ["Readymag_URL"]) ||
+        `https://sittingsystems.org/${displayId.toLowerCase()}/`,
       Map_Label: firstNonEmpty(row, ["Map_Label"]),
       Featured: firstNonEmpty(row, ["Featured"]),
-      "Web Status": firstNonEmpty(row, ["Web Status"]),
+      Web_Status: firstNonEmpty(row, ["Web Status"]),
       Location: location,
       Context_Combined: contextCombined,
       Header_Subtitle: subtitle
@@ -191,18 +188,18 @@ chairs.forEach(chair => {
 
   const metaBlocks = [
     makeMetaBlock("Object ID", chair.Display_ID),
-    makeMetaBlock("Seating Type", chair["Seating Type"]),
+    makeMetaBlock("Seating Type", chair.Seating_Type),
     makeMetaBlock("Context", chair.Context_Combined),
     makeMetaBlock("Location", chair.Location),
     makeMetaBlock("Environment", chair.Environment),
-    makeMetaBlock("Site Type", chair["Site Type"]),
+    makeMetaBlock("Site Type", chair.Site_Type),
     makeMetaBlock("Materials", chair.Materials),
     makeMetaBlock("Visibility", chair.Visibility),
     makeMetaBlock("Duration", chair.Duration),
     makeMetaBlock("Posture", chair.Posture),
-    makeMetaBlock("Body State", chair["Body State"]),
-    makeMetaBlock("Origin System", chair["Origin System"]),
-    makeMetaBlock("Current System", chair["Current System"])
+    makeMetaBlock("Body State", chair.Body_State),
+    makeMetaBlock("Origin System", chair.Origin_System),
+    makeMetaBlock("Current System", chair.Current_System)
   ].join("");
 
   const captionBlock = clean(chair.Captions)
