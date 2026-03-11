@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sitting Systems — Sources</title>
+
+  <style>
+    :root {
+      --bg: transparent;
+      --text: #111111;
+      --muted: rgba(17,17,17,.48);
+      --muted-soft: rgba(17,17,17,.72);
+      --line: #e2e2e2;
+
+      --page-pad-x: 28px;
+      --page-pad-top: 58px;
+      --page-pad-bottom: 72px;
+
+      --rail-w: 150px;
+      --gap: 56px;
+
+      --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --sources-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page,
+    .layout,
+    .main,
+    .sources-shell {
+      overflow: visible;
+    }
+
+    .page {
+      width: 100%;
+      padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+      background: transparent;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--rail-w) 1fr;
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .rail {
+      min-height: 1px;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .masthead {
+      width: var(--masthead-w);
+      max-width: 100%;
+      padding-top: 8px;
+    }
+
+    .title {
+      width: 290px;
+      margin: 0;
+      font-size: 35px;
+      line-height: 0.9;
+      font-weight: 630;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      margin: 14px 0 0 0;
+      max-width: 390px;
+      font-size: 10.5px;
+      line-height: 1.28;
+      color: var(--muted-soft);
+    }
+
+    .rule {
+      margin-top: 8px;
+      height: 1px;
+      background: var(--line);
+      width: calc(100vw - var(--page-pad-x) * 2);
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+    }
+
+    .sources-shell {
+      width: var(--sources-w);
+      max-width: 100%;
+      margin-top: 64px;
+    }
+
+    .source-group {
+      margin-bottom: 56px;
+    }
+
+    .group-title {
+      margin: 0 0 28px 0;
+      font-size: 15px;
+      line-height: 1.1;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    .source-list {
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+
+    .source-entry {
+      max-width: 720px;
+    }
+
+    .citation {
+      margin: 0 0 12px 0;
+      font-size: 12px;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: rgba(17,17,17,.92);
+    }
+
+    .citation strong {
+      font-weight: 650;
+    }
+
+    .citation em {
+      font-style: italic;
+      color: rgba(17,17,17,.82);
+    }
+
+    .annotation {
+      margin: 0 0 0 18px;
+      max-width: 560px;
+      font-size: 11.5px;
+      line-height: 1.3;
+      color: rgba(17,17,17,.9);
+    }
+
+    .annotation p {
+      margin: 0;
+    }
+
+    @media (max-width: 1100px) {
+      :root {
+        --rail-w: 120px;
+        --gap: 36px;
+      }
+
+      .title {
+        font-size: 33px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --page-pad-x: 18px;
+        --page-pad-top: 48px;
+      }
+
+      html, body {
+        overflow-y: auto;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+      }
+
+      .rail {
+        display: none;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .masthead,
+      .sources-shell {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .rule {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 680px) {
+      :root {
+        --page-pad-x: 20px;
+        --page-pad-top: 22px;
+        --page-pad-bottom: 36px;
+      }
+
+      html, body {
+        overflow-y: auto;
+      }
+
+      .page {
+        padding-top: var(--page-pad-top);
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .topbar {
+        justify-content: flex-start;
+        margin-bottom: 18px;
+      }
+
+      .masthead {
+        padding-top: 0;
+        width: 100%;
+      }
+
+      .title {
+        width: 100%;
+        max-width: 220px;
+        font-size: 28px;
+        line-height: 0.92;
+        margin: 0 0 14px 0;
+      }
+
+      .subtitle {
+        margin-top: 0;
+        max-width: 100%;
+        font-size: 12px;
+        line-height: 1.36;
+      }
+
+      .rule {
+        margin-top: 14px;
+        width: 100%;
+      }
+
+      .sources-shell {
+        width: 100%;
+        margin-top: 34px;
+      }
+
+      .group-title {
+        font-size: 14px;
+        margin-bottom: 22px;
+      }
+
+      .source-list {
+        gap: 32px;
+      }
+
+      .citation {
+        font-size: 11.5px;
+      }
+
+      .annotation {
+        margin-left: 0;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="layout">
+      <aside class="rail"></aside>
+
+      <section class="main">
+        <div class="topbar" data-site-nav></div>
+
+        <header class="masthead">
+          <h1 class="title">Sources</h1>
+          <p class="subtitle">Texts and references informing the archive’s approach to chairs, posture, and seated life.</p>
+          <div class="rule" aria-hidden="true"></div>
+        </header>
+
+        <section class="sources-shell">
+          <section class="source-group">
+            <h2 class="group-title">Books</h2>
+
+            <div class="source-list">
+              <article class="source-entry">
+                <p class="citation">
+                  <strong>Gamper, Martino.</strong> <em>100 Chairs in 100 Days and Its 100 Ways.</em> London: Dent-De-Leone, 2007.
+                </p>
+                <div class="annotation">
+                  <p>A study in iterative chair-making through reuse and modification of existing forms.</p>
+                </div>
+              </article>
+
+              <article class="source-entry">
+                <p class="citation">
+                  <strong>Cranz, Galen.</strong> <em>The Chair: Rethinking Culture, Body, and Design.</em> New York: W.W. Norton, 1998.
+                </p>
+                <div class="annotation">
+                  <p>A critical analysis of seated form, posture, and the cultural assumptions embedded in chair design.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function postSize() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+
+      window.parent.postMessage({
+        type: 'sittingsystems:resize',
+        height
+      }, '*');
+    }
+
+    window.addEventListener('load', postSize);
+    window.addEventListener('resize', postSize);
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => postSize());
+      ro.observe(document.body);
+    }
+  </script>
+  <script src="./nav.js"></script>
+</body>
+</html>
