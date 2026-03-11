@@ -1,37 +1,150 @@
 (function () {
-  function getCurrentSection() {
-    const path = window.location.pathname.toLowerCase();
+  const NAV_ITEMS = [
+    { label: "Index", href: "https://sittingsystems.org/index/" },
+    { label: "By Context", href: "https://sittingsystems.org/context/" },
+    { label: "By Location", href: "https://sittingsystems.org/location/" },
+    { label: "Notes", href: "https://sittingsystems.org/notes/" },
+    { label: "Sources", href: "https://sittingsystems.org/sources/" }
+  ];
 
-    if (path.includes("/context")) return "context";
-    if (path.includes("/location") || path.includes("/map")) return "location";
-    if (path.includes("/notes")) return "notes";
-    if (path.includes("/sources")) return "sources";
+  function getCurrentKey() {
+    const href = window.location.href;
+    if (href.includes("/context")) return "context";
+    if (href.includes("/location") || href.includes("/map")) return "location";
+    if (href.includes("/notes")) return "notes";
+    if (href.includes("/sources")) return "sources";
     return "index";
   }
 
-  const current = getCurrentSection();
+  function getItemKey(href) {
+    if (href.includes("/context/")) return "context";
+    if (href.includes("/location/")) return "location";
+    if (href.includes("/notes/")) return "notes";
+    if (href.includes("/sources/")) return "sources";
+    return "index";
+  }
 
-  const items = [
-    { key: "index", label: "Index", url: "https://sittingsystems.org/index/" },
-    { key: "context", label: "By Context", url: "https://sittingsystems.org/context/" },
-    { key: "location", label: "By Location", url: "https://sittingsystems.org/location/" },
-    { key: "notes", label: "Notes", url: "https://sittingsystems.org/notes/" },
-    { key: "sources", label: "Sources", url: "https://sittingsystems.org/sources/" }
-  ];
+  function buildNav() {
+    const activeKey = getCurrentKey();
 
-  const navHtml = `
-    <nav class="nav" aria-label="Section navigation">
-      ${items.map((item, i) => `
-        <a
-          href="${item.url}"
-          target="_top"
-          ${item.key === current ? 'class="active"' : ""}
-        >${item.label}</a>${i < items.length - 1 ? '<span class="sep">·</span>' : ''}
-      `).join("")}
-    </nav>
-  `;
+    return `
+      <nav class="ss-nav" aria-label="Section navigation">
+        ${NAV_ITEMS.map((item, i) => {
+          const active = getItemKey(item.href) === activeKey ? "active" : "";
+          return `
+            <a class="ss-nav-link ${active}" href="${item.href}" target="_top">${item.label}</a>
+            ${i < NAV_ITEMS.length - 1 ? `<span class="ss-nav-sep">·</span>` : ``}
+          `;
+        }).join("")}
+      </nav>
+    `;
+  }
 
-  document.querySelectorAll('[data-site-nav]').forEach((el) => {
-    el.innerHTML = navHtml;
-  });
+  function injectStyles() {
+    if (document.getElementById("ss-nav-styles")) return;
+
+    const style = document.createElement("style");
+    style.id = "ss-nav-styles";
+    style.textContent = `
+      [data-site-nav] {
+        position: fixed;
+        top: 28px;
+        right: 34px;
+        z-index: 9999;
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: none;
+      }
+
+      [data-site-nav] .ss-nav {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 10.5px;
+        line-height: 1;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: rgba(17,17,17,.82);
+        white-space: nowrap;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      [data-site-nav] .ss-nav-link {
+        color: inherit;
+        text-decoration: none;
+        opacity: .74;
+        transition: opacity .16s ease;
+      }
+
+      [data-site-nav] .ss-nav-link:hover {
+        opacity: 1;
+      }
+
+      [data-site-nav] .ss-nav-link.active {
+        opacity: 1;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(17,17,17,.78);
+        padding-bottom: 2px;
+      }
+
+      [data-site-nav] .ss-nav-sep {
+        margin: 0 11px;
+        opacity: .34;
+      }
+
+      @media (max-width: 900px) {
+        [data-site-nav] {
+          top: 20px;
+          right: 20px;
+          left: 20px;
+          justify-content: flex-start;
+        }
+
+        [data-site-nav] .ss-nav {
+          font-size: 10.5px;
+          line-height: 1.3;
+          white-space: normal;
+          flex-wrap: wrap;
+          row-gap: 6px;
+        }
+
+        [data-site-nav] .ss-nav-sep {
+          margin: 0 7px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        [data-site-nav] {
+          position: static;
+          top: auto;
+          right: auto;
+          left: auto;
+          margin-bottom: 18px;
+        }
+
+        [data-site-nav] .ss-nav {
+          font-size: 11px;
+          line-height: 1.35;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function mountNav() {
+    injectStyles();
+    document.querySelectorAll("[data-site-nav]").forEach((el) => {
+      el.innerHTML = buildNav();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountNav);
+  } else {
+    mountNav();
+  }
 })();
