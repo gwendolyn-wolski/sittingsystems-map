@@ -93,7 +93,7 @@ function imageBlock(imageFile, pageTitle) {
         alt="${escapeHtml(pageTitle)}"
         loading="eager"
         onload="postSize()"
-        onerror="this.closest('.image-wrap').innerHTML=''; postSize();"
+        onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
       />
     </div>
   `;
@@ -130,7 +130,7 @@ const chairs = rows
       .join(", ");
 
     const originSystem = splitList(firstNonEmpty(row, ["Origin System"])).join(", ");
-    const currentSystem = splitList(firstNonEmpty(row, ["Current System"])).join(", ");
+    const currentSystem = splitList(firstNonEmpty(row, ["Current System (multi-select)", "Current System"])).join(", ");
     const materials = splitList(firstNonEmpty(row, ["Materials"])).join(", ");
     const bodyState = splitList(firstNonEmpty(row, ["Body State"])).join(", ");
 
@@ -159,7 +159,7 @@ const chairs = rows
       Posture: firstNonEmpty(row, ["Posture"]),
       Body_State: bodyState,
       Observations: firstNonEmpty(row, ["Observations"]),
-      Captions: firstNonEmpty(row, ["Captions", "Caption"]),
+      Caption: firstNonEmpty(row, ["Caption", "Captions"]),
       Thumbnail: imageFile,
       Latitude: toNum(row["Latitude"]),
       Longitude: toNum(row["Longitude"]),
@@ -202,8 +202,8 @@ chairs.forEach(chair => {
     makeMetaBlock("Current System", chair.Current_System)
   ].join("");
 
-  const captionBlock = clean(chair.Captions)
-    ? `<p class="caption">${escapeHtml(chair.Captions)}</p>`
+  const captionBlock = clean(chair.Caption)
+    ? `<p class="caption">${escapeHtml(chair.Caption)}</p>`
     : "";
 
   const locationBlock = clean(chair.Location)
