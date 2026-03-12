@@ -21,9 +21,8 @@
       --gap: 56px;
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --notes-w: min(1120px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --intro-w: 420px;
-      --note-col-gap: 72px;
+      --notes-w: min(1100px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --note-col-gap: 64px;
     }
 
     * { box-sizing: border-box; }
@@ -92,7 +91,7 @@
 
     .subtitle {
       margin: 14px 0 0 0;
-      max-width: 420px;
+      max-width: 390px;
       font-size: 10.5px;
       line-height: 1.28;
       color: var(--muted-soft);
@@ -109,22 +108,14 @@
     .notes-shell {
       width: var(--notes-w);
       max-width: 100%;
-      margin-top: 48px;
-    }
-
-    .notes-intro {
-      max-width: var(--intro-w);
-      margin: 0 0 40px 0;
-      font-size: 12px;
-      line-height: 1.48;
-      color: var(--muted-soft);
+      margin-top: 56px;
     }
 
     .notes-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: var(--note-col-gap);
-      row-gap: 56px;
+      row-gap: 68px;
       align-items: start;
     }
 
@@ -133,34 +124,41 @@
       border-top: 1px solid var(--line);
     }
 
-    .note-kicker {
-      margin: 0 0 12px 0;
-      font-size: 9.5px;
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: .18em;
+    .note-meta {
+      margin: 0 0 18px 0;
+      font-size: 11px;
+      line-height: 1.1;
       color: var(--muted);
+      letter-spacing: .14em;
+      text-transform: uppercase;
     }
 
     .note-title {
-      margin: 0 0 18px 0;
-      font-size: 24px;
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-      font-weight: 620;
-      max-width: 420px;
+      margin: 0 0 22px 0;
+      font-size: 30px;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      max-width: 430px;
+    }
+
+    .note-title .tilt {
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.02em;
     }
 
     .note-text {
-      max-width: 420px;
+      max-width: 430px;
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.74;
       color: rgba(17,17,17,.9);
       letter-spacing: -0.01em;
     }
 
     .note-text p {
-      margin: 0 0 18px 0;
+      margin: 0 0 22px 0;
     }
 
     .note-text p:last-child {
@@ -179,7 +177,7 @@
       }
 
       .note-title {
-        font-size: 21px;
+        font-size: 26px;
       }
     }
 
@@ -215,11 +213,11 @@
 
       .notes-list {
         grid-template-columns: 1fr;
-        row-gap: 42px;
+        row-gap: 52px;
       }
 
       .note-entry {
-        max-width: 720px;
+        max-width: 760px;
       }
 
       .note-title,
@@ -274,42 +272,35 @@
 
       .notes-shell {
         width: 100%;
-        margin-top: 30px;
-      }
-
-      .notes-intro {
-        max-width: 100%;
-        margin-bottom: 28px;
-        font-size: 11.5px;
-        line-height: 1.42;
+        margin-top: 34px;
       }
 
       .notes-list {
-        row-gap: 34px;
+        row-gap: 40px;
       }
 
       .note-entry {
         padding-top: 14px;
       }
 
-      .note-kicker {
-        margin-bottom: 10px;
-        font-size: 9px;
+      .note-meta {
+        margin-bottom: 14px;
+        font-size: 10px;
       }
 
       .note-title {
-        margin-bottom: 14px;
-        font-size: 18px;
-        line-height: 1.04;
+        margin-bottom: 16px;
+        font-size: 22px;
+        line-height: 1.02;
       }
 
       .note-text {
         font-size: 13px;
-        line-height: 1.58;
+        line-height: 1.62;
       }
 
       .note-text p {
-        margin-bottom: 14px;
+        margin-bottom: 16px;
       }
     }
   </style>
@@ -327,14 +318,10 @@
         </header>
 
         <section class="notes-shell">
-          <p class="notes-intro">
-            Short thematic notes drawn from repeated spatial, bodily, and symbolic conditions across the archive. These are not exhaustive readings, but provisional observations assembled from multiple entries.
-          </p>
-
           <div class="notes-list">
             <article class="note-entry">
-              <p class="note-kicker">Note 01</p>
-              <h2 class="note-title">On Seating That Is Not Meant to Be Sat In</h2>
+              <p class="note-meta">March 2026 · Note 01</p>
+              <h2 class="note-title">On Seating That <span class="tilt">Is Not Meant to Be Sat In</span></h2>
               <div class="note-text">
                 <p>
                   Some chairs are present only to be seen. They adopt the form of seating while withholding its function.
@@ -352,8 +339,8 @@
             </article>
 
             <article class="note-entry">
-              <p class="note-kicker">Note 02</p>
-              <h2 class="note-title">On Waiting</h2>
+              <p class="note-meta">March 2026 · Note 02</p>
+              <h2 class="note-title">On <span class="tilt">Waiting</span></h2>
               <div class="note-text">
                 <p>
                   Waiting chairs are designed less for comfort than for compliance. They hold the body in a state of readiness—upright, forward-facing, alert—without offering rest. Duration is unspecified, yet implicitly limited. One is not meant to settle in, only to remain available.
