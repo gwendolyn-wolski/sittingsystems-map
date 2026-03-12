@@ -12,6 +12,8 @@
       --muted: rgba(17,17,17,.48);
       --muted-soft: rgba(17,17,17,.72);
       --line: #e2e2e2;
+      --pill-bg: rgba(17,17,17,.03);
+      --pill-text: rgba(17,17,17,.54);
 
       --page-pad-x: 28px;
       --page-pad-top: 58px;
@@ -22,8 +24,11 @@
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
       --notes-span-w: calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap));
-      --entry-w: 900px;
+      --entry-w: 980px;
       --body-w: 760px;
+
+      --example-card-w: 268px;
+      --example-gap: 44px;
     }
 
     * { box-sizing: border-box; }
@@ -138,7 +143,7 @@
     }
 
     .note-meta {
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
       font-size: 10px;
       line-height: 1.1;
       color: var(--muted);
@@ -147,7 +152,7 @@
     }
 
     .note-date {
-      margin: 0 0 18px 0;
+      margin: 0 0 16px 0;
       font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       font-style: italic;
       font-size: 13px;
@@ -156,10 +161,10 @@
     }
 
     .note-title {
-      margin: 0 0 30px 0;
-      font-size: 24px;
+      margin: 0 0 28px 0;
+      font-size: 21px;
       line-height: 1.08;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.02em;
       font-weight: 560;
       max-width: 100%;
     }
@@ -169,26 +174,116 @@
       max-width: var(--body-w);
       margin: 0 auto;
       font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-      font-size: 13px;
-      line-height: 1.62;
-      letter-spacing: -0.005em;
+      font-size: 12.5px;
+      line-height: 1.58;
+      letter-spacing: -0.003em;
       color: rgba(17,17,17,.96);
     }
 
     .note-text p {
-      margin: 0 0 24px 0;
+      margin: 0 0 22px 0;
     }
 
     .note-text p:last-child {
       margin-bottom: 0;
     }
 
+    .examples {
+      margin-top: 54px;
+      display: flex;
+      justify-content: center;
+      gap: var(--example-gap);
+      flex-wrap: wrap;
+    }
+
+    .example-card {
+      display: block;
+      width: var(--example-card-w);
+      color: inherit;
+      text-decoration: none;
+      transition: transform .16s ease;
+      text-align: left;
+    }
+
+    .example-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .thumb-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: transparent;
+      margin-bottom: 10px;
+    }
+
+    .thumb {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+    }
+
+    .example-meta {
+      max-width: 92%;
+    }
+
+    .id {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+    }
+
+    .object-title {
+      margin: 0 0 7px 0;
+      font-size: 12.5px;
+      line-height: 1.14;
+      letter-spacing: -0.012em;
+      color: rgba(17,17,17,.9);
+      text-wrap: balance;
+    }
+
+    .context {
+      margin: 0 0 8px 0;
+      font-size: 9.5px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: rgba(17,17,17,.46);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 18px;
+      padding: 2px 8px 2px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      font-size: 9.5px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
     @media (max-width: 1100px) {
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --entry-w: 820px;
+        --entry-w: 900px;
         --body-w: 700px;
+        --example-card-w: 240px;
+        --example-gap: 28px;
       }
 
       .title {
@@ -200,6 +295,8 @@
       :root {
         --page-pad-x: 18px;
         --page-pad-top: 48px;
+        --entry-w: 100%;
+        --body-w: 100%;
       }
 
       html, body {
@@ -234,7 +331,7 @@
       }
 
       .notes-list {
-        gap: 76px;
+        gap: 88px;
       }
     }
 
@@ -243,7 +340,8 @@
         --page-pad-x: 20px;
         --page-pad-top: 22px;
         --page-pad-bottom: 42px;
-        --body-w: 100%;
+        --example-card-w: 100%;
+        --example-gap: 24px;
       }
 
       html, body {
@@ -289,7 +387,7 @@
       }
 
       .notes-list {
-        gap: 56px;
+        gap: 68px;
         align-items: stretch;
       }
 
@@ -313,17 +411,35 @@
 
       .note-title {
         margin-bottom: 20px;
-        font-size: 20px;
+        font-size: 19px;
         line-height: 1.1;
       }
 
       .note-text {
         font-size: 12px;
-        line-height: 1.56;
+        line-height: 1.54;
       }
 
       .note-text p {
         margin-bottom: 18px;
+      }
+
+      .examples {
+        margin-top: 40px;
+        gap: 24px;
+      }
+
+      .example-card {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .example-meta {
+        max-width: 100%;
+      }
+
+      .object-title {
+        font-size: 14px;
       }
     }
   </style>
@@ -342,10 +458,11 @@
 
         <section class="notes-shell">
           <div class="notes-list">
+
             <article class="note-entry">
               <div class="note-rule" aria-hidden="true"></div>
-              <p class="note-meta">Note 01</p>
-              <p class="note-date">March 2026</p>
+              <p class="note-meta">Note 02</p>
+              <p class="note-date">March, 2026</p>
               <h2 class="note-title">On Seating That Is Not Meant to Be Sat In</h2>
               <div class="note-text">
                 <p>
@@ -361,12 +478,44 @@
                   In these cases, seating becomes a boundary rather than an invitation. The chair does not hold the body; it holds meaning.
                 </p>
               </div>
+
+              <div class="examples">
+                <a class="example-card" href="https://sittingsystems.org/ss-005/" target="_top" rel="noopener">
+                  <div class="thumb-wrap">
+                    <img class="thumb" src="images/SS-005.jpeg" alt="SS-005">
+                  </div>
+                  <div class="example-meta">
+                    <p class="id">SS-005</p>
+                    <p class="object-title">Modified Armchair — Exhibition Installation</p>
+                    <p class="context">Display</p>
+                    <ul class="tags">
+                      <li class="tag">exhibition</li>
+                      <li class="tag">performative</li>
+                    </ul>
+                  </div>
+                </a>
+
+                <a class="example-card" href="https://sittingsystems.org/ss-004/" target="_top" rel="noopener">
+                  <div class="thumb-wrap">
+                    <img class="thumb" src="images/SS-004.jpeg" alt="SS-004">
+                  </div>
+                  <div class="example-meta">
+                    <p class="id">SS-004</p>
+                    <p class="object-title">Ceremonial Upholstered Chair — Louvre Interior</p>
+                    <p class="context">Display</p>
+                    <ul class="tags">
+                      <li class="tag">threshold</li>
+                      <li class="tag">public</li>
+                    </ul>
+                  </div>
+                </a>
+              </div>
             </article>
 
             <article class="note-entry">
               <div class="note-rule" aria-hidden="true"></div>
-              <p class="note-meta">Note 02</p>
-              <p class="note-date">March 2026</p>
+              <p class="note-meta">Note 01</p>
+              <p class="note-date">January, 2026</p>
               <h2 class="note-title">On Waiting</h2>
               <div class="note-text">
                 <p>
@@ -379,7 +528,40 @@
                   In public and transitional spaces, waiting chairs frequently signal that lingering is conditional. Comfort is calibrated just enough to prevent complaint, but insufficient to invite staying. What appears neutral—a chair, a bench, a seat—quietly structures how long one may remain, and under what terms.
                 </p>
               </div>
+
+              <div class="examples">
+                <a class="example-card" href="https://sittingsystems.org/ss-001/" target="_top" rel="noopener">
+                  <div class="thumb-wrap">
+                    <img class="thumb" src="images/SS-001.jpeg" alt="SS-001">
+                  </div>
+                  <div class="example-meta">
+                    <p class="id">SS-001</p>
+                    <p class="object-title">Informal Armchair Arrangement, Sidewalk</p>
+                    <p class="context">Waiting</p>
+                    <ul class="tags">
+                      <li class="tag">informal</li>
+                      <li class="tag">public</li>
+                    </ul>
+                  </div>
+                </a>
+
+                <a class="example-card" href="https://sittingsystems.org/ss-006/" target="_top" rel="noopener">
+                  <div class="thumb-wrap">
+                    <img class="thumb" src="images/SS-006.jpeg" alt="SS-006">
+                  </div>
+                  <div class="example-meta">
+                    <p class="id">SS-006</p>
+                    <p class="object-title">Painted Ladder-Back Chair — Retail Threshold</p>
+                    <p class="context">Waiting</p>
+                    <ul class="tags">
+                      <li class="tag">retail</li>
+                      <li class="tag">commercial</li>
+                    </ul>
+                  </div>
+                </a>
+              </div>
             </article>
+
           </div>
         </section>
       </section>
