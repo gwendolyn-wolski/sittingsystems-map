@@ -21,7 +21,9 @@
       --gap: 56px;
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --notes-w: min(760px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --notes-w: min(1120px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --intro-w: 420px;
+      --note-col-gap: 72px;
     }
 
     * { box-sizing: border-box; }
@@ -90,7 +92,7 @@
 
     .subtitle {
       margin: 14px 0 0 0;
-      max-width: 390px;
+      max-width: 420px;
       font-size: 10.5px;
       line-height: 1.28;
       color: var(--muted-soft);
@@ -107,69 +109,77 @@
     .notes-shell {
       width: var(--notes-w);
       max-width: 100%;
-      margin-top: 46px;
+      margin-top: 48px;
     }
 
     .notes-intro {
-      max-width: 420px;
-      margin: 0 0 34px 0;
-      font-size: 11px;
-      line-height: 1.38;
+      max-width: var(--intro-w);
+      margin: 0 0 40px 0;
+      font-size: 12px;
+      line-height: 1.48;
       color: var(--muted-soft);
     }
 
     .notes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 34px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--note-col-gap);
+      row-gap: 56px;
+      align-items: start;
     }
 
     .note-entry {
-      padding-top: 14px;
+      padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
-    .note-date {
-      margin: 0 0 8px 0;
+    .note-kicker {
+      margin: 0 0 12px 0;
       font-size: 9.5px;
       line-height: 1;
       text-transform: uppercase;
-      letter-spacing: .2em;
+      letter-spacing: .18em;
       color: var(--muted);
     }
 
     .note-title {
-      margin: 0 0 8px 0;
-      font-size: 15px;
-      line-height: 1.14;
-      letter-spacing: -0.015em;
-      font-weight: 600;
+      margin: 0 0 18px 0;
+      font-size: 24px;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-weight: 620;
+      max-width: 420px;
     }
 
     .note-text {
-      margin: 0;
-      max-width: 620px;
-      font-size: 12px;
-      line-height: 1.42;
-      color: rgba(17,17,17,.88);
+      max-width: 420px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(17,17,17,.9);
+      letter-spacing: -0.01em;
     }
 
-    .placeholder {
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      font-size: 11px;
-      line-height: 1.35;
-      color: var(--muted);
+    .note-text p {
+      margin: 0 0 18px 0;
+    }
+
+    .note-text p:last-child {
+      margin-bottom: 0;
     }
 
     @media (max-width: 1100px) {
       :root {
         --rail-w: 120px;
         --gap: 36px;
+        --note-col-gap: 44px;
       }
 
       .title {
         font-size: 33px;
+      }
+
+      .note-title {
+        font-size: 21px;
       }
     }
 
@@ -191,6 +201,7 @@
       .rail {
         display: none;
       }
+
       .masthead,
       .notes-shell {
         width: 100%;
@@ -200,6 +211,20 @@
       .rule {
         width: 100%;
         margin-left: 0;
+      }
+
+      .notes-list {
+        grid-template-columns: 1fr;
+        row-gap: 42px;
+      }
+
+      .note-entry {
+        max-width: 720px;
+      }
+
+      .note-title,
+      .note-text {
+        max-width: 100%;
       }
     }
 
@@ -252,17 +277,39 @@
         margin-top: 30px;
       }
 
+      .notes-intro {
+        max-width: 100%;
+        margin-bottom: 28px;
+        font-size: 11.5px;
+        line-height: 1.42;
+      }
+
       .notes-list {
-        gap: 28px;
+        row-gap: 34px;
+      }
+
+      .note-entry {
+        padding-top: 14px;
+      }
+
+      .note-kicker {
+        margin-bottom: 10px;
+        font-size: 9px;
       }
 
       .note-title {
-        font-size: 14px;
+        margin-bottom: 14px;
+        font-size: 18px;
+        line-height: 1.04;
       }
 
       .note-text {
-        font-size: 11.5px;
-        line-height: 1.42;
+        font-size: 13px;
+        line-height: 1.58;
+      }
+
+      .note-text p {
+        margin-bottom: 14px;
       }
     }
   </style>
@@ -279,19 +326,46 @@
           <div class="rule" aria-hidden="true"></div>
         </header>
 
-          <div class="notes-list">
-            <div class="placeholder">
-            </div>
+        <section class="notes-shell">
+          <p class="notes-intro">
+            Short thematic notes drawn from repeated spatial, bodily, and symbolic conditions across the archive. These are not exhaustive readings, but provisional observations assembled from multiple entries.
+          </p>
 
-            <!-- Example entry format
+          <div class="notes-list">
             <article class="note-entry">
-              <p class="note-date">March 2026</p>
-              <h2 class="note-title">Threshold objects</h2>
-              <p class="note-text">
-                Many entries position seating near edges: storefronts, sidewalks, windows, porches, transitional rooms. Chairs often appear where one condition becomes another.
-              </p>
+              <p class="note-kicker">Note 01</p>
+              <h2 class="note-title">On Seating That Is Not Meant to Be Sat In</h2>
+              <div class="note-text">
+                <p>
+                  Some chairs are present only to be seen. They adopt the form of seating while withholding its function.
+                </p>
+                <p>
+                  These chairs often appear oversized, elevated, or excessively adorned. Ornament replaces accommodation. Their surfaces signal fragility, expense, or authority—conditions that make the act of sitting feel inappropriate, even transgressive. The body hesitates. The chair performs instead.
+                </p>
+                <p>
+                  Placed in thresholds, storefronts, museums, or ceremonial interiors, this type of seating operates symbolically. It marks status, frames entry, or asserts control over who may rest and under what terms. Though physically accessible, it remains socially unavailable.
+                </p>
+                <p>
+                  In these cases, seating becomes a boundary rather than an invitation. The chair does not hold the body; it holds meaning.
+                </p>
+              </div>
             </article>
-            -->
+
+            <article class="note-entry">
+              <p class="note-kicker">Note 02</p>
+              <h2 class="note-title">On Waiting</h2>
+              <div class="note-text">
+                <p>
+                  Waiting chairs are designed less for comfort than for compliance. They hold the body in a state of readiness—upright, forward-facing, alert—without offering rest. Duration is unspecified, yet implicitly limited. One is not meant to settle in, only to remain available.
+                </p>
+                <p>
+                  Across institutional settings, waiting seating narrows posture and restricts movement. Armrests separate bodies; rigid backs discourage slouching or sideways rest. These chairs regulate time by regulating the body, making waiting feel active rather than idle.
+                </p>
+                <p>
+                  In public and transitional spaces, waiting chairs frequently signal that lingering is conditional. Comfort is calibrated just enough to prevent complaint, but insufficient to invite staying. What appears neutral—a chair, a bench, a seat—quietly structures how long one may remain, and under what terms.
+                </p>
+              </div>
+            </article>
           </div>
         </section>
       </section>
