@@ -1,3 +1,24 @@
+<article class="source-entry">
+  <p class="citation">
+    <strong>Bütler, Heinz, dir.</strong> <em>Chair Times: A History of Seating from 1800 to Today.</em> HOOK Film &amp; Kultur Produktion GmbH in cooperation with the Vitra Design Museum, 2018. First published 2019.
+  </p>
+  <div class="annotation">
+    <p>A filmed timeline of seating design drawn from 125 objects in the Vitra Design Museum collection, tracing developments from the early nineteenth century to contemporary digitally fabricated forms.</p>
+  </div>
+</article>
+
+One small note: if you want stricter consistency, choose one rule for dates on the page:
+
+either use production year
+
+or use first publication year
+
+or include both, like above
+
+For this entry, including both is the cleanest.
+
+rewrite the whole sources.html only using books and media as the sections. include the newest source
+Thought for a second
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,13 +36,15 @@
 
       --page-pad-x: 28px;
       --page-pad-top: 58px;
-      --page-pad-bottom: 72px;
+      --page-pad-bottom: 96px;
 
       --rail-w: 150px;
       --gap: 56px;
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --sources-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --sources-span-w: calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap));
+      --section-w: 900px;
+      --citation-w: 760px;
     }
 
     * { box-sizing: border-box; }
@@ -90,7 +113,7 @@
 
     .subtitle {
       margin: 14px 0 0 0;
-      max-width: 390px;
+      max-width: 430px;
       font-size: 10.5px;
       line-height: 1.28;
       color: var(--muted-soft);
@@ -105,56 +128,100 @@
     }
 
     .sources-shell {
-      width: var(--sources-w);
+      width: var(--sources-span-w);
       max-width: 100%;
-      margin-top: 64px;
+      margin-top: 76px;
+      margin-left: calc((var(--rail-w) + var(--gap)) * -1);
+      padding-left: calc(var(--rail-w) + var(--gap));
+      display: flex;
+      justify-content: center;
+    }
+
+    .sources-list {
+      width: 100%;
+      max-width: var(--section-w);
+      display: flex;
+      flex-direction: column;
+      gap: 94px;
+      align-items: center;
     }
 
     .source-group {
-      margin-bottom: 56px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .group-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin: 0 auto 26px auto;
+    }
+
+    .group-kicker {
+      margin: 0 0 10px 0;
+      font-size: 10px;
+      line-height: 1.1;
+      color: var(--muted);
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
     .group-title {
-      margin: 0 0 28px 0;
-      font-size: 15px;
-      line-height: 1.1;
-      font-weight: 650;
+      margin: 0 0 18px 0;
+      font-size: 23px;
+      line-height: 1.08;
       letter-spacing: -0.02em;
+      font-weight: 560;
+    }
+
+    .group-note {
+      max-width: 560px;
+      margin: 0 auto 34px auto;
+      font-size: 11.5px;
+      line-height: 1.42;
+      color: var(--muted-soft);
     }
 
     .source-list {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 42px;
+      gap: 34px;
+      align-items: center;
     }
 
     .source-entry {
-      max-width: 720px;
+      width: 100%;
+      max-width: var(--citation-w);
+      text-align: center;
     }
 
     .citation {
-      margin: 0 0 12px 0;
-      font-size: 12px;
-      line-height: 1.22;
-      letter-spacing: -0.015em;
-      color: rgba(17,17,17,.92);
+      margin: 0 0 10px 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-size: 16px;
+      line-height: 1.44;
+      color: rgba(17,17,17,.96);
+      letter-spacing: -0.01em;
     }
 
     .citation strong {
-      font-weight: 650;
+      font-weight: 700;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -0.01em;
     }
 
     .citation em {
       font-style: italic;
-      color: rgba(17,17,17,.82);
     }
 
     .annotation {
-      margin: 0 0 0 18px;
-      max-width: 560px;
+      max-width: 620px;
+      margin: 0 auto;
       font-size: 11.5px;
-      line-height: 1.3;
-      color: rgba(17,17,17,.9);
+      line-height: 1.42;
+      color: var(--muted-soft);
     }
 
     .annotation p {
@@ -165,10 +232,16 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
+        --section-w: 840px;
+        --citation-w: 700px;
       }
 
       .title {
         font-size: 33px;
+      }
+
+      .group-title {
+        font-size: 21px;
       }
     }
 
@@ -176,6 +249,8 @@
       :root {
         --page-pad-x: 18px;
         --page-pad-top: 48px;
+        --section-w: 100%;
+        --citation-w: 100%;
       }
 
       html, body {
@@ -191,8 +266,7 @@
         display: none;
       }
 
-      .masthead,
-      .sources-shell {
+      .masthead {
         width: 100%;
         max-width: 100%;
       }
@@ -201,13 +275,25 @@
         width: 100%;
         margin-left: 0;
       }
+
+      .sources-shell {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 52px;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      .sources-list {
+        gap: 76px;
+      }
     }
 
     @media (max-width: 680px) {
       :root {
         --page-pad-x: 20px;
         --page-pad-top: 22px;
-        --page-pad-bottom: 36px;
+        --page-pad-bottom: 42px;
       }
 
       html, body {
@@ -252,22 +338,43 @@
         margin-top: 34px;
       }
 
+      .sources-list {
+        gap: 62px;
+        align-items: stretch;
+      }
+
+      .group-rule {
+        margin-bottom: 18px;
+      }
+
+      .group-kicker {
+        margin-bottom: 8px;
+        font-size: 9.5px;
+      }
+
       .group-title {
-        font-size: 14px;
-        margin-bottom: 22px;
+        margin-bottom: 14px;
+        font-size: 19px;
+      }
+
+      .group-note {
+        margin-bottom: 26px;
+        font-size: 11px;
+        line-height: 1.38;
       }
 
       .source-list {
-        gap: 32px;
+        gap: 26px;
       }
 
       .citation {
-        font-size: 11.5px;
+        font-size: 13px;
+        line-height: 1.42;
       }
 
       .annotation {
-        margin-left: 0;
         font-size: 11px;
+        line-height: 1.38;
       }
     }
   </style>
@@ -280,34 +387,59 @@
       <section class="main">
         <header class="masthead">
           <h1 class="title">Sources</h1>
-          <p class="subtitle">Texts and references informing the archive’s approach to chairs, posture, and seated life.</p>
+          <p class="subtitle">A working bibliography for chairs, posture, interiors, and seated life.</p>
           <div class="rule" aria-hidden="true"></div>
         </header>
 
         <section class="sources-shell">
-          <section class="source-group">
-            <h2 class="group-title">Books</h2>
+          <div class="sources-list">
 
-            <div class="source-list">
-              <article class="source-entry">
-                <p class="citation">
-                  <strong>Gamper, Martino.</strong> <em>100 Chairs in 100 Days and Its 100 Ways.</em> London: Dent-De-Leone, 2007.
-                </p>
-                <div class="annotation">
-                  <p>A study in iterative chair-making through reuse and modification of existing forms.</p>
-                </div>
-              </article>
+            <section class="source-group">
+              <div class="group-rule" aria-hidden="true"></div>
+              <p class="group-kicker">Section 01</p>
+              <h2 class="group-title">Books</h2>
+              <p class="group-note">Foundational texts on chairs, seated form, typology, and the social life of furniture.</p>
 
-              <article class="source-entry">
-                <p class="citation">
-                  <strong>Cranz, Galen.</strong> <em>The Chair: Rethinking Culture, Body, and Design.</em> New York: W.W. Norton, 1998.
-                </p>
-                <div class="annotation">
-                  <p>A critical analysis of seated form, posture, and the cultural assumptions embedded in chair design.</p>
-                </div>
-              </article>
-            </div>
-          </section>
+              <div class="source-list">
+                <article class="source-entry">
+                  <p class="citation">
+                    <strong>Cranz, Galen.</strong> <em>The Chair: Rethinking Culture, Body, and Design.</em> New York: W.W. Norton, 1998.
+                  </p>
+                  <div class="annotation">
+                    <p>A critical analysis of seated form, posture, and the cultural assumptions embedded in chair design.</p>
+                  </div>
+                </article>
+
+                <article class="source-entry">
+                  <p class="citation">
+                    <strong>Gamper, Martino.</strong> <em>100 Chairs in 100 Days and Its 100 Ways.</em> London: Dent-De-Leone, 2007.
+                  </p>
+                  <div class="annotation">
+                    <p>A study in iterative chair-making through reuse and modification of existing forms.</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="source-group">
+              <div class="group-rule" aria-hidden="true"></div>
+              <p class="group-kicker">Section 02</p>
+              <h2 class="group-title">Media</h2>
+              <p class="group-note">Films, interviews, and visual references that shape the archive’s reading of chair history and seated space.</p>
+
+              <div class="source-list">
+                <article class="source-entry">
+                  <p class="citation">
+                    <strong>Bütler, Heinz, dir.</strong> <em>Chair Times: A History of Seating from 1800 to Today.</em> HOOK Film &amp; Kultur Produktion GmbH in cooperation with the Vitra Design Museum, 2018. First published 2019.
+                  </p>
+                  <div class="annotation">
+                    <p>A filmed timeline of seating design drawn from 125 objects in the Vitra Design Museum collection, tracing developments from the early nineteenth century to contemporary digitally fabricated forms.</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+          </div>
         </section>
       </section>
     </div>
@@ -337,4 +469,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
