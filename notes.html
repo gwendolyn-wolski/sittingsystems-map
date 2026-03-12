@@ -22,7 +22,8 @@
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
       --notes-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --entry-w: 620px;
+      --entry-w: 760px;
+      --body-w: 860px;
     }
 
     * { box-sizing: border-box; }
@@ -123,18 +124,18 @@
     .note-entry {
       width: 100%;
       max-width: var(--entry-w);
-      text-align: left;
+      text-align: center;
     }
 
     .note-rule {
       width: 100%;
       height: 1px;
       background: var(--line);
-      margin-bottom: 24px;
+      margin: 0 auto 28px auto;
     }
 
     .note-meta {
-      margin: 0 0 18px 0;
+      margin: 0 0 12px 0;
       font-size: 11px;
       line-height: 1.1;
       color: var(--muted);
@@ -142,33 +143,37 @@
       text-transform: uppercase;
     }
 
-    .note-title {
-      margin: 0 0 28px 0;
-      font-size: 34px;
-      line-height: 0.98;
-      letter-spacing: -0.045em;
-      font-weight: 620;
-      max-width: 100%;
-    }
-
-    .note-title .tilt {
+    .note-date {
+      margin: 0 0 18px 0;
       font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       font-style: italic;
-      font-weight: 400;
-      letter-spacing: -0.02em;
+      font-size: 16px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .note-title {
+      margin: 0 0 34px 0;
+      font-size: 28px;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-weight: 560;
+      max-width: 100%;
     }
 
     .note-text {
       width: 100%;
-      max-width: 100%;
-      font-size: 16px;
-      line-height: 1.78;
-      color: rgba(17,17,17,.9);
+      max-width: var(--body-w);
+      margin: 0 auto;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-size: 19px;
+      line-height: 1.5;
       letter-spacing: -0.01em;
+      color: rgba(17,17,17,.96);
     }
 
     .note-text p {
-      margin: 0 0 24px 0;
+      margin: 0 0 34px 0;
     }
 
     .note-text p:last-child {
@@ -179,7 +184,8 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --entry-w: 600px;
+        --entry-w: 700px;
+        --body-w: 760px;
       }
 
       .title {
@@ -187,7 +193,11 @@
       }
 
       .note-title {
-        font-size: 30px;
+        font-size: 25px;
+      }
+
+      .note-text {
+        font-size: 18px;
       }
     }
 
@@ -195,6 +205,8 @@
       :root {
         --page-pad-x: 18px;
         --page-pad-top: 48px;
+        --entry-w: 100%;
+        --body-w: 100%;
       }
 
       html, body {
@@ -226,11 +238,7 @@
       }
 
       .notes-list {
-        gap: 72px;
-      }
-
-      .note-entry {
-        max-width: 640px;
+        gap: 76px;
       }
     }
 
@@ -284,7 +292,7 @@
       }
 
       .notes-list {
-        gap: 54px;
+        gap: 56px;
         align-items: stretch;
       }
 
@@ -293,27 +301,32 @@
       }
 
       .note-rule {
-        margin-bottom: 16px;
+        margin-bottom: 18px;
       }
 
       .note-meta {
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         font-size: 10px;
       }
 
+      .note-date {
+        margin-bottom: 14px;
+        font-size: 14px;
+      }
+
       .note-title {
-        margin-bottom: 18px;
-        font-size: 24px;
-        line-height: 1.02;
+        margin-bottom: 22px;
+        font-size: 22px;
+        line-height: 1.08;
       }
 
       .note-text {
-        font-size: 13.5px;
-        line-height: 1.68;
+        font-size: 15px;
+        line-height: 1.52;
       }
 
       .note-text p {
-        margin-bottom: 18px;
+        margin-bottom: 22px;
       }
     }
   </style>
@@ -334,8 +347,9 @@
           <div class="notes-list">
             <article class="note-entry">
               <div class="note-rule" aria-hidden="true"></div>
-              <p class="note-meta">March 2026 · Note 01</p>
-              <h2 class="note-title">On Seating That <span class="tilt">Is Not Meant to Be Sat In</span></h2>
+              <p class="note-meta">Note 01</p>
+              <p class="note-date">March 2026</p>
+              <h2 class="note-title">On Seating That Is Not Meant to Be Sat In</h2>
               <div class="note-text">
                 <p>
                   Some chairs are present only to be seen. They adopt the form of seating while withholding its function.
@@ -354,8 +368,9 @@
 
             <article class="note-entry">
               <div class="note-rule" aria-hidden="true"></div>
-              <p class="note-meta">March 2026 · Note 02</p>
-              <h2 class="note-title">On <span class="tilt">Waiting</span></h2>
+              <p class="note-meta">Note 02</p>
+              <p class="note-date">March 2026</p>
+              <h2 class="note-title">On Waiting</h2>
               <div class="note-text">
                 <p>
                   Waiting chairs are designed less for comfort than for compliance. They hold the body in a state of readiness—upright, forward-facing, alert—without offering rest. Duration is unspecified, yet implicitly limited. One is not meant to settle in, only to remain available.
