@@ -6,7 +6,8 @@
     "Seating_Type": "armchair",
     "Context (Primary)": "Waiting",
     "Context - Secondary": [
-      "informal"
+      "informal",
+      "public"
     ],
     "Readymag_URL": "https://sittingsystems.org/ss-001/"
   },
@@ -14,9 +15,12 @@
     "Record_Number": 2,
     "Display_ID": "SS-002",
     "Title": "Child-Sized Chair, Private Residence",
-    "Seating_Type": "child-sized chair",
+    "Seating_Type": "child-sized domestic side chair",
     "Context (Primary)": "Resting",
-    "Context - Secondary": [],
+    "Context - Secondary": [
+      "private",
+      "domestic"
+    ],
     "Readymag_URL": "https://sittingsystems.org/ss-002/"
   },
   {
@@ -25,7 +29,10 @@
     "Title": "Decorative Side Chair, Outdoor Market",
     "Seating_Type": "side chair",
     "Context (Primary)": "Display",
-    "Context - Secondary": [],
+    "Context - Secondary": [
+      "transitional",
+      "resale"
+    ],
     "Readymag_URL": "https://sittingsystems.org/ss-003/"
   },
   {
@@ -34,7 +41,10 @@
     "Title": "Ceremonial Upholstered Chair — Louvre Interior",
     "Seating_Type": "Ceremonial upholstered chair",
     "Context (Primary)": "Display",
-    "Context - Secondary": [],
+    "Context - Secondary": [
+      "threshold",
+      "public"
+    ],
     "Readymag_URL": "https://sittingsystems.org/ss-004/"
   },
   {
