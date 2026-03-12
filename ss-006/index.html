@@ -252,6 +252,14 @@
       margin-left: auto;
     }
 
+    .object-nav-mobile {
+      display: none;
+    }
+
+    .object-nav-desktop {
+      display: block;
+    }
+
     .empty-image {
       width: var(--image-w);
       max-width: 100%;
@@ -320,7 +328,7 @@
       :root {
         --page-pad-x: 20px;
         --page-pad-top: 22px;
-        --page-pad-bottom: 36px;
+        --page-pad-bottom: 32px;
       }
 
       html, body {
@@ -362,11 +370,11 @@
 
       .detail-shell {
         width: 100%;
-        margin-top: 30px;
+        margin-top: 28px;
       }
 
       .detail-grid {
-        row-gap: 24px;
+        row-gap: 22px;
       }
 
       .media {
@@ -383,53 +391,86 @@
         max-width: 100%;
       }
 
-      .meta-primary .meta-group {
-        margin-bottom: 18px;
-      }
-
-      .meta-primary .meta-value {
-        font-size: 16px;
-      }
-
-      .meta-secondary {
-        margin-top: 18px;
-      }
-
-      .meta-secondary .meta-group {
-        margin-bottom: 13px;
-      }
-
-      .meta-secondary .meta-value {
-        font-size: 12.5px;
-      }
-
       .caption,
       .location-line {
         max-width: 100%;
         font-size: 11.5px;
+        line-height: 1.42;
       }
 
       .location-line {
-        margin-top: 10px;
+        margin-top: 8px;
       }
 
       .notes {
         max-width: 100%;
-        margin-top: 18px;
+        margin-top: 16px;
         font-size: 13px;
-        line-height: 1.62;
+        line-height: 1.58;
       }
 
-      .nav-row {
-        margin-top: 38px;
-        padding-top: 16px;
+      .notes p {
+        margin: 0 0 12px 0;
+      }
+
+      .meta-primary .meta-group {
+        margin-bottom: 16px;
+      }
+
+      .meta-primary .meta-label {
+        margin-bottom: 3px;
+        font-size: 11px;
+      }
+
+      .meta-primary .meta-value {
+        font-size: 15px;
+        line-height: 1.22;
+      }
+
+      .meta-secondary {
+        margin-top: 14px;
+      }
+
+      .meta-secondary .meta-group {
+        margin-bottom: 11px;
+      }
+
+      .meta-secondary .meta-label {
+        margin-bottom: 2px;
+        font-size: 10.5px;
+      }
+
+      .meta-secondary .meta-value {
+        font-size: 12px;
+        line-height: 1.24;
+      }
+
+      .object-nav-desktop {
+        display: none;
+      }
+
+      .object-nav-mobile {
+        display: block;
+        margin-top: 30px;
+      }
+
+      .object-nav-mobile .nav-row {
+        margin-top: 0;
+        max-width: 100%;
+        padding-top: 14px;
         flex-direction: column;
         align-items: flex-start;
+        gap: 16px;
       }
 
       .nav-link.next {
         text-align: left;
         margin-left: 0;
+      }
+
+      .nav-title {
+        font-size: 12.5px;
+        line-height: 1.32;
       }
     }
   </style>
@@ -538,7 +579,8 @@
               <p class="caption">Photographic record of painted wooden seating observed in a commercial interior.</p>
               <p class="location-line">Lambertville, New Jersey, United States</p>
               <div class="notes"><p>A small red chair is positioned within a retail environment, where its cracked painted finish and worn surface foreground prolonged use and material aging. The object remains legible as functional seating, yet its visual presence exceeds its practical scale. Within the shop, it contributes to an atmosphere shaped by reuse, accumulation, and the display of domestic objects as both utility and character.</p></div>
-              <nav class="nav-row">
+              <div class="object-nav-desktop">
+                <nav class="nav-row">
       <a class="nav-link prev" href="https://sittingsystems.org/ss-005/" target="_top" rel="noopener">
         <span class="nav-kicker">Previous object</span>
         <span class="nav-title">← SS-005 — Modified Armchair — Exhibition Installation</span>
@@ -549,7 +591,22 @@
         <span class="nav-title">SS-007 — Upholstered Armchair — Roadside (Winter) →</span>
       </a>
     </nav>
+              </div>
             </section>
+          </div>
+
+          <div class="object-nav-mobile">
+            <nav class="nav-row">
+      <a class="nav-link prev" href="https://sittingsystems.org/ss-005/" target="_top" rel="noopener">
+        <span class="nav-kicker">Previous object</span>
+        <span class="nav-title">← SS-005 — Modified Armchair — Exhibition Installation</span>
+      </a>
+    
+      <a class="nav-link next" href="https://sittingsystems.org/ss-007/" target="_top" rel="noopener">
+        <span class="nav-kicker">Next object</span>
+        <span class="nav-title">SS-007 — Upholstered Armchair — Roadside (Winter) →</span>
+      </a>
+    </nav>
           </div>
         </section>
       </section>
