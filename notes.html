@@ -15,14 +15,14 @@
 
       --page-pad-x: 28px;
       --page-pad-top: 58px;
-      --page-pad-bottom: 72px;
+      --page-pad-bottom: 96px;
 
       --rail-w: 150px;
       --gap: 56px;
 
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --notes-w: min(1100px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
-      --note-col-gap: 64px;
+      --notes-w: min(980px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
+      --entry-w: 620px;
     }
 
     * { box-sizing: border-box; }
@@ -108,20 +108,29 @@
     .notes-shell {
       width: var(--notes-w);
       max-width: 100%;
-      margin-top: 56px;
+      margin-top: 64px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .notes-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--note-col-gap);
-      row-gap: 68px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: 96px;
+      align-items: center;
     }
 
     .note-entry {
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
+      width: 100%;
+      max-width: var(--entry-w);
+      text-align: left;
+    }
+
+    .note-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 24px;
     }
 
     .note-meta {
@@ -129,17 +138,17 @@
       font-size: 11px;
       line-height: 1.1;
       color: var(--muted);
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
     }
 
     .note-title {
-      margin: 0 0 22px 0;
-      font-size: 30px;
+      margin: 0 0 28px 0;
+      font-size: 34px;
       line-height: 0.98;
-      letter-spacing: -0.04em;
-      font-weight: 600;
-      max-width: 430px;
+      letter-spacing: -0.045em;
+      font-weight: 620;
+      max-width: 100%;
     }
 
     .note-title .tilt {
@@ -150,15 +159,16 @@
     }
 
     .note-text {
-      max-width: 430px;
-      font-size: 15px;
-      line-height: 1.74;
+      width: 100%;
+      max-width: 100%;
+      font-size: 16px;
+      line-height: 1.78;
       color: rgba(17,17,17,.9);
       letter-spacing: -0.01em;
     }
 
     .note-text p {
-      margin: 0 0 22px 0;
+      margin: 0 0 24px 0;
     }
 
     .note-text p:last-child {
@@ -169,7 +179,7 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --note-col-gap: 44px;
+        --entry-w: 600px;
       }
 
       .title {
@@ -177,7 +187,7 @@
       }
 
       .note-title {
-        font-size: 26px;
+        font-size: 30px;
       }
     }
 
@@ -211,18 +221,16 @@
         margin-left: 0;
       }
 
+      .notes-shell {
+        margin-top: 48px;
+      }
+
       .notes-list {
-        grid-template-columns: 1fr;
-        row-gap: 52px;
+        gap: 72px;
       }
 
       .note-entry {
-        max-width: 760px;
-      }
-
-      .note-title,
-      .note-text {
-        max-width: 100%;
+        max-width: 640px;
       }
     }
 
@@ -230,7 +238,7 @@
       :root {
         --page-pad-x: 20px;
         --page-pad-top: 22px;
-        --page-pad-bottom: 36px;
+        --page-pad-bottom: 42px;
       }
 
       html, body {
@@ -276,31 +284,36 @@
       }
 
       .notes-list {
-        row-gap: 40px;
+        gap: 54px;
+        align-items: stretch;
       }
 
       .note-entry {
-        padding-top: 14px;
+        max-width: 100%;
+      }
+
+      .note-rule {
+        margin-bottom: 16px;
       }
 
       .note-meta {
-        margin-bottom: 14px;
+        margin-bottom: 12px;
         font-size: 10px;
       }
 
       .note-title {
-        margin-bottom: 16px;
-        font-size: 22px;
+        margin-bottom: 18px;
+        font-size: 24px;
         line-height: 1.02;
       }
 
       .note-text {
-        font-size: 13px;
-        line-height: 1.62;
+        font-size: 13.5px;
+        line-height: 1.68;
       }
 
       .note-text p {
-        margin-bottom: 16px;
+        margin-bottom: 18px;
       }
     }
   </style>
@@ -320,6 +333,7 @@
         <section class="notes-shell">
           <div class="notes-list">
             <article class="note-entry">
+              <div class="note-rule" aria-hidden="true"></div>
               <p class="note-meta">March 2026 · Note 01</p>
               <h2 class="note-title">On Seating That <span class="tilt">Is Not Meant to Be Sat In</span></h2>
               <div class="note-text">
@@ -339,6 +353,7 @@
             </article>
 
             <article class="note-entry">
+              <div class="note-rule" aria-hidden="true"></div>
               <p class="note-meta">March 2026 · Note 02</p>
               <h2 class="note-title">On <span class="tilt">Waiting</span></h2>
               <div class="note-text">
