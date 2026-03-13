@@ -72,6 +72,7 @@ function makeMetaBlock(label, value, secondary = false) {
 function paragraphize(text) {
   const raw = clean(text);
   if (!raw) return "";
+
   const paragraphs = raw
     .split(/\n{2,}/)
     .map(p => p.trim())
@@ -151,8 +152,10 @@ const chairs = rows
   .filter(row => {
     const displayId = clean(row["Display_ID"]);
     const webStatus = clean(row["Web Status"]).toLowerCase();
+
     if (!displayId) return false;
     if (webStatus && webStatus !== "public") return false;
+
     return true;
   })
   .map(row => {
@@ -228,20 +231,24 @@ const chairs = rows
     return a.Display_ID.localeCompare(b.Display_ID);
   });
 
-fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairs, null, 2), "utf8");
+const chairsAsc = chairs;
 
-// index.json: all chairs in reverse order so newest appears first
-const indexChairs = [...chairs].sort((a, b) => {
+const chairsDesc = [...chairs].sort((a, b) => {
   if (a.Record_Number != null && b.Record_Number != null) {
     return b.Record_Number - a.Record_Number;
   }
   return b.Display_ID.localeCompare(a.Display_ID);
 });
-fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(indexChairs, null, 2), "utf8");
 
-// context.json: grouped by primary context, newest first within each group
+// chair-data.json stays ascending for object-to-object navigation
+fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairsAsc, null, 2), "utf8");
+
+// index.json is newest first
+fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(chairsDesc, null, 2), "utf8");
+
+// context.json is grouped from newest-first order
 const contextMap = {};
-for (const chair of indexChairs) {
+for (const chair of chairsDesc) {
   const key = clean(chair.Context_Primary);
   if (!key) continue;
   if (!contextMap[key]) contextMap[key] = [];
@@ -249,20 +256,21 @@ for (const chair of indexChairs) {
 }
 fs.writeFileSync(CONTEXT_JSON_PATH, JSON.stringify(contextMap, null, 2), "utf8");
 
-// featured.json: only chairs marked featured
-const featuredChairs = indexChairs.filter(chair => {
+// featured.json is also newest first
+const featuredChairs = chairsDesc.filter(chair => {
   const val = clean(chair.Featured).toLowerCase();
   return val === "yes" || val === "true";
 });
 fs.writeFileSync(FEATURED_JSON_PATH, JSON.stringify(featuredChairs, null, 2), "utf8");
 
-chairs.forEach((chair, index) => {
+// individual chair pages stay in ascending order for previous/next navigation
+chairsAsc.forEach((chair, index) => {
   const slug = chair.Slug;
   const outDir = path.join(ROOT, slug);
   fs.mkdirSync(outDir, { recursive: true });
 
-  const previousChair = index > 0 ? chairs[index - 1] : null;
-  const nextChair = index < chairs.length - 1 ? chairs[index + 1] : null;
+  const previousChair = index > 0 ? chairsAsc[index - 1] : null;
+  const nextChair = index < chairsAsc.length - 1 ? chairsAsc[index + 1] : null;
 
   const pageTitle = chair.Title
     ? `${chair.Display_ID} — ${chair.Title}`
@@ -313,5 +321,5 @@ chairs.forEach((chair, index) => {
 });
 
 console.log(
-  `Built ${chairs.length} chair pages plus chair-data.json, index.json, context.json, and featured.json`
+  `Built ${chairsAsc.length} chair pages plus chair-data.json, index.json, context.json, and featured.json`
 );
