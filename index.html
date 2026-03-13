@@ -113,7 +113,6 @@
       margin-left: calc((var(--rail-w) + var(--gap)) * -1);
     }
 
-    /* FULL-WIDTH ARCHIVE BREAKOUT */
     .archive {
       width: var(--full-w);
       max-width: var(--full-w);
@@ -256,7 +255,6 @@
       transform: translateY(-2px);
     }
 
-    /* CARD WIDTH FOLLOWS IMAGE WIDTH */
     .card.card-narrow {
       width: var(--card-img-w-narrow);
     }
@@ -276,7 +274,6 @@
       max-width: none;
     }
 
-    /* TEXT NARROWER INSIDE IMAGE BOX */
     .card .meta-block {
       max-width: 92%;
     }
@@ -663,7 +660,7 @@
     function getCardScale(item, indexInRow = 0) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
-      const hasManyTags = Array.isArray(item["Context - Secondary"]) && item["Context - Secondary"].length >= 2;
+      const hasManyTags = Array.isArray(item.Context_Secondary) && item.Context_Secondary.length >= 2;
       const isLongTitle = title.length > 44;
 
       if (displayId === "SS-014" || displayId === "SS-003") return "narrow";
@@ -677,8 +674,8 @@
     function renderMeta(item, featured = false) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
-      const context = (item["Context (Primary)"] || "").trim();
-      const secondary = item["Context - Secondary"] || [];
+      const context = (item.Context_Primary || "").trim();
+      const secondary = item.Context_Secondary || [];
 
       return `
         <div class="meta-block">
@@ -736,10 +733,6 @@
           ${renderMeta(item, false)}
         </a>
       `;
-    }
-
-    function byRecordDescending(a, b) {
-      return (b.Record_Number ?? -9999) - (a.Record_Number ?? -9999);
     }
 
     function buildRow(items, rowIndex) {
@@ -814,20 +807,19 @@
       }, '*');
     }
 
+    function isFeatured(item) {
+      const val = String(item?.Featured || "").trim().toLowerCase();
+      return val === "yes" || val === "true";
+    }
+
     async function init() {
       const archive = document.getElementById('archive');
 
       try {
-        const [indexRes, featuredRes] = await Promise.all([
-          fetch('./index.json', { cache: 'no-store' }),
-          fetch('./featured.json', { cache: 'no-store' })
-        ]);
-
+        const indexRes = await fetch('./index.json', { cache: 'no-store' });
         if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
-        if (!featuredRes.ok) throw new Error(`Failed to load featured.json (${featuredRes.status})`);
 
         const itemsRaw = await indexRes.json();
-        const featuredRaw = await featuredRes.json();
 
         if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
           archive.innerHTML = '<div class="empty">No objects available yet.</div>';
@@ -835,16 +827,11 @@
           return;
         }
 
-        const items = [...itemsRaw].sort(byRecordDescending);
-        const featuredItems = Array.isArray(featuredRaw) ? [...featuredRaw].sort(byRecordDescending) : [];
-        const featuredIds = new Set(
-          featuredItems.map(item => (item.Display_ID || "").trim()).filter(Boolean)
-        );
+        const items = [...itemsRaw];
 
-        const itemMap = new Map(items.map(item => [(item.Display_ID || "").trim(), item]));
-
-        const firstFeaturedId = featuredItems[0] ? (featuredItems[0].Display_ID || "").trim() : null;
-        const secondFeaturedId = featuredItems[1] ? (featuredItems[1].Display_ID || "").trim() : null;
+        const featuredItems = items.filter(isFeatured);
+        const firstFeaturedId = featuredItems[0]?.Display_ID || null;
+        const secondFeaturedId = featuredItems[1]?.Display_ID || null;
 
         let html = "";
         let rowIndex = 0;
@@ -856,15 +843,18 @@
           }
         }
 
-        if (firstFeaturedId && itemMap.has(firstFeaturedId)) {
-          html += `
-            <div class="archive-block loose">
-              ${renderCard(itemMap.get(firstFeaturedId), {
-                featured: true,
-                featuredClass: "center"
-              })}
-            </div>
-          `;
+        if (firstFeaturedId) {
+          const firstFeatured = items.find(item => item.Display_ID === firstFeaturedId);
+          if (firstFeatured) {
+            html += `
+              <div class="archive-block loose">
+                ${renderCard(firstFeatured, {
+                  featured: true,
+                  featuredClass: "center"
+                })}
+              </div>
+            `;
+          }
         }
 
         const remaining = items.filter(item => {
@@ -877,26 +867,13 @@
         remaining.forEach(item => {
           const id = (item.Display_ID || "").trim();
 
-          if (id === secondFeaturedId) {
+          if (secondFeaturedId && id === secondFeaturedId) {
             addRowsFromQueue(queue);
             html += `
               <div class="archive-block loose">
                 ${renderCard(item, {
                   featured: true,
                   featuredClass: "right"
-                })}
-              </div>
-            `;
-            return;
-          }
-
-          if (featuredIds.has(id) && id !== secondFeaturedId) {
-            addRowsFromQueue(queue);
-            html += `
-              <div class="archive-block loose">
-                ${renderCard(item, {
-                  featured: true,
-                  featuredClass: "center"
                 })}
               </div>
             `;
