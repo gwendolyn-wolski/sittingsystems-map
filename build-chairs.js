@@ -10,6 +10,7 @@ const FULL_JSON_PATH = path.join(ROOT, "chair-data.json");
 const INDEX_JSON_PATH = path.join(ROOT, "index.json");
 const CONTEXT_JSON_PATH = path.join(ROOT, "context.json");
 const FEATURED_JSON_PATH = path.join(ROOT, "featured.json");
+const DATA_JSON_PATH = path.join(ROOT, "data.json");
 
 const csvText = fs.readFileSync(CSV_PATH, "utf8");
 const template = fs.readFileSync(TEMPLATE_PATH, "utf8");
@@ -240,13 +241,9 @@ const chairs = rows
 const chairsAsc = chairs;
 const chairsDesc = [...chairsAsc].reverse();
 
-// chair-data.json stays ascending for object navigation
 fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairsAsc, null, 2), "utf8");
-
-// index.json becomes newest first by reversing the asc array
 fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(chairsDesc, null, 2), "utf8");
 
-// context.json groups from newest-first order
 const contextMap = {};
 for (const chair of chairsDesc) {
   const key = clean(chair.Context_Primary);
@@ -256,12 +253,21 @@ for (const chair of chairsDesc) {
 }
 fs.writeFileSync(CONTEXT_JSON_PATH, JSON.stringify(contextMap, null, 2), "utf8");
 
-// featured.json also respects newest-first order
 const featuredChairs = chairsDesc.filter(chair => {
   const val = clean(chair.Featured).toLowerCase();
   return val === "yes" || val === "true";
 });
 fs.writeFileSync(FEATURED_JSON_PATH, JSON.stringify(featuredChairs, null, 2), "utf8");
+
+const mapData = chairsAsc.map(chair => ({
+  Display_ID: chair.Display_ID,
+  Latitude: chair.Latitude,
+  Longitude: chair.Longitude,
+  Readymag_URL: chair.Readymag_URL,
+  Map_Label: chair.Map_Label,
+  "Context (Primary)": chair.Context_Primary
+}));
+fs.writeFileSync(DATA_JSON_PATH, JSON.stringify(mapData, null, 2), "utf8");
 
 chairsAsc.forEach((chair, index) => {
   const slug = chair.Slug;
@@ -320,5 +326,5 @@ chairsAsc.forEach((chair, index) => {
 });
 
 console.log(
-  `Built ${chairsAsc.length} chair pages plus chair-data.json, index.json, context.json, and featured.json`
+  `Built ${chairsAsc.length} chair pages plus chair-data.json, index.json, context.json, featured.json, and data.json`
 );
