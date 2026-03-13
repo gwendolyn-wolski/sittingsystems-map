@@ -17,7 +17,7 @@
 
       --page-pad-x: 28px;
       --page-pad-top: 58px;
-      --page-pad-bottom: 72px;
+      --page-pad-bottom: 80px;
 
       --rail-w: 150px;
       --gap: 56px;
@@ -25,12 +25,12 @@
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
       --full-w: calc(100vw - var(--page-pad-x) * 2);
 
-      --hero-w: min(600px, calc(var(--full-w) * 0.39));
-      --hero-2-w: min(560px, calc(var(--full-w) * 0.36));
+      --hero-w: min(560px, calc(var(--full-w) * 0.37));
+      --feature-w: 330px;
+      --feature-narrow-w: 250px;
+      --feature-wide-w: 390px;
 
-      --card-img-w: 246px;
-      --card-img-w-narrow: 220px;
-      --card-img-w-wide: 270px;
+      --meta-w: 250px;
     }
 
     * { box-sizing: border-box; }
@@ -99,7 +99,7 @@
 
     .subtitle {
       margin: 14px 0 0 0;
-      max-width: 390px;
+      max-width: 360px;
       font-size: 10.5px;
       line-height: 1.28;
       color: var(--muted-soft);
@@ -116,7 +116,7 @@
     .archive {
       width: var(--full-w);
       max-width: var(--full-w);
-      margin-top: 72px;
+      margin-top: 78px;
       margin-left: calc((var(--rail-w) + var(--gap)) * -1);
       display: flex;
       flex-direction: column;
@@ -125,49 +125,97 @@
 
     .archive-block {
       width: 100%;
-      margin: 0 0 138px 0;
+      margin: 0 0 124px 0;
     }
 
     .archive-block.tight {
-      margin-bottom: 108px;
+      margin-bottom: 96px;
     }
 
     .archive-block.loose {
-      margin-bottom: 180px;
+      margin-bottom: 156px;
     }
 
-    .featured-row {
+    .archive-block.hero-block {
+      margin-bottom: 138px;
+    }
+
+    .hero-row {
       width: 100%;
       display: flex;
-    }
-
-    .featured-row.center {
       justify-content: center;
     }
 
-    .featured-row.right {
-      justify-content: flex-end;
-    }
-
-    .featured-card {
+    .hero-card {
       width: var(--hero-w);
       max-width: 100%;
       display: block;
     }
 
-    .featured-card.secondary {
-      width: var(--hero-2-w);
+    .composition-row {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .composition-row.align-left {
+      justify-content: flex-start;
+      gap: 140px;
+    }
+
+    .composition-row.align-right {
+      justify-content: flex-end;
+      gap: 140px;
+    }
+
+    .composition-row.align-between {
+      justify-content: space-between;
+      gap: 52px;
+    }
+
+    .card-group {
+      display: flex;
+      gap: 58px;
+      align-items: flex-start;
+    }
+
+    .card-group.compact {
+      gap: 44px;
+    }
+
+    .card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      transition: transform .18s ease, opacity .45s ease, filter .45s ease;
+      min-width: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card.narrow {
+      width: var(--feature-narrow-w);
+    }
+
+    .card.standard {
+      width: var(--feature-w);
+    }
+
+    .card.wide {
+      width: var(--feature-wide-w);
+    }
+
+    .hero-card .thumb-wrap {
+      margin-bottom: 14px;
     }
 
     .thumb-wrap {
       width: 100%;
       overflow: hidden;
       background: transparent;
-      margin-bottom: 9px;
-    }
-
-    .featured-card .thumb-wrap {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .thumb {
@@ -190,161 +238,50 @@
     }
 
     .meta-block {
-      max-width: 360px;
+      max-width: var(--meta-w);
     }
 
-    .featured-card.secondary .meta-block {
-      max-width: 330px;
+    .hero-card .meta-block {
+      max-width: 320px;
     }
 
-    .editorial-row {
-      width: 100%;
+    .card.narrow .meta-block {
+      max-width: 210px;
     }
 
-    .editorial-row.two {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, auto));
-      align-items: start;
+    .card.standard .meta-block {
+      max-width: 238px;
     }
 
-    .editorial-row.two.left {
-      justify-content: start;
-      justify-items: start;
-      column-gap: 170px;
-    }
-
-    .editorial-row.two.right {
-      justify-content: end;
-      justify-items: start;
-      column-gap: 170px;
-    }
-
-    .editorial-row.three {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, auto));
-      align-items: start;
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    .editorial-row.three.offset-up .card:nth-child(2) {
-      transform: translateY(-18px);
-    }
-
-    .editorial-row.three.offset-down .card:nth-child(3) {
-      transform: translateY(30px);
-    }
-
-    .editorial-row.three.stagger-soft .card:nth-child(1) {
-      transform: translateY(16px);
-    }
-
-    .editorial-row.three.stagger-soft .card:nth-child(2) {
-      transform: translateY(-8px);
-    }
-
-    .card {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-      transition: transform .18s ease, opacity .45s ease, filter .45s ease;
-      min-width: 0;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-    }
-
-    .card.card-narrow {
-      width: var(--card-img-w-narrow);
-    }
-
-    .card.card-standard {
-      width: var(--card-img-w);
-    }
-
-    .card.card-wide {
-      width: var(--card-img-w-wide);
-    }
-
-    .card.card-narrow .thumb,
-    .card.card-standard .thumb,
-    .card.card-wide .thumb {
-      width: 100%;
-      max-width: none;
-    }
-
-    .card .meta-block {
-      max-width: 92%;
-    }
-
-    .card.card-narrow .meta-block {
-      max-width: 90%;
-    }
-
-    .card.card-wide .meta-block {
-      max-width: 94%;
+    .card.wide .meta-block {
+      max-width: 276px;
     }
 
     .id {
-      margin: 0 0 4px 0;
-      font-size: 14px;
+      margin: 0 0 6px 0;
+      font-size: 13px;
       line-height: 1;
-      font-weight: 650;
-      letter-spacing: -0.015em;
+      font-weight: 700;
+      letter-spacing: -0.012em;
     }
 
-    .featured-card .id {
+    .hero-card .id {
       font-size: 15px;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
     .object-title {
-      margin: 0 0 7px 0;
-      font-size: 12.5px;
-      line-height: 1.12;
+      margin: 0;
+      font-size: 11.8px;
+      line-height: 1.08;
       letter-spacing: -0.012em;
       color: rgba(17,17,17,.9);
-      max-width: 100%;
       text-wrap: balance;
     }
 
-    .featured-card .object-title {
-      font-size: 13.5px;
-      line-height: 1.14;
-      margin-bottom: 7px;
-      max-width: 360px;
-    }
-
-    .context {
-      margin: 0 0 8px 0;
-      font-size: 9.5px;
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: .2em;
-      color: rgba(17,17,17,.46);
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 18px;
-      padding: 2px 8px 2px;
-      border-radius: 999px;
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      font-size: 9.5px;
-      line-height: 1;
-      white-space: nowrap;
+    .hero-card .object-title {
+      font-size: 13.2px;
+      line-height: 1.1;
     }
 
     .loading,
@@ -355,7 +292,7 @@
 
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(16px);
       filter: blur(2px);
     }
 
@@ -365,11 +302,19 @@
       filter: blur(0);
     }
 
+    .offset-1 { transform: translateY(18px); }
+    .offset-2 { transform: translateY(-12px); }
+    .offset-3 { transform: translateY(26px); }
+    .offset-4 { transform: translateY(-20px); }
+
     @media (prefers-reduced-motion: reduce) {
       .card,
       .thumb,
       .reveal,
-      .editorial-row.three .card {
+      .offset-1,
+      .offset-2,
+      .offset-3,
+      .offset-4 {
         transition: none !important;
         transform: none !important;
         filter: none !important;
@@ -380,18 +325,17 @@
       }
     }
 
-    @media (max-width: 1220px) {
+    @media (max-width: 1280px) {
       :root {
-        --card-img-w: 230px;
-        --card-img-w-narrow: 206px;
-        --card-img-w-wide: 252px;
-        --hero-w: min(565px, calc(var(--full-w) * 0.42));
-        --hero-2-w: min(525px, calc(var(--full-w) * 0.39));
+        --hero-w: min(520px, calc(var(--full-w) * 0.39));
+        --feature-w: 300px;
+        --feature-narrow-w: 228px;
+        --feature-wide-w: 350px;
       }
 
-      .editorial-row.two.left,
-      .editorial-row.two.right {
-        column-gap: 120px;
+      .composition-row.align-left,
+      .composition-row.align-right {
+        gap: 90px;
       }
     }
 
@@ -399,11 +343,10 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --card-img-w: 214px;
-        --card-img-w-narrow: 194px;
-        --card-img-w-wide: 234px;
-        --hero-w: min(540px, calc(var(--full-w) * 0.44));
-        --hero-2-w: min(500px, calc(var(--full-w) * 0.40));
+        --hero-w: min(500px, calc(var(--full-w) * 0.42));
+        --feature-w: 280px;
+        --feature-narrow-w: 214px;
+        --feature-wide-w: 320px;
       }
 
       .title {
@@ -411,16 +354,20 @@
       }
 
       .archive-block {
-        margin-bottom: 120px;
+        margin-bottom: 108px;
       }
 
       .archive-block.loose {
-        margin-bottom: 152px;
+        margin-bottom: 132px;
       }
 
-      .editorial-row.two.left,
-      .editorial-row.two.right {
-        column-gap: 92px;
+      .composition-row.align-left,
+      .composition-row.align-right {
+        gap: 62px;
+      }
+
+      .card-group {
+        gap: 40px;
       }
     }
 
@@ -455,51 +402,61 @@
       }
 
       .archive {
-        margin-top: 44px;
+        margin-top: 50px;
         margin-left: 0;
       }
 
       .archive-block,
       .archive-block.tight,
-      .archive-block.loose {
-        margin-bottom: 76px;
+      .archive-block.loose,
+      .archive-block.hero-block {
+        margin-bottom: 74px;
       }
 
-      .featured-row,
-      .featured-row.center,
-      .featured-row.right {
+      .hero-row {
         justify-content: flex-start;
       }
 
-      .featured-card,
-      .featured-card.secondary {
+      .hero-card {
         width: min(560px, 100%);
       }
 
-      .editorial-row.two,
-      .editorial-row.two.left,
-      .editorial-row.two.right,
-      .editorial-row.three {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, auto));
+      .composition-row.align-left,
+      .composition-row.align-right,
+      .composition-row.align-between {
         justify-content: space-between;
-        column-gap: 40px;
-        row-gap: 52px;
+        gap: 32px;
       }
 
-      .editorial-row.three .card,
-      .editorial-row.three.offset-up .card,
-      .editorial-row.three.offset-down .card,
-      .editorial-row.three.stagger-soft .card {
+      .card-group {
+        gap: 28px;
+      }
+
+      .card.narrow {
+        width: 196px;
+      }
+
+      .card.standard {
+        width: 236px;
+      }
+
+      .card.wide {
+        width: 272px;
+      }
+
+      .offset-1,
+      .offset-2,
+      .offset-3,
+      .offset-4 {
         transform: none !important;
       }
     }
 
     @media (max-width: 680px) {
       :root {
-        --page-pad-x: 18px;
+        --page-pad-x: 20px;
         --page-pad-top: 18px;
-        --page-pad-bottom: 26px;
+        --page-pad-bottom: 34px;
       }
 
       html, body {
@@ -522,100 +479,73 @@
       .title {
         width: 100%;
         max-width: 220px;
-        font-size: 27px;
+        font-size: 28px;
         line-height: 0.92;
-        margin: 0 0 10px 0;
+        margin: 0 0 14px 0;
       }
 
       .subtitle {
         margin-top: 0;
         max-width: 100%;
         font-size: 11.5px;
-        line-height: 1.32;
+        line-height: 1.34;
       }
 
       .rule {
-        margin-top: 12px;
+        margin-top: 14px;
         width: 100%;
       }
 
       .archive {
         width: 100%;
-        margin-top: 22px;
+        margin-top: 34px;
         margin-left: 0;
       }
 
-      .archive-block,
-      .archive-block.tight,
-      .archive-block.loose {
-        margin-bottom: 22px;
+      .mobile-list {
+        display: flex;
+        flex-direction: column;
+        gap: 46px;
       }
 
-      .featured-row,
-      .featured-row.center,
-      .featured-row.right {
-        justify-content: flex-start;
+      .mobile-item {
+        width: 100%;
       }
 
-      .featured-card,
-      .featured-card.secondary,
-      .card.card-narrow,
-      .card.card-standard,
-      .card.card-wide {
+      .mobile-item .card {
         width: 100%;
         max-width: 100%;
       }
 
-      .thumb-wrap,
-      .featured-card .thumb-wrap {
-        margin-bottom: 8px;
+      .mobile-item .thumb-wrap {
+        width: 88%;
+        margin: 0 0 12px 0;
       }
 
-      .featured-card .meta-block,
-      .featured-card.secondary .meta-block,
-      .card .meta-block,
-      .card.card-narrow .meta-block,
-      .card.card-wide .meta-block {
-        max-width: 100%;
+      .mobile-item .meta-block {
+        max-width: 72%;
       }
 
-      .id,
-      .featured-card .id {
-        margin: 0 0 4px 0;
-        font-size: 13px;
+      .mobile-item .id {
+        margin: 0 0 5px 0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
       }
 
-      .object-title,
-      .featured-card .object-title {
-        margin: 0 0 6px 0;
-        font-size: 13px;
-        line-height: 1.14;
-        max-width: 100%;
+      .mobile-item .object-title {
+        font-size: 11.5px;
+        line-height: 1.06;
+        letter-spacing: -0.012em;
       }
 
-      .context {
-        margin: 0 0 6px 0;
-        font-size: 9px;
-      }
-
-      .tags {
-        gap: 4px;
-      }
-
-      .tag {
-        min-height: 17px;
-        padding: 2px 7px 2px;
-        font-size: 8.5px;
-      }
-
-      .editorial-row.two,
-      .editorial-row.two.left,
-      .editorial-row.two.right,
-      .editorial-row.three {
-        grid-template-columns: 1fr;
-        justify-content: start;
-        row-gap: 18px;
-        column-gap: 0;
+      .archive-block,
+      .archive-block.tight,
+      .archive-block.loose,
+      .archive-block.hero-block,
+      .hero-row,
+      .composition-row {
+        margin: 0;
       }
 
       .reveal {
@@ -661,147 +591,202 @@
       return displayId ? `images/${displayId}.jpeg` : "";
     }
 
-    function renderTags(tags, featured = false) {
-      if (!Array.isArray(tags) || tags.length === 0) return "";
-      const filtered = tags.filter(Boolean);
-      const limited = featured ? filtered : filtered.slice(0, 2);
-      if (!limited.length) return "";
-      return `
-        <ul class="tags">
-          ${limited.map(tag => `<li class="tag">${escapeHtml(tag)}</li>`).join("")}
-        </ul>
-      `;
+    function getContextPrimary(item) {
+      return (item.Context_Primary || item["Context (Primary)"] || "").trim();
     }
 
-    function getCardScale(item, indexInRow = 0) {
-      const displayId = (item.Display_ID || "").trim();
-      const title = (item.Title || "").trim();
-      const hasManyTags = Array.isArray(item.Context_Secondary) && item.Context_Secondary.length >= 2;
-      const isLongTitle = title.length > 44;
-
-      if (displayId === "SS-014" || displayId === "SS-003") return "narrow";
-      if (displayId === "SS-009" || displayId === "SS-013") return "wide";
-
-      if (isLongTitle && hasManyTags) return "wide";
-      if (title.length < 30 && !hasManyTags && indexInRow === 1) return "narrow";
-      return "standard";
+    function getContextSecondary(item) {
+      return item.Context_Secondary || item["Context - Secondary"] || [];
     }
 
-    function renderMeta(item, featured = false) {
+    function getSortValue(item) {
+      const displayId = String(item.Display_ID || "").trim();
+      const match = displayId.match(/(\d+)$/);
+      if (match) return Number(match[1]);
+      const record = Number(item.Record_Number);
+      return Number.isFinite(record) ? record : -1;
+    }
+
+    function sortNewestFirst(items) {
+      return [...items].sort((a, b) => getSortValue(b) - getSortValue(a));
+    }
+
+    function isFeatured(item) {
+      const val = String(item?.Featured || "").trim().toLowerCase();
+      return val === "yes" || val === "true";
+    }
+
+    function featuredRank(item) {
+      const id = String(item?.Display_ID || "").trim();
+      const preferred = ["SS-017", "SS-013", "SS-001"];
+      const index = preferred.indexOf(id);
+      return index === -1 ? 999 : index;
+    }
+
+    function renderMeta(item, isHero = false) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
-      const context = (item.Context_Primary || "").trim();
-      const secondary = item.Context_Secondary || [];
 
       return `
         <div class="meta-block">
           <p class="id">${escapeHtml(displayId)}</p>
           <p class="object-title">${escapeHtml(title)}</p>
-          <p class="context">${escapeHtml(context)}</p>
-          ${renderTags(secondary, featured)}
         </div>
       `;
     }
 
-    function renderCard(item, opts = {}) {
+    function renderImage(displayId) {
+      return `
+        <div class="thumb-wrap">
+          <img
+            class="thumb"
+            src="${escapeHtml(imagePathFromDisplayId(displayId))}"
+            alt="${escapeHtml(displayId)}"
+            loading="lazy"
+            onload="this.classList.add('loaded'); postSize();"
+            onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
+          >
+        </div>
+      `;
+    }
+
+    function renderCard(item, options = {}) {
       const {
-        featured = false,
-        featuredClass = "",
-        scale = "standard"
-      } = opts;
+        width = "standard",
+        extraClass = "",
+        hero = false
+      } = options;
 
       const displayId = (item.Display_ID || "").trim();
       const url = (item.Readymag_URL || "").trim();
-      const img = imagePathFromDisplayId(displayId);
-
-      if (featured) {
-        return `
-          <div class="featured-row ${featuredClass}">
-            <a class="card featured-card ${featuredClass === "right" ? "secondary" : ""} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
-              <div class="thumb-wrap">
-                <img
-                  class="thumb"
-                  src="${escapeHtml(img)}"
-                  alt="${escapeHtml(displayId)}"
-                  loading="lazy"
-                  onload="this.classList.add('loaded'); postSize();"
-                  onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
-                >
-              </div>
-              ${renderMeta(item, true)}
-            </a>
-          </div>
-        `;
-      }
 
       return `
-        <a class="card card-${scale} reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
-          <div class="thumb-wrap">
-            <img
-              class="thumb"
-              src="${escapeHtml(img)}"
-              alt="${escapeHtml(displayId)}"
-              loading="lazy"
-              onload="this.classList.add('loaded'); postSize();"
-              onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
-            >
-          </div>
-          ${renderMeta(item, false)}
+        <a class="card ${hero ? "hero-card" : width} reveal ${extraClass}" href="${escapeHtml(url)}" target="_top" rel="noopener">
+          ${renderImage(displayId)}
+          ${renderMeta(item, hero)}
         </a>
       `;
     }
 
-    function renderMobileList(items) {
-      return items.map(item => `
-        <div class="archive-block mobile-chronological">
-          <a class="card card-standard reveal" href="${escapeHtml((item.Readymag_URL || "").trim())}" target="_top" rel="noopener">
-            <div class="thumb-wrap">
-              <img
-                class="thumb"
-                src="${escapeHtml(imagePathFromDisplayId((item.Display_ID || "").trim()))}"
-                alt="${escapeHtml((item.Display_ID || "").trim())}"
-                loading="lazy"
-                onload="this.classList.add('loaded'); postSize();"
-                onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
-              >
-            </div>
-            ${renderMeta(item, false)}
-          </a>
-        </div>
-      `).join("");
+    function getWidthClass(item, indexInRow = 0) {
+      const displayId = (item.Display_ID || "").trim();
+      const title = (item.Title || "").trim();
+      const secondary = getContextSecondary(item);
+      const hasManyTags = Array.isArray(secondary) && secondary.length >= 2;
+      const isLong = title.length > 40;
+
+      if (displayId === "SS-018" || displayId === "SS-016" || displayId === "SS-013") return "wide";
+      if (displayId === "SS-003" || displayId === "SS-014" || displayId === "SS-002") return "narrow";
+      if (isLong && hasManyTags) return "wide";
+      if (!isLong && indexInRow === 1) return "narrow";
+      return "standard";
     }
 
-    function buildRow(items, rowIndex) {
-      const everyThirdIsTwo = (rowIndex + 1) % 3 === 0;
-      const takeCount = everyThirdIsTwo ? 2 : 3;
-      const rowItems = items.splice(0, takeCount);
-      if (!rowItems.length) return "";
+    function renderMobileList(items) {
+      return `
+        <div class="mobile-list">
+          ${items.map(item => `
+            <div class="mobile-item">
+              ${renderCard(item, { width: "standard" })}
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
 
-      const rowClassVariants = ["offset-up", "stagger-soft", "offset-down", ""];
-      const rowVariant = rowClassVariants[rowIndex % rowClassVariants.length];
+    function renderDesktop(items) {
+      const featured = sortNewestFirst(items.filter(isFeatured))
+        .sort((a, b) => featuredRank(a) - featuredRank(b));
 
-      if (rowItems.length === 2) {
-        const sideClass = rowIndex % 2 === 0 ? "left" : "right";
-        return `
-          <div class="archive-block tight">
-            <div class="editorial-row two ${sideClass}">
-              ${rowItems.map((item, i) => renderCard(item, {
-                scale: getCardScale(item, i)
-              })).join("")}
+      const featuredIds = new Set(featured.map(item => item.Display_ID));
+      const remaining = sortNewestFirst(items.filter(item => !featuredIds.has(item.Display_ID)));
+
+      let html = "";
+
+      if (featured[0]) {
+        html += `
+          <div class="archive-block hero-block">
+            <div class="hero-row">
+              ${renderCard(featured[0], { hero: true })}
             </div>
           </div>
         `;
       }
 
-      return `
-        <div class="archive-block ${rowVariant ? "loose" : ""}">
-          <div class="editorial-row three ${rowVariant}">
-            ${rowItems.map((item, i) => renderCard(item, {
-              scale: getCardScale(item, i)
-            })).join("")}
-          </div>
-        </div>
-      `;
+      const patterns = [
+        { type: "between-3", offsets: ["offset-1", "", "offset-2"] },
+        { type: "left-2", offsets: ["", "offset-3"] },
+        { type: "right-2", offsets: ["offset-2", ""] },
+        { type: "between-3", offsets: ["", "offset-4", ""] },
+        { type: "solo-right", offsets: [""] }
+      ];
+
+      if (featured[1]) remaining.unshift(featured[1]);
+      if (featured[2]) remaining.splice(Math.min(4, remaining.length), 0, featured[2]);
+
+      let cursor = 0;
+      let patternIndex = 0;
+
+      while (cursor < remaining.length) {
+        const pattern = patterns[patternIndex % patterns.length];
+
+        if (pattern.type === "between-3") {
+          const rowItems = remaining.slice(cursor, cursor + 3);
+          if (!rowItems.length) break;
+
+          html += `
+            <div class="archive-block ${patternIndex % 2 === 0 ? "loose" : "tight"}">
+              <div class="composition-row align-between">
+                ${rowItems.map((item, i) =>
+                  renderCard(item, {
+                    width: getWidthClass(item, i),
+                    extraClass: pattern.offsets[i] || ""
+                  })
+                ).join("")}
+              </div>
+            </div>
+          `;
+
+          cursor += rowItems.length;
+        } else if (pattern.type === "left-2" || pattern.type === "right-2") {
+          const rowItems = remaining.slice(cursor, cursor + 2);
+          if (!rowItems.length) break;
+
+          html += `
+            <div class="archive-block tight">
+              <div class="composition-row ${pattern.type === "left-2" ? "align-left" : "align-right"}">
+                <div class="card-group compact">
+                  ${rowItems.map((item, i) =>
+                    renderCard(item, {
+                      width: getWidthClass(item, i),
+                      extraClass: pattern.offsets[i] || ""
+                    })
+                  ).join("")}
+                </div>
+              </div>
+            </div>
+          `;
+
+          cursor += rowItems.length;
+        } else if (pattern.type === "solo-right") {
+          const item = remaining[cursor];
+          if (!item) break;
+
+          html += `
+            <div class="archive-block loose">
+              <div class="composition-row align-right">
+                ${renderCard(item, { width: "standard" })}
+              </div>
+            </div>
+          `;
+
+          cursor += 1;
+        }
+
+        patternIndex += 1;
+      }
+
+      return html;
     }
 
     function setupReveal() {
@@ -843,101 +828,44 @@
       }, '*');
     }
 
-    function isFeatured(item) {
-      const val = String(item?.Featured || "").trim().toLowerCase();
-      return val === "yes" || val === "true";
-    }
-
     async function init() {
       const archive = document.getElementById('archive');
 
       try {
-        const indexRes = await fetch('./index.json', { cache: 'no-store' });
+        const [indexRes, featuredRes] = await Promise.all([
+          fetch('./index.json', { cache: 'no-store' }),
+          fetch('./featured.json', { cache: 'no-store' }).catch(() => null)
+        ]);
+
         if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
 
-        const itemsRaw = await indexRes.json();
+        const indexItems = await indexRes.json();
+        let featuredItems = [];
 
-        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
+        if (featuredRes && featuredRes.ok) {
+          featuredItems = await featuredRes.json();
+        }
+
+        if (!Array.isArray(indexItems) || indexItems.length === 0) {
           archive.innerHTML = '<div class="empty">No objects available yet.</div>';
           postSize();
           return;
         }
 
-        const items = [...itemsRaw];
+        const items = sortNewestFirst(indexItems).map(item => {
+          const match = Array.isArray(featuredItems)
+            ? featuredItems.find(f => String(f.Display_ID || "").trim() === String(item.Display_ID || "").trim())
+            : null;
+
+          if (match && !item.Featured) {
+            return { ...item, Featured: match.Featured || "Yes" };
+          }
+          return item;
+        });
+
         const isMobile = window.innerWidth <= 680;
+        archive.innerHTML = isMobile ? renderMobileList(items) : renderDesktop(items);
 
-        if (isMobile) {
-          archive.innerHTML = renderMobileList(items);
-          setupReveal();
-
-          setTimeout(postSize, 50);
-          setTimeout(postSize, 300);
-          setTimeout(postSize, 900);
-          return;
-        }
-
-        const featuredItems = items.filter(isFeatured);
-        const firstFeaturedId = featuredItems[0]?.Display_ID || null;
-        const secondFeaturedId = featuredItems[1]?.Display_ID || null;
-
-        let html = "";
-        let rowIndex = 0;
-        let queue = [];
-
-        function addRowsFromQueue(queueRef) {
-          while (queueRef.length) {
-            html += buildRow(queueRef, rowIndex);
-            rowIndex += 1;
-          }
-        }
-
-        if (firstFeaturedId) {
-          const firstFeatured = items.find(item => item.Display_ID === firstFeaturedId);
-          if (firstFeatured) {
-            html += `
-              <div class="archive-block loose">
-                ${renderCard(firstFeatured, {
-                  featured: true,
-                  featuredClass: "center"
-                })}
-              </div>
-            `;
-          }
-        }
-
-        const remaining = items.filter(item => {
-          const id = (item.Display_ID || "").trim();
-          return id !== firstFeaturedId;
-        });
-
-        remaining.forEach(item => {
-          const id = (item.Display_ID || "").trim();
-
-          if (secondFeaturedId && id === secondFeaturedId) {
-            addRowsFromQueue(queue);
-            html += `
-              <div class="archive-block loose">
-                ${renderCard(item, {
-                  featured: true,
-                  featuredClass: "right"
-                })}
-              </div>
-            `;
-            return;
-          }
-
-          queue.push(item);
-
-          const upcomingRowSize = ((rowIndex + 1) % 3 === 0) ? 2 : 3;
-          if (queue.length >= upcomingRowSize) {
-            html += buildRow(queue, rowIndex);
-            rowIndex += 1;
-          }
-        });
-
-        addRowsFromQueue(queue);
-
-        archive.innerHTML = html;
         setupReveal();
 
         setTimeout(postSize, 50);
