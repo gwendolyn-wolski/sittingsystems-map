@@ -1,6 +1,7 @@
 [
   {
     "Record_Number": 0,
+    "Sort_Number": 1,
     "Display_ID": "SS-001",
     "Title": "Informal Armchair Arrangement, Sidewalk",
     "Slug": "ss-001",
@@ -37,6 +38,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 2,
     "Display_ID": "SS-002",
     "Title": "Child-Sized Chair, Private Residence",
     "Slug": "ss-002",
@@ -73,6 +75,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 3,
     "Display_ID": "SS-003",
     "Title": "Decorative Side Chair, Outdoor Market",
     "Slug": "ss-003",
@@ -109,6 +112,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 4,
     "Display_ID": "SS-004",
     "Title": "Ceremonial Upholstered Chair — Louvre Interior",
     "Slug": "ss-004",
@@ -145,6 +149,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 5,
     "Display_ID": "SS-005",
     "Title": "Modified Armchair — Exhibition Installation",
     "Slug": "ss-005",
@@ -181,6 +186,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 6,
     "Display_ID": "SS-006",
     "Title": "Painted Ladder-Back Chair — Commercial Interior",
     "Slug": "ss-006",
@@ -216,6 +222,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 7,
     "Display_ID": "SS-007",
     "Title": "Upholstered Armchair — Roadside (Winter)",
     "Slug": "ss-007",
@@ -253,6 +260,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 8,
     "Display_ID": "SS-008",
     "Title": "Artist’s Step Chair — Improvised Seating",
     "Slug": "ss-008",
@@ -289,6 +297,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 9,
     "Display_ID": "SS-009",
     "Title": "Reclining Loungers — Hospitality Lawn",
     "Slug": "ss-009",
@@ -325,6 +334,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 10,
     "Display_ID": "SS-010",
     "Title": "Ornamental Armchairs — Storefront Threshold",
     "Slug": "ss-010",
@@ -360,6 +370,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 11,
     "Display_ID": "SS-011",
     "Title": "Student Desk-Chair — Classroom Synchronization",
     "Slug": "ss-011",
@@ -395,6 +406,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 12,
     "Display_ID": "SS-012",
     "Title": "Lakeside Armchairs — Horizon-Oriented Rest",
     "Slug": "ss-012",
@@ -430,6 +442,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 13,
     "Display_ID": "SS-013",
     "Title": "Dining Chairs (Matched Set) — Domestic Displacement",
     "Slug": "ss-013",
@@ -465,6 +478,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 14,
     "Display_ID": "SS-014",
     "Title": "Lounge Chair — Exhibition Proxy for Rest",
     "Slug": "ss-014",
@@ -502,6 +516,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 15,
     "Display_ID": "SS-015",
     "Title": "Bentwood Armchair — Retail Seating",
     "Slug": "ss-015",
@@ -537,6 +552,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 16,
     "Display_ID": "SS-016",
     "Title": "Molded Plywood Lounge Chair — Sidewalk Resale Display",
     "Slug": "ss-016",
@@ -572,6 +588,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 17,
     "Display_ID": "SS-017",
     "Title": "Deep-Seated Armchair — Domestic Rest",
     "Slug": "ss-017",
@@ -607,6 +624,7 @@
   },
   {
     "Record_Number": 0,
+    "Sort_Number": 18,
     "Display_ID": "SS-018",
     "Title": "Ceremonial Upholstered Chair — Louvre Interior",
     "Slug": "ss-018",
