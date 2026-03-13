@@ -812,97 +812,130 @@
       return val === "yes" || val === "true";
     }
 
-    async function init() {
-      const archive = document.getElementById('archive');
+async function init() {
+  const archive = document.getElementById('archive');
 
-      try {
-        const indexRes = await fetch('./index.json', { cache: 'no-store' });
-        if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
+  try {
+    const indexRes = await fetch('./index.json', { cache: 'no-store' });
+    if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
 
-        const itemsRaw = await indexRes.json();
+    const itemsRaw = await indexRes.json();
 
-        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
-          archive.innerHTML = '<div class="empty">No objects available yet.</div>';
-          postSize();
-          return;
-        }
+    if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
+      archive.innerHTML = '<div class="empty">No objects available yet.</div>';
+      postSize();
+      return;
+    }
 
-        const items = [...itemsRaw];
+    const items = [...itemsRaw];
+    const isMobile = window.innerWidth <= 680;
 
-        const featuredItems = items.filter(isFeatured);
-        const firstFeaturedId = featuredItems[0]?.Display_ID || null;
-        const secondFeaturedId = featuredItems[1]?.Display_ID || null;
-
-        let html = "";
-        let rowIndex = 0;
-
-        function addRowsFromQueue(queue) {
-          while (queue.length) {
-            html += buildRow(queue, rowIndex);
-            rowIndex += 1;
-          }
-        }
-
-        if (firstFeaturedId) {
-          const firstFeatured = items.find(item => item.Display_ID === firstFeaturedId);
-          if (firstFeatured) {
-            html += `
-              <div class="archive-block loose">
-                ${renderCard(firstFeatured, {
-                  featured: true,
-                  featuredClass: "center"
-                })}
-              </div>
-            `;
-          }
-        }
-
-        const remaining = items.filter(item => {
-          const id = (item.Display_ID || "").trim();
-          return id !== firstFeaturedId;
-        });
-
-        let queue = [];
-
-        remaining.forEach(item => {
-          const id = (item.Display_ID || "").trim();
-
-          if (secondFeaturedId && id === secondFeaturedId) {
-            addRowsFromQueue(queue);
-            html += `
-              <div class="archive-block loose">
-                ${renderCard(item, {
-                  featured: true,
-                  featuredClass: "right"
-                })}
-              </div>
-            `;
-            return;
-          }
-
-          queue.push(item);
-
-          const upcomingRowSize = ((rowIndex + 1) % 3 === 0) ? 2 : 3;
-          if (queue.length >= upcomingRowSize) {
-            html += buildRow(queue, rowIndex);
-            rowIndex += 1;
-          }
-        });
-
-        addRowsFromQueue(queue);
-
-        archive.innerHTML = html;
-        setupReveal();
-
-        setTimeout(postSize, 50);
-        setTimeout(postSize, 300);
-        setTimeout(postSize, 900);
-      } catch (err) {
-        console.error(err);
-        archive.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
-        postSize();
+    function addRowsFromQueue(queue, htmlState) {
+      while (queue.length) {
+        htmlState.html += buildRow(queue, htmlState.rowIndex);
+        htmlState.rowIndex += 1;
       }
     }
+
+    // MOBILE: ignore featured logic, show strict chronological order (newest first)
+    if (isMobile) {
+      let html = "";
+      let rowIndex = 0;
+      let queue = [];
+
+      items.forEach(item => {
+        queue.push(item);
+
+        const upcomingRowSize = ((rowIndex + 1) % 3 === 0) ? 2 : 3;
+        if (queue.length >= upcomingRowSize) {
+          html += buildRow(queue, rowIndex);
+          rowIndex += 1;
+        }
+      });
+
+      while (queue.length) {
+        html += buildRow(queue, rowIndex);
+        rowIndex += 1;
+      }
+
+      archive.innerHTML = html;
+      setupReveal();
+
+      setTimeout(postSize, 50);
+      setTimeout(postSize, 300);
+      setTimeout(postSize, 900);
+      return;
+    }
+
+    // DESKTOP / TABLET: keep featured logic
+    const featuredItems = items.filter(isFeatured);
+    const firstFeaturedId = featuredItems[0]?.Display_ID || null;
+    const secondFeaturedId = featuredItems[1]?.Display_ID || null;
+
+    let html = "";
+    let rowIndex = 0;
+    let queue = [];
+
+    const htmlState = { html, rowIndex };
+
+    if (firstFeaturedId) {
+      const firstFeatured = items.find(item => item.Display_ID === firstFeaturedId);
+      if (firstFeatured) {
+        htmlState.html += `
+          <div class="archive-block loose">
+            ${renderCard(firstFeatured, {
+              featured: true,
+              featuredClass: "center"
+            })}
+          </div>
+        `;
+      }
+    }
+
+    const remaining = items.filter(item => {
+      const id = (item.Display_ID || "").trim();
+      return id !== firstFeaturedId;
+    });
+
+    remaining.forEach(item => {
+      const id = (item.Display_ID || "").trim();
+
+      if (secondFeaturedId && id === secondFeaturedId) {
+        addRowsFromQueue(queue, htmlState);
+        htmlState.html += `
+          <div class="archive-block loose">
+            ${renderCard(item, {
+              featured: true,
+              featuredClass: "right"
+            })}
+          </div>
+        `;
+        return;
+      }
+
+      queue.push(item);
+
+      const upcomingRowSize = ((htmlState.rowIndex + 1) % 3 === 0) ? 2 : 3;
+      if (queue.length >= upcomingRowSize) {
+        htmlState.html += buildRow(queue, htmlState.rowIndex);
+        htmlState.rowIndex += 1;
+      }
+    });
+
+    addRowsFromQueue(queue, htmlState);
+
+    archive.innerHTML = htmlState.html;
+    setupReveal();
+
+    setTimeout(postSize, 50);
+    setTimeout(postSize, 300);
+    setTimeout(postSize, 900);
+  } catch (err) {
+    console.error(err);
+    archive.innerHTML = '<div class="empty">There was a problem loading the archive.</div>';
+    postSize();
+  }
+}
 
     window.addEventListener('load', postSize);
     window.addEventListener('resize', postSize);
