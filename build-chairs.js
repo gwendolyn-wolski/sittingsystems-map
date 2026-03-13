@@ -5,7 +5,11 @@ const { parse } = require("csv-parse/sync");
 const ROOT = __dirname;
 const CSV_PATH = path.join(ROOT, "chairs.csv");
 const TEMPLATE_PATH = path.join(ROOT, "chair-template.html");
+
 const FULL_JSON_PATH = path.join(ROOT, "chair-data.json");
+const INDEX_JSON_PATH = path.join(ROOT, "index.json");
+const CONTEXT_JSON_PATH = path.join(ROOT, "context.json");
+const FEATURED_JSON_PATH = path.join(ROOT, "featured.json");
 
 const csvText = fs.readFileSync(CSV_PATH, "utf8");
 const template = fs.readFileSync(TEMPLATE_PATH, "utf8");
@@ -144,7 +148,13 @@ function objectNav(previousChair, nextChair) {
 }
 
 const chairs = rows
-  .filter(row => clean(row["Display_ID"]))
+  .filter(row => {
+    const displayId = clean(row["Display_ID"]);
+    const webStatus = clean(row["Web Status"]).toLowerCase();
+    if (!displayId) return false;
+    if (webStatus && webStatus !== "public") return false;
+    return true;
+  })
   .map(row => {
     const displayId = clean(row["Display_ID"]);
     const title =
@@ -218,7 +228,33 @@ const chairs = rows
     return a.Display_ID.localeCompare(b.Display_ID);
   });
 
-fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairs, null, 2));
+fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairs, null, 2), "utf8");
+
+// index.json: all chairs in reverse order so newest appears first
+const indexChairs = [...chairs].sort((a, b) => {
+  if (a.Record_Number != null && b.Record_Number != null) {
+    return b.Record_Number - a.Record_Number;
+  }
+  return b.Display_ID.localeCompare(a.Display_ID);
+});
+fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(indexChairs, null, 2), "utf8");
+
+// context.json: grouped by primary context, newest first within each group
+const contextMap = {};
+for (const chair of indexChairs) {
+  const key = clean(chair.Context_Primary);
+  if (!key) continue;
+  if (!contextMap[key]) contextMap[key] = [];
+  contextMap[key].push(chair);
+}
+fs.writeFileSync(CONTEXT_JSON_PATH, JSON.stringify(contextMap, null, 2), "utf8");
+
+// featured.json: only chairs marked featured
+const featuredChairs = indexChairs.filter(chair => {
+  const val = clean(chair.Featured).toLowerCase();
+  return val === "yes" || val === "true";
+});
+fs.writeFileSync(FEATURED_JSON_PATH, JSON.stringify(featuredChairs, null, 2), "utf8");
 
 chairs.forEach((chair, index) => {
   const slug = chair.Slug;
@@ -273,7 +309,9 @@ chairs.forEach((chair, index) => {
     .replaceAll("{{OBSERVATIONS_BLOCK}}", observationsBlock)
     .replaceAll("{{OBJECT_NAV}}", objectNavBlock);
 
-  fs.writeFileSync(path.join(outDir, "index.html"), html);
+  fs.writeFileSync(path.join(outDir, "index.html"), html, "utf8");
 });
 
-console.log(`Built ${chairs.length} chair pages and chair-data.json`);
+console.log(
+  `Built ${chairs.length} chair pages plus chair-data.json, index.json, context.json, and featured.json`
+);
