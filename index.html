@@ -12,12 +12,10 @@
       --muted: rgba(17,17,17,.48);
       --muted-soft: rgba(17,17,17,.72);
       --line: #e2e2e2;
-      --pill-bg: rgba(17,17,17,.03);
-      --pill-text: rgba(17,17,17,.54);
 
       --page-pad-x: 28px;
       --page-pad-top: 58px;
-      --page-pad-bottom: 80px;
+      --page-pad-bottom: 88px;
 
       --rail-w: 150px;
       --gap: 56px;
@@ -25,12 +23,8 @@
       --masthead-w: min(860px, calc(100vw - var(--page-pad-x) * 2 - var(--rail-w) - var(--gap)));
       --full-w: calc(100vw - var(--page-pad-x) * 2);
 
-      --hero-w: min(560px, calc(var(--full-w) * 0.37));
-      --feature-w: 330px;
-      --feature-narrow-w: 250px;
-      --feature-wide-w: 390px;
-
-      --meta-w: 250px;
+      --card-w: 460px;
+      --meta-w: 292px;
     }
 
     * { box-sizing: border-box; }
@@ -45,9 +39,7 @@
       overflow-y: hidden;
     }
 
-    body {
-      min-height: 100vh;
-    }
+    body { min-height: 100vh; }
 
     a {
       color: inherit;
@@ -74,13 +66,8 @@
       align-items: start;
     }
 
-    .rail {
-      min-height: 1px;
-    }
-
-    .main {
-      min-width: 0;
-    }
+    .rail { min-height: 1px; }
+    .main { min-width: 0; }
 
     .masthead {
       width: var(--masthead-w);
@@ -116,106 +103,64 @@
     .archive {
       width: var(--full-w);
       max-width: var(--full-w);
-      margin-top: 78px;
+      margin-top: 76px;
       margin-left: calc((var(--rail-w) + var(--gap)) * -1);
       display: flex;
       flex-direction: column;
       gap: 0;
     }
 
-    .archive-block {
-      width: 100%;
-      margin: 0 0 124px 0;
-    }
-
-    .archive-block.tight {
-      margin-bottom: 96px;
-    }
-
-    .archive-block.loose {
-      margin-bottom: 156px;
-    }
-
-    .archive-block.hero-block {
-      margin-bottom: 138px;
-    }
-
-    .hero-row {
+    .archive-row {
       width: 100%;
       display: flex;
+      align-items: flex-start;
+      margin: 0 0 116px 0;
+    }
+
+    .archive-row.center {
+      justify-content: center;
+      gap: 132px;
+    }
+
+    .archive-row.right {
+      justify-content: flex-end;
+      gap: 132px;
+    }
+
+    .archive-row.left {
+      justify-content: flex-start;
+      gap: 132px;
+    }
+
+    .archive-row.between {
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    .archive-row.solo-center {
       justify-content: center;
     }
 
-    .hero-card {
-      width: var(--hero-w);
-      max-width: 100%;
-      display: block;
-    }
-
-    .composition-row {
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .composition-row.align-left {
-      justify-content: flex-start;
-      gap: 140px;
-    }
-
-    .composition-row.align-right {
+    .archive-row.solo-right {
       justify-content: flex-end;
-      gap: 140px;
-    }
-
-    .composition-row.align-between {
-      justify-content: space-between;
-      gap: 52px;
-    }
-
-    .card-group {
-      display: flex;
-      gap: 58px;
-      align-items: flex-start;
-    }
-
-    .card-group.compact {
-      gap: 44px;
     }
 
     .card {
       display: block;
-      color: inherit;
-      text-decoration: none;
-      transition: transform .18s ease, opacity .45s ease, filter .45s ease;
+      width: var(--card-w);
       min-width: 0;
+      transition: transform .18s ease, opacity .45s ease, filter .45s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
     }
 
-    .card.narrow {
-      width: var(--feature-narrow-w);
-    }
-
-    .card.standard {
-      width: var(--feature-w);
-    }
-
-    .card.wide {
-      width: var(--feature-wide-w);
-    }
-
-    .hero-card .thumb-wrap {
-      margin-bottom: 14px;
-    }
-
     .thumb-wrap {
       width: 100%;
       overflow: hidden;
       background: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .thumb {
@@ -229,32 +174,11 @@
       transition: opacity .28s ease, transform .28s ease;
     }
 
-    .thumb.loaded {
-      opacity: 1;
-    }
-
-    .card:hover .thumb.loaded {
-      transform: scale(1.01);
-    }
+    .thumb.loaded { opacity: 1; }
+    .card:hover .thumb.loaded { transform: scale(1.01); }
 
     .meta-block {
       max-width: var(--meta-w);
-    }
-
-    .hero-card .meta-block {
-      max-width: 320px;
-    }
-
-    .card.narrow .meta-block {
-      max-width: 210px;
-    }
-
-    .card.standard .meta-block {
-      max-width: 238px;
-    }
-
-    .card.wide .meta-block {
-      max-width: 276px;
     }
 
     .id {
@@ -265,23 +189,13 @@
       letter-spacing: -0.012em;
     }
 
-    .hero-card .id {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
     .object-title {
       margin: 0;
       font-size: 11.8px;
       line-height: 1.08;
       letter-spacing: -0.012em;
-      color: rgba(17,17,17,.9);
+      color: rgba(17,17,17,.92);
       text-wrap: balance;
-    }
-
-    .hero-card .object-title {
-      font-size: 13.2px;
-      line-height: 1.1;
     }
 
     .loading,
@@ -302,19 +216,10 @@
       filter: blur(0);
     }
 
-    .offset-1 { transform: translateY(18px); }
-    .offset-2 { transform: translateY(-12px); }
-    .offset-3 { transform: translateY(26px); }
-    .offset-4 { transform: translateY(-20px); }
-
     @media (prefers-reduced-motion: reduce) {
       .card,
       .thumb,
-      .reveal,
-      .offset-1,
-      .offset-2,
-      .offset-3,
-      .offset-4 {
+      .reveal {
         transition: none !important;
         transform: none !important;
         filter: none !important;
@@ -325,17 +230,37 @@
       }
     }
 
-    @media (max-width: 1280px) {
+    @media (max-width: 1500px) {
       :root {
-        --hero-w: min(520px, calc(var(--full-w) * 0.39));
-        --feature-w: 300px;
-        --feature-narrow-w: 228px;
-        --feature-wide-w: 350px;
+        --card-w: 420px;
+        --meta-w: 270px;
       }
 
-      .composition-row.align-left,
-      .composition-row.align-right {
-        gap: 90px;
+      .archive-row.center,
+      .archive-row.right,
+      .archive-row.left {
+        gap: 92px;
+      }
+    }
+
+    @media (max-width: 1240px) {
+      :root {
+        --card-w: 360px;
+        --meta-w: 236px;
+      }
+
+      .archive-row {
+        margin-bottom: 96px;
+      }
+
+      .archive-row.center,
+      .archive-row.right,
+      .archive-row.left {
+        gap: 56px;
+      }
+
+      .archive-row.between {
+        gap: 28px;
       }
     }
 
@@ -343,31 +268,12 @@
       :root {
         --rail-w: 120px;
         --gap: 36px;
-        --hero-w: min(500px, calc(var(--full-w) * 0.42));
-        --feature-w: 280px;
-        --feature-narrow-w: 214px;
-        --feature-wide-w: 320px;
+        --card-w: 320px;
+        --meta-w: 216px;
       }
 
       .title {
         font-size: 33px;
-      }
-
-      .archive-block {
-        margin-bottom: 108px;
-      }
-
-      .archive-block.loose {
-        margin-bottom: 132px;
-      }
-
-      .composition-row.align-left,
-      .composition-row.align-right {
-        gap: 62px;
-      }
-
-      .card-group {
-        gap: 40px;
       }
     }
 
@@ -375,6 +281,8 @@
       :root {
         --page-pad-x: 18px;
         --page-pad-top: 48px;
+        --card-w: 280px;
+        --meta-w: 198px;
       }
 
       html, body {
@@ -386,9 +294,7 @@
         row-gap: 18px;
       }
 
-      .rail {
-        display: none;
-      }
+      .rail { display: none; }
 
       .masthead,
       .archive {
@@ -402,61 +308,30 @@
       }
 
       .archive {
-        margin-top: 50px;
+        margin-top: 52px;
         margin-left: 0;
       }
 
-      .archive-block,
-      .archive-block.tight,
-      .archive-block.loose,
-      .archive-block.hero-block {
-        margin-bottom: 74px;
+      .archive-row {
+        margin-bottom: 76px;
       }
 
-      .hero-row {
-        justify-content: flex-start;
+      .archive-row.center,
+      .archive-row.right,
+      .archive-row.left {
+        gap: 34px;
       }
 
-      .hero-card {
-        width: min(560px, 100%);
-      }
-
-      .composition-row.align-left,
-      .composition-row.align-right,
-      .composition-row.align-between {
-        justify-content: space-between;
-        gap: 32px;
-      }
-
-      .card-group {
-        gap: 28px;
-      }
-
-      .card.narrow {
-        width: 196px;
-      }
-
-      .card.standard {
-        width: 236px;
-      }
-
-      .card.wide {
-        width: 272px;
-      }
-
-      .offset-1,
-      .offset-2,
-      .offset-3,
-      .offset-4 {
-        transform: none !important;
+      .archive-row.between {
+        gap: 20px;
       }
     }
 
     @media (max-width: 680px) {
       :root {
         --page-pad-x: 20px;
-        --page-pad-top: 18px;
-        --page-pad-bottom: 34px;
+        --page-pad-top: 22px;
+        --page-pad-bottom: 40px;
       }
 
       html, body {
@@ -505,7 +380,7 @@
       .mobile-list {
         display: flex;
         flex-direction: column;
-        gap: 46px;
+        gap: 52px;
       }
 
       .mobile-item {
@@ -529,22 +404,16 @@
       .mobile-item .id {
         margin: 0 0 5px 0;
         font-size: 12px;
+        line-height: 1;
         font-weight: 700;
-        letter-spacing: -0.01em;
       }
 
       .mobile-item .object-title {
         font-size: 11.5px;
         line-height: 1.06;
-        letter-spacing: -0.012em;
       }
 
-      .archive-block,
-      .archive-block.tight,
-      .archive-block.loose,
-      .archive-block.hero-block,
-      .hero-row,
-      .composition-row {
+      .archive-row {
         margin: 0;
       }
 
@@ -591,14 +460,6 @@
       return displayId ? `images/${displayId}.jpeg` : "";
     }
 
-    function getContextPrimary(item) {
-      return (item.Context_Primary || item["Context (Primary)"] || "").trim();
-    }
-
-    function getContextSecondary(item) {
-      return item.Context_Secondary || item["Context - Secondary"] || [];
-    }
-
     function getSortValue(item) {
       const displayId = String(item.Display_ID || "").trim();
       const match = displayId.match(/(\d+)$/);
@@ -611,182 +472,67 @@
       return [...items].sort((a, b) => getSortValue(b) - getSortValue(a));
     }
 
-    function isFeatured(item) {
-      const val = String(item?.Featured || "").trim().toLowerCase();
-      return val === "yes" || val === "true";
-    }
-
-    function featuredRank(item) {
-      const id = String(item?.Display_ID || "").trim();
-      const preferred = ["SS-017", "SS-013", "SS-001"];
-      const index = preferred.indexOf(id);
-      return index === -1 ? 999 : index;
-    }
-
-    function renderMeta(item, isHero = false) {
+    function renderCard(item) {
       const displayId = (item.Display_ID || "").trim();
       const title = (item.Title || "").trim();
-
-      return `
-        <div class="meta-block">
-          <p class="id">${escapeHtml(displayId)}</p>
-          <p class="object-title">${escapeHtml(title)}</p>
-        </div>
-      `;
-    }
-
-    function renderImage(displayId) {
-      return `
-        <div class="thumb-wrap">
-          <img
-            class="thumb"
-            src="${escapeHtml(imagePathFromDisplayId(displayId))}"
-            alt="${escapeHtml(displayId)}"
-            loading="lazy"
-            onload="this.classList.add('loaded'); postSize();"
-            onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
-          >
-        </div>
-      `;
-    }
-
-    function renderCard(item, options = {}) {
-      const {
-        width = "standard",
-        extraClass = "",
-        hero = false
-      } = options;
-
-      const displayId = (item.Display_ID || "").trim();
       const url = (item.Readymag_URL || "").trim();
 
       return `
-        <a class="card ${hero ? "hero-card" : width} reveal ${extraClass}" href="${escapeHtml(url)}" target="_top" rel="noopener">
-          ${renderImage(displayId)}
-          ${renderMeta(item, hero)}
+        <a class="card reveal" href="${escapeHtml(url)}" target="_top" rel="noopener">
+          <div class="thumb-wrap">
+            <img
+              class="thumb"
+              src="${escapeHtml(imagePathFromDisplayId(displayId))}"
+              alt="${escapeHtml(displayId)}"
+              loading="lazy"
+              onload="this.classList.add('loaded'); postSize();"
+              onerror="this.closest('.thumb-wrap').style.display='none'; postSize();"
+            >
+          </div>
+          <div class="meta-block">
+            <p class="id">${escapeHtml(displayId)}</p>
+            <p class="object-title">${escapeHtml(title)}</p>
+          </div>
         </a>
       `;
     }
 
-    function getWidthClass(item, indexInRow = 0) {
-      const displayId = (item.Display_ID || "").trim();
-      const title = (item.Title || "").trim();
-      const secondary = getContextSecondary(item);
-      const hasManyTags = Array.isArray(secondary) && secondary.length >= 2;
-      const isLong = title.length > 40;
+    function renderDesktop(itemMap) {
+      const rows = [
+        { cls: "center", ids: ["SS-017", "SS-013"] },
+        { cls: "solo-right", ids: ["SS-001"] },
+        { cls: "between", ids: ["SS-018", "SS-015", "SS-005"] },
+        { cls: "left", ids: ["SS-014", "SS-012"] },
+        { cls: "solo-center", ids: ["SS-003"] },
+        { cls: "solo-center", ids: ["SS-004"] },
+        { cls: "between", ids: ["SS-006", "SS-008", "SS-016"] },
+        { cls: "left", ids: ["SS-010", "SS-002"] },
+        { cls: "between", ids: ["SS-007", "SS-009", "SS-011"] }
+      ];
 
-      if (displayId === "SS-018" || displayId === "SS-016" || displayId === "SS-013") return "wide";
-      if (displayId === "SS-003" || displayId === "SS-014" || displayId === "SS-002") return "narrow";
-      if (isLong && hasManyTags) return "wide";
-      if (!isLong && indexInRow === 1) return "narrow";
-      return "standard";
+      return rows.map(row => {
+        const cards = row.ids
+          .map(id => itemMap.get(id))
+          .filter(Boolean)
+          .map(item => renderCard(item))
+          .join("");
+
+        if (!cards) return "";
+        return `<div class="archive-row ${row.cls}">${cards}</div>`;
+      }).join("");
     }
 
-    function renderMobileList(items) {
+    function renderMobile(items) {
+      const ordered = sortNewestFirst(items);
       return `
         <div class="mobile-list">
-          ${items.map(item => `
+          ${ordered.map(item => `
             <div class="mobile-item">
-              ${renderCard(item, { width: "standard" })}
+              ${renderCard(item)}
             </div>
           `).join("")}
         </div>
       `;
-    }
-
-    function renderDesktop(items) {
-      const featured = sortNewestFirst(items.filter(isFeatured))
-        .sort((a, b) => featuredRank(a) - featuredRank(b));
-
-      const featuredIds = new Set(featured.map(item => item.Display_ID));
-      const remaining = sortNewestFirst(items.filter(item => !featuredIds.has(item.Display_ID)));
-
-      let html = "";
-
-      if (featured[0]) {
-        html += `
-          <div class="archive-block hero-block">
-            <div class="hero-row">
-              ${renderCard(featured[0], { hero: true })}
-            </div>
-          </div>
-        `;
-      }
-
-      const patterns = [
-        { type: "between-3", offsets: ["offset-1", "", "offset-2"] },
-        { type: "left-2", offsets: ["", "offset-3"] },
-        { type: "right-2", offsets: ["offset-2", ""] },
-        { type: "between-3", offsets: ["", "offset-4", ""] },
-        { type: "solo-right", offsets: [""] }
-      ];
-
-      if (featured[1]) remaining.unshift(featured[1]);
-      if (featured[2]) remaining.splice(Math.min(4, remaining.length), 0, featured[2]);
-
-      let cursor = 0;
-      let patternIndex = 0;
-
-      while (cursor < remaining.length) {
-        const pattern = patterns[patternIndex % patterns.length];
-
-        if (pattern.type === "between-3") {
-          const rowItems = remaining.slice(cursor, cursor + 3);
-          if (!rowItems.length) break;
-
-          html += `
-            <div class="archive-block ${patternIndex % 2 === 0 ? "loose" : "tight"}">
-              <div class="composition-row align-between">
-                ${rowItems.map((item, i) =>
-                  renderCard(item, {
-                    width: getWidthClass(item, i),
-                    extraClass: pattern.offsets[i] || ""
-                  })
-                ).join("")}
-              </div>
-            </div>
-          `;
-
-          cursor += rowItems.length;
-        } else if (pattern.type === "left-2" || pattern.type === "right-2") {
-          const rowItems = remaining.slice(cursor, cursor + 2);
-          if (!rowItems.length) break;
-
-          html += `
-            <div class="archive-block tight">
-              <div class="composition-row ${pattern.type === "left-2" ? "align-left" : "align-right"}">
-                <div class="card-group compact">
-                  ${rowItems.map((item, i) =>
-                    renderCard(item, {
-                      width: getWidthClass(item, i),
-                      extraClass: pattern.offsets[i] || ""
-                    })
-                  ).join("")}
-                </div>
-              </div>
-            </div>
-          `;
-
-          cursor += rowItems.length;
-        } else if (pattern.type === "solo-right") {
-          const item = remaining[cursor];
-          if (!item) break;
-
-          html += `
-            <div class="archive-block loose">
-              <div class="composition-row align-right">
-                ${renderCard(item, { width: "standard" })}
-              </div>
-            </div>
-          `;
-
-          cursor += 1;
-        }
-
-        patternIndex += 1;
-      }
-
-      return html;
     }
 
     function setupReveal() {
@@ -832,39 +578,25 @@
       const archive = document.getElementById('archive');
 
       try {
-        const [indexRes, featuredRes] = await Promise.all([
-          fetch('./index.json', { cache: 'no-store' }),
-          fetch('./featured.json', { cache: 'no-store' }).catch(() => null)
-        ]);
-
+        const indexRes = await fetch('./index.json', { cache: 'no-store' });
         if (!indexRes.ok) throw new Error(`Failed to load index.json (${indexRes.status})`);
 
-        const indexItems = await indexRes.json();
-        let featuredItems = [];
+        const itemsRaw = await indexRes.json();
 
-        if (featuredRes && featuredRes.ok) {
-          featuredItems = await featuredRes.json();
-        }
-
-        if (!Array.isArray(indexItems) || indexItems.length === 0) {
+        if (!Array.isArray(itemsRaw) || itemsRaw.length === 0) {
           archive.innerHTML = '<div class="empty">No objects available yet.</div>';
           postSize();
           return;
         }
 
-        const items = sortNewestFirst(indexItems).map(item => {
-          const match = Array.isArray(featuredItems)
-            ? featuredItems.find(f => String(f.Display_ID || "").trim() === String(item.Display_ID || "").trim())
-            : null;
-
-          if (match && !item.Featured) {
-            return { ...item, Featured: match.Featured || "Yes" };
-          }
-          return item;
-        });
+        const itemMap = new Map(
+          itemsRaw.map(item => [String(item.Display_ID || "").trim(), item])
+        );
 
         const isMobile = window.innerWidth <= 680;
-        archive.innerHTML = isMobile ? renderMobileList(items) : renderDesktop(items);
+        archive.innerHTML = isMobile
+          ? renderMobile(itemsRaw)
+          : renderDesktop(itemMap);
 
         setupReveal();
 
