@@ -238,17 +238,15 @@ const chairs = rows
   });
 
 const chairsAsc = chairs;
+const chairsDesc = [...chairsAsc].reverse();
 
-const chairsDesc = [...chairs].sort((a, b) => {
-  if (a.Sort_Number != null && b.Sort_Number != null) {
-    return b.Sort_Number - a.Sort_Number;
-  }
-  return b.Display_ID.localeCompare(a.Display_ID);
-});
-
+// chair-data.json stays ascending for object navigation
 fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairsAsc, null, 2), "utf8");
+
+// index.json becomes newest first by reversing the asc array
 fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(chairsDesc, null, 2), "utf8");
 
+// context.json groups from newest-first order
 const contextMap = {};
 for (const chair of chairsDesc) {
   const key = clean(chair.Context_Primary);
@@ -258,6 +256,7 @@ for (const chair of chairsDesc) {
 }
 fs.writeFileSync(CONTEXT_JSON_PATH, JSON.stringify(contextMap, null, 2), "utf8");
 
+// featured.json also respects newest-first order
 const featuredChairs = chairsDesc.filter(chair => {
   const val = clean(chair.Featured).toLowerCase();
   return val === "yes" || val === "true";
