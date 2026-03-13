@@ -54,6 +54,11 @@ function toNum(value) {
   return Number.isFinite(n) ? n : null;
 }
 
+function displayIdNumber(displayId) {
+  const match = clean(displayId).match(/(\d+)$/);
+  return match ? Number(match[1]) : null;
+}
+
 function joinParts(parts) {
   return parts.map(clean).filter(Boolean).join(", ");
 }
@@ -190,6 +195,7 @@ const chairs = rows
 
     return {
       Record_Number: toNum(row["Record Number"] ?? row["Record_Number"]),
+      Sort_Number: displayIdNumber(displayId),
       Display_ID: displayId,
       Title: title,
       Slug: displayId.toLowerCase(),
@@ -225,8 +231,8 @@ const chairs = rows
     };
   })
   .sort((a, b) => {
-    if (a.Record_Number != null && b.Record_Number != null) {
-      return a.Record_Number - b.Record_Number;
+    if (a.Sort_Number != null && b.Sort_Number != null) {
+      return a.Sort_Number - b.Sort_Number;
     }
     return a.Display_ID.localeCompare(b.Display_ID);
   });
@@ -234,19 +240,15 @@ const chairs = rows
 const chairsAsc = chairs;
 
 const chairsDesc = [...chairs].sort((a, b) => {
-  if (a.Record_Number != null && b.Record_Number != null) {
-    return b.Record_Number - a.Record_Number;
+  if (a.Sort_Number != null && b.Sort_Number != null) {
+    return b.Sort_Number - a.Sort_Number;
   }
   return b.Display_ID.localeCompare(a.Display_ID);
 });
 
-// chair-data.json stays ascending for object-to-object navigation
 fs.writeFileSync(FULL_JSON_PATH, JSON.stringify(chairsAsc, null, 2), "utf8");
-
-// index.json is newest first
 fs.writeFileSync(INDEX_JSON_PATH, JSON.stringify(chairsDesc, null, 2), "utf8");
 
-// context.json is grouped from newest-first order
 const contextMap = {};
 for (const chair of chairsDesc) {
   const key = clean(chair.Context_Primary);
@@ -256,14 +258,12 @@ for (const chair of chairsDesc) {
 }
 fs.writeFileSync(CONTEXT_JSON_PATH, JSON.stringify(contextMap, null, 2), "utf8");
 
-// featured.json is also newest first
 const featuredChairs = chairsDesc.filter(chair => {
   const val = clean(chair.Featured).toLowerCase();
   return val === "yes" || val === "true";
 });
 fs.writeFileSync(FEATURED_JSON_PATH, JSON.stringify(featuredChairs, null, 2), "utf8");
 
-// individual chair pages stay in ascending order for previous/next navigation
 chairsAsc.forEach((chair, index) => {
   const slug = chair.Slug;
   const outDir = path.join(ROOT, slug);
