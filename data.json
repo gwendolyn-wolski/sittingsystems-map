@@ -65,8 +65,8 @@
   },
   {
     "Display_ID": "SS-009",
-    "Latitude": -29.728212406061417,
-    "Longitude": 31.087279050924582,
+    "Latitude": -29.728212,
+    "Longitude": 31.087279,
     "Readymag_URL": "https://sittingsystems.org/ss-009/",
     "Map_Label": "SS-009 — Reclining Loungers — Hospitality Lawn",
     "Context (Primary)": "Resting"
@@ -142,5 +142,13 @@
     "Readymag_URL": "https://sittingsystems.org/ss-018/",
     "Map_Label": "SS-018 — Ceremonial Upholstered Chair — Louvre Interior",
     "Context (Primary)": "Display"
+  },
+  {
+    "Display_ID": "SS-019",
+    "Latitude": 41.857783,
+    "Longitude": -87.656975,
+    "Readymag_URL": "https://sittingsystems.org/ss-019/",
+    "Map_Label": "SS-019 — Exposed Upholstery Armchair",
+    "Context (Primary)": "Waiting"
   }
 ]
