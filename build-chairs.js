@@ -101,7 +101,7 @@ function imageBlock(imageFile, pageTitle, pinDescription) {
       <img
         class="main-image"
         src="../images/${escapeHtml(imageFile)}"
-        data-pin-media="https://sittingsystems.org/images/${escapeHtml(imageFile)}"
+        data-pin-media="https://sittingsystems.org/images/pinterest/${escapeHtml(imageFile)}"
         data-pin-description="${escapeHtml(pinDescription)}"
         alt="${escapeHtml(pageTitle)}"
         loading="eager"
@@ -287,7 +287,7 @@ chairsAsc.forEach((chair, index) => {
     `https://sittingsystems.org/${chair.Slug}/`;
 
   const socialImageUrl =
-    `https://sittingsystems.org/images/${chair.Thumbnail}`;
+  `https://sittingsystems.org/images/pinterest/${chair.Thumbnail}`;
 
   const metaDescription =
     clean(chair.Caption) ||
