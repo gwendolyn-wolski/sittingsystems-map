@@ -327,8 +327,8 @@ chairsAsc.forEach((chair, index) => {
   const observationsBlock = paragraphize(chair.Observations);
   const objectNavBlock = objectNav(previousChair, nextChair);
 
-  const html = template
-     const html = template
+ 
+    const html = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
     .replaceAll("{{META_DESCRIPTION}}", escapeHtml(metaDescription))
     .replaceAll("{{CANONICAL_URL}}", escapeHtml(canonicalUrl))
