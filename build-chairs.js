@@ -91,25 +91,25 @@ function paragraphize(text) {
   return `<div class="notes">${paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div>`;
 }
 
-function imageBlock(imageFile, pageTitle, pinDescription)  {
+function imageBlock(imageFile, pageTitle, pinDescription) {
   if (!imageFile) {
     return `<div class="empty-image" aria-hidden="true"></div>`;
   }
 
   return `
-  <div class="image-wrap">
-    <img
-      class="main-image"
-      src="../images/${escapeHtml(imageFile)}"
-      data-pin-media="https://sittingsystems.org/images/${escapeHtml(imageFile)}"
-      data-pin-description="${escapeHtml(pinDescription)}"
-      alt="${escapeHtml(pageTitle)}"
-      loading="eager"
-      onload="postSize()"
-      onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
-    />
-  </div>
-`;
+    <div class="image-wrap">
+      <img
+        class="main-image"
+        src="../images/${escapeHtml(imageFile)}"
+        data-pin-media="https://sittingsystems.org/images/${escapeHtml(imageFile)}"
+        data-pin-description="${escapeHtml(pinDescription)}"
+        alt="${escapeHtml(pageTitle)}"
+        loading="eager"
+        onload="postSize()"
+        onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
+      />
+    </div>
+  `;
 }
 
 function titleFromMapLabelFallback(mapLabel, displayId) {
@@ -282,7 +282,8 @@ chairsAsc.forEach((chair, index) => {
   const pageTitle = chair.Title
     ? `${chair.Display_ID} — ${chair.Title}`
     : chair.Display_ID;
-    const canonicalUrl =
+  
+  const canonicalUrl =
     `https://sittingsystems.org/${chair.Slug}/`;
 
   const socialImageUrl =
@@ -327,6 +328,7 @@ chairsAsc.forEach((chair, index) => {
   const objectNavBlock = objectNav(previousChair, nextChair);
 
   const html = template
+     const html = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
     .replaceAll("{{META_DESCRIPTION}}", escapeHtml(metaDescription))
     .replaceAll("{{CANONICAL_URL}}", escapeHtml(canonicalUrl))
