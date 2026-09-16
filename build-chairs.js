@@ -91,23 +91,25 @@ function paragraphize(text) {
   return `<div class="notes">${paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div>`;
 }
 
-function imageBlock(imageFile, pageTitle) {
+function imageBlock(imageFile, pageTitle, pinDescription)  {
   if (!imageFile) {
     return `<div class="empty-image" aria-hidden="true"></div>`;
   }
 
   return `
-    <div class="image-wrap">
-      <img
-        class="main-image"
-        src="../images/${escapeHtml(imageFile)}"
-        alt="${escapeHtml(pageTitle)}"
-        loading="eager"
-        onload="postSize()"
-        onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
-      />
-    </div>
-  `;
+  <div class="image-wrap">
+    <img
+      class="main-image"
+      src="../images/${escapeHtml(imageFile)}"
+      data-pin-media="https://sittingsystems.org/images/${escapeHtml(imageFile)}"
+      data-pin-description="${escapeHtml(pinDescription)}"
+      alt="${escapeHtml(pageTitle)}"
+      loading="eager"
+      onload="postSize()"
+      onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
+    />
+  </div>
+`;
 }
 
 function titleFromMapLabelFallback(mapLabel, displayId) {
@@ -280,6 +282,19 @@ chairsAsc.forEach((chair, index) => {
   const pageTitle = chair.Title
     ? `${chair.Display_ID} — ${chair.Title}`
     : chair.Display_ID;
+    const canonicalUrl =
+    `https://sittingsystems.org/${chair.Slug}/`;
+
+  const socialImageUrl =
+    `https://sittingsystems.org/images/${chair.Thumbnail}`;
+
+  const metaDescription =
+    clean(chair.Caption) ||
+    clean(chair.Observations) ||
+    `${pageTitle}. Sitting Systems — an archive of chairs, seats, and the context in which the body rests.`;
+
+  const pinDescription =
+    `${pageTitle}. ${metaDescription}`;
 
   const primaryMetaBlocks = [
     makeMetaBlock("Object ID", chair.Display_ID),
@@ -313,10 +328,16 @@ chairsAsc.forEach((chair, index) => {
 
   const html = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
+    .replaceAll("{{META_DESCRIPTION}}", escapeHtml(metaDescription))
+    .replaceAll("{{CANONICAL_URL}}", escapeHtml(canonicalUrl))
+    .replaceAll("{{SOCIAL_IMAGE_URL}}", escapeHtml(socialImageUrl))
     .replaceAll("{{HEADER_SUBTITLE}}", escapeHtml(chair.Header_Subtitle))
     .replaceAll("{{PRIMARY_META_BLOCKS}}", primaryMetaBlocks)
     .replaceAll("{{SECONDARY_META_BLOCKS}}", secondaryMetaBlocks)
-    .replaceAll("{{IMAGE_BLOCK}}", imageBlock(chair.Thumbnail, pageTitle))
+    .replaceAll(
+      "{{IMAGE_BLOCK}}",
+      imageBlock(chair.Thumbnail, pageTitle, pinDescription)
+    )
     .replaceAll("{{CAPTION_BLOCK}}", captionBlock)
     .replaceAll("{{LOCATION_BLOCK}}", locationBlock)
     .replaceAll("{{OBSERVATIONS_BLOCK}}", observationsBlock)
