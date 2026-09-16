@@ -488,6 +488,25 @@
         line-height: 1.32;
       }
     }
+
+    .pinterest-save {
+      margin-top: 24px;
+      margin-bottom: 14px;
+      text-align: right;
+    }
+
+    .pinterest-save a {
+      color: var(--muted-soft);
+      font-size: 12px;
+      line-height: 1.3;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .pinterest-save a:hover {
+      color: var(--text);
+    }
+
   </style>
 </head>
 <body>
@@ -518,6 +537,7 @@
               {{CAPTION_BLOCK}}
               {{LOCATION_BLOCK}}
               {{OBSERVATIONS_BLOCK}}
+              {{PINTEREST_BLOCK}}
               <div class="object-nav-desktop">
                 {{OBJECT_NAV}}
               </div>

@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SS-004 — Ceremonial Upholstered Chair — Louvre Interior</title>
-  <meta name="description" content="Photographic record of ceremonial upholstered seating within the Louvre’s Napoleon III Apartments." />
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}" />
 
-  <link rel="canonical" href="https://sittingsystems.org/ss-004/" />
+  <link rel="canonical" href="{{CANONICAL_URL}}" />
   
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Sitting Systems" />
-  <meta property="og:title" content="SS-004 — Ceremonial Upholstered Chair — Louvre Interior" />
-  <meta property="og:description" content="Photographic record of ceremonial upholstered seating within the Louvre’s Napoleon III Apartments." />
-  <meta property="og:url" content="https://sittingsystems.org/ss-004/" />
-  <meta property="og:image" content="https://gwendolyn-wolski.github.io/sittingsystems-map/images/pinterest/SS-004.jpeg" />
+  <meta property="og:title" content="{{PAGE_TITLE}}" />
+  <meta property="og:description" content="{{META_DESCRIPTION}}" />
+  <meta property="og:url" content="{{CANONICAL_URL}}" />
+  <meta property="og:image" content="{{SOCIAL_IMAGE_URL}}" />
   
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SS-004 — Ceremonial Upholstered Chair — Louvre Interior" />
-  <meta name="twitter:description" content="Photographic record of ceremonial upholstered seating within the Louvre’s Napoleon III Apartments." />
-  <meta name="twitter:image" content="https://gwendolyn-wolski.github.io/sittingsystems-map/images/pinterest/SS-004.jpeg" />
+  <meta name="twitter:title" content="{{PAGE_TITLE}}" />
+  <meta name="twitter:description" content="{{META_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{SOCIAL_IMAGE_URL}}" />
 
   <style>
     :root {
@@ -490,9 +490,8 @@
     }
 
     .pinterest-save {
-      margin-top: 24px;
+      margin-top: 8px;
       margin-bottom: 14px;
-      text-align: right;
     }
 
     .pinterest-save a {
@@ -517,7 +516,7 @@
       <section class="main">
         <header class="masthead">
           <h1 class="title">Sitting<br>Systems</h1>
-          <p class="subtitle">SS-004 — Ceremonial Upholstered Chair — Louvre Interior</p>
+          <p class="subtitle">{{HEADER_SUBTITLE}}</p>
           <div class="rule" aria-hidden="true"></div>
         </header>
 
@@ -525,134 +524,27 @@
           <div class="detail-grid">
             <aside class="meta">
               <div class="meta-primary">
-                
-    <div class="meta-group">
-      <p class="meta-label">Object ID</p>
-      <p class="meta-value">SS-004</p>
-    </div>
-  
-    <div class="meta-group">
-      <p class="meta-label">Seating Type</p>
-      <p class="meta-value">ceremonial upholstered chair</p>
-    </div>
-  
-    <div class="meta-group">
-      <p class="meta-label">Context</p>
-      <p class="meta-value">Display, collective, public</p>
-    </div>
-  
-    <div class="meta-group">
-      <p class="meta-label">Location</p>
-      <p class="meta-value">Paris, France</p>
-    </div>
-  
+                {{PRIMARY_META_BLOCKS}}
               </div>
               <div class="meta-secondary">
-                
-    <div class="meta-group secondary">
-      <p class="meta-label">Environment</p>
-      <p class="meta-value">indoor</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Site Type</p>
-      <p class="meta-value">museum</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Materials</p>
-      <p class="meta-value">upholstered fabric, gilded detailing, carved wood</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Visibility</p>
-      <p class="meta-value">controlled</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Duration</p>
-      <p class="meta-value">suspended</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Posture</p>
-      <p class="meta-value">upright</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Body State</p>
-      <p class="meta-value">self-conscious, restrained, attentive</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Origin System</p>
-      <p class="meta-value">ceremonial, domestic</p>
-    </div>
-  
-    <div class="meta-group secondary">
-      <p class="meta-label">Current System</p>
-      <p class="meta-value">insitutional</p>
-    </div>
-  
+                {{SECONDARY_META_BLOCKS}}
               </div>
             </aside>
 
             <section class="media">
-              
-    <div class="image-wrap">
-      <img
-        class="main-image"
-        src="../images/SS-004.jpeg"
-        data-pin-media="https://gwendolyn-wolski.github.io/sittingsystems-map/images/pinterest/SS-004.jpeg"
-        data-pin-description="SS-004 — Ceremonial Upholstered Chair — Louvre Interior. Photographic record of ceremonial upholstered seating within the Louvre’s Napoleon III Apartments."
-        alt="SS-004 — Ceremonial Upholstered Chair — Louvre Interior"
-        loading="eager"
-        onload="postSize()"
-        onerror="console.error('IMAGE FAILED:', this.src); this.closest('.image-wrap').innerHTML=''; postSize();"
-      />
-    </div>
-  
-              <p class="caption">Photographic record of ceremonial upholstered seating within the Louvre’s Napoleon III Apartments.</p>
-              <p class="location-line">Paris, France</p>
-              <div class="notes"><p>Ceremonial upholstered seating preserved within the Napoleon III Apartments at the Louvre, a Second Empire interior created in 1861 for Napoleon III’s Minister of State. Designed for elite reception rather than informal rest, the chair participates in a larger decorative system in which gilding, upholstery, and controlled spacing organize visibility and social order. In the museum setting, its original function survives as atmosphere and historical display while bodily use is suspended.</p></div>
-              
-    <div class="pinterest-save">
-      <a
-        href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fsittingsystems.org%2Fss-004%2F&amp;media=https%3A%2F%2Fgwendolyn-wolski.github.io%2Fsittingsystems-map%2Fimages%2Fpinterest%2FSS-004.jpeg&amp;description=SS-004+%E2%80%94+Ceremonial+Upholstered+Chair+%E2%80%94+Louvre+Interior.+Photographic+record+of+ceremonial+upholstered+seating+within+the+Louvre%E2%80%99s+Napoleon+III+Apartments."
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Save SS-004 to Pinterest"
-      >Save to Pinterest ↗</a>
-    </div>
-  
+              {{IMAGE_BLOCK}}
+              {{PINTEREST_BLOCK}}
+              {{CAPTION_BLOCK}}
+              {{LOCATION_BLOCK}}
+              {{OBSERVATIONS_BLOCK}}
               <div class="object-nav-desktop">
-                <nav class="nav-row">
-      <a class="nav-link prev" href="https://sittingsystems.org/ss-003/" target="_top" rel="noopener">
-        <span class="nav-kicker">Previous object</span>
-        <span class="nav-title">← SS-003 — Decorative Side Chair, Outdoor Market</span>
-      </a>
-    
-      <a class="nav-link next" href="https://sittingsystems.org/ss-005/" target="_top" rel="noopener">
-        <span class="nav-kicker">Next object</span>
-        <span class="nav-title">SS-005 — Modified Armchair — Exhibition Installation →</span>
-      </a>
-    </nav>
+                {{OBJECT_NAV}}
               </div>
             </section>
           </div>
 
           <div class="object-nav-mobile">
-            <nav class="nav-row">
-      <a class="nav-link prev" href="https://sittingsystems.org/ss-003/" target="_top" rel="noopener">
-        <span class="nav-kicker">Previous object</span>
-        <span class="nav-title">← SS-003 — Decorative Side Chair, Outdoor Market</span>
-      </a>
-    
-      <a class="nav-link next" href="https://sittingsystems.org/ss-005/" target="_top" rel="noopener">
-        <span class="nav-kicker">Next object</span>
-        <span class="nav-title">SS-005 — Modified Armchair — Exhibition Installation →</span>
-      </a>
-    </nav>
+            {{OBJECT_NAV}}
           </div>
         </section>
       </section>

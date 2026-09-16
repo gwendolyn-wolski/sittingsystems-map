@@ -327,6 +327,36 @@ chairsAsc.forEach((chair, index) => {
   const observationsBlock = paragraphize(chair.Observations);
   const objectNavBlock = objectNav(previousChair, nextChair);
 
+  const pinterestDestination =
+    `https://sittingsystems.org/${chair.Slug}/`;
+
+  const pinterestImage =
+    `https://gwendolyn-wolski.github.io/sittingsystems-map/images/pinterest/${chair.Thumbnail}`;
+
+  const pinterestDescription = [
+    chair.Header_Subtitle,
+    chair.Caption
+  ].filter(Boolean).join(". ");
+
+  const pinterestUrl =
+    "https://www.pinterest.com/pin/create/button/?" +
+    new URLSearchParams({
+      url: pinterestDestination,
+      media: pinterestImage,
+      description: pinterestDescription
+    }).toString();
+
+  const pinterestBlock = `
+    <div class="pinterest-save">
+      <a
+        href="${escapeHtml(pinterestUrl)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Save ${escapeHtml(chair.Display_ID)} to Pinterest"
+      >Save to Pinterest ↗</a>
+    </div>
+  `;
+
  
     const html = template
     .replaceAll("{{PAGE_TITLE}}", escapeHtml(pageTitle))
@@ -340,6 +370,7 @@ chairsAsc.forEach((chair, index) => {
       "{{IMAGE_BLOCK}}",
       imageBlock(chair.Thumbnail, pageTitle, pinDescription)
     )
+    .replaceAll("{{PINTEREST_BLOCK}}", pinterestBlock)
     .replaceAll("{{CAPTION_BLOCK}}", captionBlock)
     .replaceAll("{{LOCATION_BLOCK}}", locationBlock)
     .replaceAll("{{OBSERVATIONS_BLOCK}}", observationsBlock)
