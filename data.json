@@ -5,7 +5,7 @@
     "Longitude": -58.429375,
     "Readymag_URL": "https://sittingsystems.org/ss-001/",
     "Map_Label": "SS-001 — Informal Armchair Arrangement, Sidewalk",
-    "Context (Primary)": "Waiting"
+    "Context (Primary)": "waiting"
   },
   {
     "Display_ID": "SS-002",
@@ -13,7 +13,7 @@
     "Longitude": -87.7796,
     "Readymag_URL": "https://sittingsystems.org/ss-002/",
     "Map_Label": "SS-002 — Child-Sized Chair, Private Residence",
-    "Context (Primary)": "Resting"
+    "Context (Primary)": "resting"
   },
   {
     "Display_ID": "SS-003",
@@ -21,7 +21,7 @@
     "Longitude": 2.34162,
     "Readymag_URL": "https://sittingsystems.org/ss-003/",
     "Map_Label": "SS-003 — Decorative Side Chair, Outdoor Market",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-004",
@@ -29,7 +29,7 @@
     "Longitude": 2.339405,
     "Readymag_URL": "https://sittingsystems.org/ss-004/",
     "Map_Label": "SS-004 — Ceremonial Upholstered Chair — Louvre Interior",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-005",
@@ -37,7 +37,7 @@
     "Longitude": -73.985542,
     "Readymag_URL": "https://sittingsystems.org/ss-005/",
     "Map_Label": "SS-005 — Modified Armchair — Exhibition Installation",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-006",
@@ -45,7 +45,7 @@
     "Longitude": -74.944642,
     "Readymag_URL": "https://sittingsystems.org/ss-006/",
     "Map_Label": "SS-006 — Painted Ladder-Back Chair — Commercial Interior",
-    "Context (Primary)": "Waiting"
+    "Context (Primary)": "waiting"
   },
   {
     "Display_ID": "SS-007",
@@ -53,7 +53,7 @@
     "Longitude": -75.4549,
     "Readymag_URL": "https://sittingsystems.org/ss-007/",
     "Map_Label": "SS-007 — Upholstered Armchair — Roadside (Winter)",
-    "Context (Primary)": "Waiting"
+    "Context (Primary)": "waiting"
   },
   {
     "Display_ID": "SS-008",
@@ -61,15 +61,15 @@
     "Longitude": -118.2426,
     "Readymag_URL": "https://sittingsystems.org/ss-008/",
     "Map_Label": "SS-008 — Artist’s Step Chair — Improvised Seating",
-    "Context (Primary)": "Working"
+    "Context (Primary)": "working"
   },
   {
     "Display_ID": "SS-009",
-    "Latitude": -29.728212,
-    "Longitude": 31.087279,
+    "Latitude": -29.728212406061417,
+    "Longitude": 31.087279050924582,
     "Readymag_URL": "https://sittingsystems.org/ss-009/",
     "Map_Label": "SS-009 — Reclining Loungers — Hospitality Lawn",
-    "Context (Primary)": "Resting"
+    "Context (Primary)": "resting"
   },
   {
     "Display_ID": "SS-010",
@@ -77,7 +77,7 @@
     "Longitude": -73.992675,
     "Readymag_URL": "https://sittingsystems.org/ss-010/",
     "Map_Label": "SS-010 — Ornamental Armchairs — Storefront Threshold",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-011",
@@ -85,7 +85,7 @@
     "Longitude": 80.0117,
     "Readymag_URL": "https://sittingsystems.org/ss-011/",
     "Map_Label": "SS-011 — Student Desk-Chair — Classroom Synchronization",
-    "Context (Primary)": "Working"
+    "Context (Primary)": "working"
   },
   {
     "Display_ID": "SS-012",
@@ -93,7 +93,7 @@
     "Longitude": -88.7879,
     "Readymag_URL": "https://sittingsystems.org/ss-012/",
     "Map_Label": "SS-012 — Lakeside Armchairs — Horizon-Oriented Rest",
-    "Context (Primary)": "Resting"
+    "Context (Primary)": "resting"
   },
   {
     "Display_ID": "SS-013",
@@ -101,7 +101,7 @@
     "Longitude": -74.9428,
     "Readymag_URL": "https://sittingsystems.org/ss-013/",
     "Map_Label": "SS-013 — Dining Chairs (Matched Set) — Domestic Displacement",
-    "Context (Primary)": "Waiting"
+    "Context (Primary)": "waiting"
   },
   {
     "Display_ID": "SS-014",
@@ -109,7 +109,7 @@
     "Longitude": -73.994438,
     "Readymag_URL": "https://sittingsystems.org/ss-014/",
     "Map_Label": "SS-014 — Lounge Chair — Exhibition Proxy for Rest",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-015",
@@ -117,7 +117,7 @@
     "Longitude": -73.996467,
     "Readymag_URL": "https://sittingsystems.org/ss-015/",
     "Map_Label": "SS-015 — Bentwood Armchair — Retail Seating",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-016",
@@ -125,7 +125,7 @@
     "Longitude": -73.997337,
     "Readymag_URL": "https://sittingsystems.org/ss-016/",
     "Map_Label": "SS-016 — Molded Plywood Lounge Chair — Sidewalk Resale Display",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-017",
@@ -133,7 +133,7 @@
     "Longitude": 2.353055,
     "Readymag_URL": "https://sittingsystems.org/ss-017/",
     "Map_Label": "SS-017 — Deep-Seated Armchair — Domestic Rest",
-    "Context (Primary)": "Resting"
+    "Context (Primary)": "resting"
   },
   {
     "Display_ID": "SS-018",
@@ -141,7 +141,7 @@
     "Longitude": 2.339405,
     "Readymag_URL": "https://sittingsystems.org/ss-018/",
     "Map_Label": "SS-018 — Ceremonial Upholstered Chair — Louvre Interior",
-    "Context (Primary)": "Display"
+    "Context (Primary)": "display"
   },
   {
     "Display_ID": "SS-019",
@@ -149,6 +149,6 @@
     "Longitude": -87.656975,
     "Readymag_URL": "https://sittingsystems.org/ss-019/",
     "Map_Label": "SS-019 — Exposed Upholstery Armchair",
-    "Context (Primary)": "Waiting"
+    "Context (Primary)": "waiting"
   }
 ]
